@@ -1,0 +1,34 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/Adder16.hdl
+
+/**
+ * Adds two 16-bit values.
+ * The most significant carry bit is ignored.
+ */
+
+CHIP Add16 {
+    IN a[16], b[16];
+    OUT out[16];
+
+    PARTS:
+    Xor(a=a[0], b=a[0], out=zero);
+    FullAdder(a=a[0], b=b[0], c=zero, sum=out[0], carry=cone);
+    FullAdder(a=a[1], b=b[1], c=cone, sum=out[1], carry=ctwo);
+    FullAdder(a=a[2],  b=b[2],  c=ctwo, sum=out[2],  carry=cthree);
+    FullAdder(a=a[3],  b=b[3],  c=cthree, sum=out[3],  carry=cfour);
+    FullAdder(a=a[4],  b=b[4],  c=cfour, sum=out[4],  carry=cfive);
+    FullAdder(a=a[5],  b=b[5],  c=cfive, sum=out[5],  carry=csix);
+    FullAdder(a=a[6],  b=b[6],  c=csix, sum=out[6],  carry=cseven);
+    FullAdder(a=a[7],  b=b[7],  c=cseven, sum=out[7],  carry=ceight);
+    FullAdder(a=a[8],  b=b[8],  c=ceight, sum=out[8],  carry=cnine);
+    FullAdder(a=a[9],  b=b[9],  c=cnine, sum=out[9],  carry=cten);
+    FullAdder(a=a[10], b=b[10], c=cten, sum=out[10], carry=celeven);
+    FullAdder(a=a[11], b=b[11], c=celeven, sum=out[11], carry=ctwelve);
+    FullAdder(a=a[12], b=b[12], c=ctwelve, sum=out[12], carry=conethree);
+    FullAdder(a=a[13], b=b[13], c=conethree, sum=out[13], carry=conefour);
+    FullAdder(a=a[14], b=b[14], c=conefour, sum=out[14], carry=conefive);
+    FullAdder(a=a[15], b=b[15], c=conefive, sum=out[15], carry=conesix);
+
+}

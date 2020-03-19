@@ -1,0 +1,28 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/Bit.hdl
+
+/**
+ * 1-bit register:
+ * If load[t] == 1 then out[t+1] = in[t]
+ *                 else out does not change (out[t+1] = out[t])
+ */
+
+CHIP Bit {
+    IN in, load;
+    OUT out;
+
+    PARTS:
+    /*
+    On each step we store the value of previous step.
+    Depend on load pin we decide which value will be stored
+    in state pin. When load pin is set to zero we store a 
+    value from previous step. When the load pin is equal one 
+    we store the new value from in pin. On each step we feed out pin with a
+    result of previous calculation. This can be reached by using DFF gate that
+    stores current value and return the previous stored value.
+    */       
+    Mux(a=state, b=in, sel=load, out=result);
+    DFF(in=result, out=out, out=state);
+}
