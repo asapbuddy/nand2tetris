@@ -26,7 +26,9 @@ CHIP Memory {
     IN in[16], load, address[15];
     OUT out[16];
 
-    
+    PARTS:
+        
+    // Put your code here:
     DMux4Way(in=load, sel=address[13..14], a=loadram1, b=loadram2, c=scrflag, d=loadkbd);
     Or(a=loadram1, b=loadram2, out=ramflag);
     RAM16K(in=in, load=ramflag, address=address[0..13], out=ramm);    
