@@ -1,0 +1,2 @@
+F:\source\nand2tetris\projects\06\hack_assembly\x64\Debug\hack_assembly.exe
+F:\source\nand2tetris\projects\06\hack_assembly\x64\Debug\hack_assembly.pdb
