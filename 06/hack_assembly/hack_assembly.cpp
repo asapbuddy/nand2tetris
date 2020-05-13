@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        auto&& ifs = helper::process_source(argv[1]);
-        parser parser(std::move(ifs), argv[2]);
+        parser parser(argv[2]);
+        parser.load(helper::process_source(argv[1]));
     }
     catch(helper_error& err)
     {
