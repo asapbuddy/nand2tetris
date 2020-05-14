@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iterator>
+
 
 #include "core/Parser.h"
 #include "core/errors/HelperError.h"
@@ -9,13 +11,24 @@ int print_usage();
 
 int main(int argc, char* argv[])
 {
-    if(argc < 3)
+    if(argc != 2)
         return print_usage();
 
     try
     {
-        parser parser(argv[2]);
+        parser parser;
         parser.load(helper::process_source(argv[1]));
+        parser.process();
+        auto parsed = parser.compile();
+
+        path output(argv[1]);
+        string filename = output.stem().string();
+        filename.append(".hack");
+        path result(output.parent_path().append(filename));
+        std::ofstream output_file(result);
+
+        ostream_iterator<std::string> output_iterator(output_file, "\n");
+        std::copy(parsed.begin(), parsed.end(), output_iterator);
     }
     catch(helper_error& err)
     {
@@ -33,6 +46,6 @@ int main(int argc, char* argv[])
 int print_usage()
 {
     cerr << "You have entered wrong number of argumens" << endl;
-    cerr << "Use hack_assembly.exe input.hack output.bin" << endl;
+    cerr << "Use hack_assembly.exe input.asm" << endl;
     return -1;
 }

@@ -226,6 +226,7 @@
     <ClCompile Include="hack_assembly.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\Command.h" />
     <ClInclude Include="core\errors\HelperError.h" />
     <ClInclude Include="core\errors\ParserError.h" />
     <ClInclude Include="core\misc\Helper.h" />
