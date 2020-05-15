@@ -18,7 +18,10 @@ class parser
 {
     vector<string> raw_source_;
     vector<command> source_;
-    unordered_map<string, unsigned> sym_table_;
+    unordered_map<string, pair<int, bool>> a_table_;
+    unordered_map<string, pair<int, bool>> l_table_;
+
+
     unordered_map<string, string> comp_table_;
     unordered_map<string, string> dest_table{
         {"M", "001"},
@@ -43,30 +46,30 @@ class parser
 
     void init_sym_table()
     {
-        sym_table_["SP"] = 0;
-        sym_table_["LCL"] = 1;
-        sym_table_["ARG"] = 2;
-        sym_table_["THIS"] = 3;
-        sym_table_["THAT"] = 4;
-        sym_table_["SCREEN"] = 16384;
-        sym_table_["KBD"] = 24576;
+        a_table_["SP"] = {0, false};
+        a_table_["LCL"] = {1, false};
+        a_table_["ARG"] = {2, false};
+        a_table_["THIS"] = {3, false};
+        a_table_["THAT"] = {4, false};
+        a_table_["SCREEN"] = {16384, false};
+        a_table_["KBD"] = {24576, false};
 
-        sym_table_["R0"] = 0;
-        sym_table_["R1"] = 1;
-        sym_table_["R2"] = 2;
-        sym_table_["R3"] = 3;
-        sym_table_["R4"] = 4;
-        sym_table_["R5"] = 5;
-        sym_table_["R6"] = 6;
-        sym_table_["R7"] = 7;
-        sym_table_["R8"] = 8;
-        sym_table_["R9"] = 9;
-        sym_table_["R10"] = 10;
-        sym_table_["R11"] = 11;
-        sym_table_["R12"] = 12;
-        sym_table_["R13"] = 13;
-        sym_table_["R14"] = 14;
-        sym_table_["R15"] = 15;
+        a_table_["R0"] = {0, false};
+        a_table_["R1"] = {1, false};
+        a_table_["R2"] = {2, false};
+        a_table_["R3"] = {3, false};
+        a_table_["R4"] = {4, false};
+        a_table_["R5"] = {5, false};
+        a_table_["R6"] = {6, false};
+        a_table_["R7"] = {7, false};
+        a_table_["R8"] = {8, false};
+        a_table_["R9"] = {9, false};
+        a_table_["R10"] = {10, false};
+        a_table_["R11"] = {11, false};
+        a_table_["R12"] = {12, false};
+        a_table_["R13"] = {13, false};
+        a_table_["R14"] = {14, false};
+        a_table_["R15"] = {15, false};
     }
 
     void init_comp_table()
@@ -135,52 +138,94 @@ public:
 
     void process()
     {
-        // resolve label addresses
+        for(auto i = 0; i < source_.size(); ++i)
+        {
+            if(source_[i].type == COMMAND_TYPE::LABEL)
+            {
+                l_table_[source_[i].mnemonic].first = i;
+                l_table_[source_[i].mnemonic].second = false;
+                if(i < source_.size())
+                {
+                    //while(source_[i + 1].type == COMMAND_TYPE::LABEL && i < source_.size())
+                      //  ++i;
+                }
+            }
+        }
+
+        auto test1 = l_table_["RET_ADDRESS_CALL0"];
+        auto test2 = l_table_["ball.new"];
         for(auto i = 0, a_cnt = 16; i < source_.size(); ++i)
         {
             auto& current = source_[i];
-            if(current.type == COMMAND_TYPE::LABEL)
+            int shift = 0;
+            if(current.type == COMMAND_TYPE::A_COMMAND)
             {
-                sym_table_[current.mnemonic] = i;
+                int test = 0;
+                if(current.mnemonic == "RET_ADDRESS_CALL7")
+                {
+                    test++;
+                }
+                if(l_table_.count(current.mnemonic))
+                {
+                    auto& position = l_table_[current.mnemonic];
+                    if(position.second == false)
+                    {
+                        vector<pair<string, pair<int, bool>>> positions;
+                        for(const auto& label : l_table_)
+                        {
+                            if(label.second.first < position.first)
+                            {
+                                shift--;
+                                positions.push_back(label);
+                            }
+                        }
+
+                        position.first += shift;
+                        position.second = true;
+                    }
+
+                    a_table_[current.mnemonic] = {position.first, true};
+                }
+                else if(is_digit(current.mnemonic[0]))
+                {
+                    a_table_[current.mnemonic] = {stoi(current.mnemonic), false};
+                }
+                else if(a_table_.count(current.mnemonic) == 0)
+                {
+                    a_table_[current.mnemonic] = {a_cnt++, false};
+                }
             }
         }
-        // resolve @ addresses
-        for(auto i = 0, a_cnt = 16; i < source_.size(); ++i)
+        // redudant labels 
+        vector<pair<string, pair<int, bool>>> positions;
+        for(auto& label : l_table_)
         {
-            auto& current = source_[i];
-            if(current.type == COMMAND_TYPE::A_COMMAND && sym_table_[current.mnemonic] == 0)
+            if(label.second.second == false)
             {
-                if(is_digit(current.mnemonic[0]))
-                    sym_table_[current.mnemonic] = stoi(current.mnemonic);
-                else
-                    sym_table_[current.mnemonic] = a_cnt++;
+                positions.push_back(label);
+                for(auto& a_cmd : a_table_)
+                {
+                    if(a_cmd.second.first > label.second.first && a_cmd.second.second == true)
+                        a_cmd.second.first--;
+                }
             }
         }
-        //process opcodes
-        for(unsigned i=0; i < source_.size(); ++i)
+
+        for(unsigned i = 0; i < source_.size(); ++i)
         {
             auto& command = source_[i];
             if(command.type == COMMAND_TYPE::A_COMMAND)
             {
-                auto bits  = sym_table_[command.mnemonic];
-                // forward_lookup
-                for(auto j=i; j < source_.size(); ++j)
-                {
-                    if(source_[j].mnemonic == source_[i].mnemonic && source_[j].type == COMMAND_TYPE::LABEL)
-                    {
-                        bits--;
-                        sym_table_[command.mnemonic] = bits;
-                    }
-                        
-                }
+                auto bits = a_table_[command.mnemonic].first;
                 command.op_code = "0" + std::bitset<15>(bits).to_string();
             }
 
             if(command.type == COMMAND_TYPE::C_COMMAND)
                 process_c_command(command);
-        };
-            
-        
+        }
+
+        test1 = test1;
+        test2 = test2;
         //for()
         // resolve @
     }
