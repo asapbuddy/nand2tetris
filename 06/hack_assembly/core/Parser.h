@@ -6,13 +6,13 @@
 #include <vector>
 #include <xstring>
 
-
 #include "Command.h"
+#include "errors/ParserError.h"
 #include "misc/Helper.h"
+
 using namespace std;
 using namespace std::filesystem;
 
-#include "errors/ParserError.h"
 
 class parser
 {
@@ -147,7 +147,7 @@ public:
                 if(i < source_.size())
                 {
                     //while(source_[i + 1].type == COMMAND_TYPE::LABEL && i < source_.size())
-                      //  ++i;
+                    //  ++i;
                 }
             }
         }
@@ -163,6 +163,7 @@ public:
                 int test = 0;
                 if(current.mnemonic == "RET_ADDRESS_CALL7")
                 {
+                    // ReSharper disable once CppAssignedValueIsNeverUsed
                     test++;
                 }
                 if(l_table_.count(current.mnemonic))
