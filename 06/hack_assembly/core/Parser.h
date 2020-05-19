@@ -289,7 +289,7 @@ private:
     void get_command_mnemonic(command& cmd)
     {
         switch(cmd.type)
-        {2
+        {
         case COMMAND_TYPE::A_COMMAND:
             cmd.mnemonic = string(cmd.raw.begin() + 1, cmd.raw.end());
             break;

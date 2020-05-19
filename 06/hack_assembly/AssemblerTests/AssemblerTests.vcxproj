@@ -35,6 +35,9 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(Configuration)\Tests\</IntDir>
+  </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="BaseCodeModule.cpp" />
   </ItemGroup>
