@@ -81,7 +81,7 @@ std::bitset<3> BaseCodeModule::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
         throw "Jump mnemonic not found";
-    return bitset<3>(mnemonic);
+    return bitset<3>(jump_table_[mnemonic]);
 }
 
 std::bitset<16> BaseCodeModule::instruction()
