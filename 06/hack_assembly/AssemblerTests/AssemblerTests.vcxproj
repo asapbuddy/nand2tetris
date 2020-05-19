@@ -41,6 +41,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FabricTests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssemblerLib\AssemblerLib.vcxproj">
+      <Project>{fc8ccbde-5ea5-4220-b2cd-591dab9dc031}</Project>
+      <Name>AssemblerLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,7 @@
 struct ISymbolTable
 {
     virtual ~ISymbolTable() = default;
-    
+
     /**
      * \brief adds entry to table
      * \param symbol symbolic label
@@ -24,12 +24,10 @@ struct ISymbolTable
      */
     virtual bool contains(std::string symbol) = 0;
 
-
     /**
      * \brief get address of symbol in source code
      * \param symbol symbolic label
      * \return address in source file where symbol located
      */
     virtual int address(std::string symbol) = 0;
-    
 };

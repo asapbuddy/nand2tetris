@@ -17,6 +17,7 @@ enum class CommandType
 struct IParserModule
 {
     virtual ~IParserModule() = default;
+
     /**
      * \brief Are the more commands in the input?
      * \return true if more commands available in source

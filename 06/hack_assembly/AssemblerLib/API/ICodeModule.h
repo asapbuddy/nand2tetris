@@ -7,6 +7,7 @@
 struct ICodeModule
 {
     virtual ~ICodeModule() = default;
+
     /**
     * \brief 
     * \param mnemonic of instruction
