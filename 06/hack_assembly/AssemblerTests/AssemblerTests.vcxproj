@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AssemblerLib\AssemblerLib.vcxproj">
-      <Project>{fc8ccbde-5ea5-4220-b2cd-591dab9dc031}</Project>
+      <Project>{01243917-9cde-4c12-83d4-f41929b6cc75}</Project>
       <Name>AssemblerLib</Name>
     </ProjectReference>
   </ItemGroup>

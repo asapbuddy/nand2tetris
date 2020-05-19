@@ -2,18 +2,90 @@
 
 #include <bitset>
 
+void BaseCodeModule::init_comp_table()
+{
+    comp_table_["0"] = "101010";
+    comp_table_["1"] = "111111";
+    comp_table_["-1"] = "111010";
+    comp_table_["D"] = "001100";
+    comp_table_["A"] = "110000";
+    comp_table_["!D"] = "001101";
+    comp_table_["!A"] = "110001";
+    comp_table_["-D"] = "001111";
+    comp_table_["-A"] = "110011";
+    comp_table_["D+1"] = "011111";
+    comp_table_["A+1"] = "110111";
+    comp_table_["D-1"] = "001110";
+    comp_table_["A-1"] = "110010";
+    comp_table_["D+A"] = "000010";
+    comp_table_["D-A"] = "010011";
+    comp_table_["A-D"] = "000111";
+    comp_table_["D&A"] = "000000";
+    comp_table_["D|A"] = "010101";
+    // when a =1
+    comp_table_["M"] = "110000";
+    comp_table_["!M"] = "110001";
+    comp_table_["-M"] = "110011";
+    comp_table_["M+1"] = "110111";
+    comp_table_["M-1"] = "110010";
+    comp_table_["D+M"] = "000010";
+    comp_table_["D-M"] = "010011";
+    comp_table_["M-D"] = "000111";
+    comp_table_["D&M"] = "000000";
+    comp_table_["D|M"] = "010101";
+}
+
+void BaseCodeModule::init_jump_table()
+{
+    jump_table_["JGT"] = "001";
+    jump_table_["JEQ"] = "010";
+    jump_table_["JGE"] = "011";
+    jump_table_["JLT"] = "100";
+    jump_table_["JNE"] = "101";
+    jump_table_["JLE"] = "110";
+    jump_table_["JMP"] = "111";
+}
+
+void BaseCodeModule::init_dest_table()
+{
+    dest_table_["M"] = "001";
+    dest_table_["D"] = "010";
+    dest_table_["MD"] = "011";
+    dest_table_["A"] = "100";
+    dest_table_["AM"] = "101";
+    dest_table_["AD"] = "110";
+    dest_table_["AMD"] = "111";
+}
+
 std::bitset<3> BaseCodeModule::dest(std::string mnemonic)
 {
-    return std::bitset<3>("000");
+    if(dest_table_.count(mnemonic) == 0)
+        throw "Dest mnemonic not found";
+
+    return bitset<3>(dest_table_[mnemonic]);
 }
 
 std::bitset<7> BaseCodeModule::comp(std::string mnemonic)
 {
-    return std::bitset<7>("0000000");
+    bool a_bit = mnemonic.find('M') == string::npos ? false : true;
+    string result;
+    result += a_bit ? "1" : "0";
+    if(comp_table_.count(mnemonic) == 0)
+        throw "Comp mnemonic not found";
+    result += comp_table_[mnemonic];
+
+    return bitset<7>(result);
 }
 
 std::bitset<3> BaseCodeModule::jump(std::string mnemonic)
 {
-    if(1 == 1)
-        return std::bitset<3>("000");
+    if(jump_table_.count(mnemonic) == 0)
+        throw "Jump mnemonic not found";
+    return bitset<3>(mnemonic);
+}
+
+std::bitset<16> BaseCodeModule::instruction()
+{
+    std::string result = "111";
+    return std::bitset<16>(result);
 }
