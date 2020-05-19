@@ -13,10 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{64a90193-eddb-4fb9-afbc-bf106be41ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{aac931e0-aebd-4e9d-8df7-7709f56551a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API">
+      <UniqueIdentifier>{e6e9d710-3ec2-42ad-908a-27a0016bffb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssemblerLib.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Modules\BaseCodeModule.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\BaseParserModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\BaseSymbolTable.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DefaultModuleFabric.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="API\ICodeModule.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\IModuleFabric.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\IParserModule.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="API\ISymbolTable.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\BaseCodeModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\BaseParserModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\BaseSymbolTable.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DefaultModuleFabric.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Helper.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
