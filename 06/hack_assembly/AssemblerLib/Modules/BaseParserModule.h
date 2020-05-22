@@ -4,11 +4,13 @@
 class BaseParserModule : public IParserModule
 {
 public:
+    bool init(char* path) override;
     bool has_more_commands() override;
     void advance() override;
     CommandType command_type() override;
     std::string symbol() override;
-    std::string dest() override;
-    std::string comp() override;
-    std::string jump() override;
+    std::bitset<16> dest() override;
+    std::bitset<16> comp() override;
+    std::bitset<16> jump() override;
+    ~BaseParserModule() = default;
 };

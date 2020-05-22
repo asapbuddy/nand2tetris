@@ -233,13 +233,7 @@
     <ClInclude Include="core\Parser.h" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="asm\Add.asm" />
-    <Content Include="asm\Max.asm" />
-    <Content Include="asm\MaxL.asm" />
-    <Content Include="asm\Pong.asm" />
-    <Content Include="asm\PongL.asm" />
-    <Content Include="asm\Rect.asm" />
-    <Content Include="asm\RectL.asm" />
+    <Folder Include="asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

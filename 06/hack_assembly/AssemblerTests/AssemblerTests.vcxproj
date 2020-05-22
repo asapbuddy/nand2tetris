@@ -147,6 +147,15 @@
       <Name>AssemblerLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\Add.asm" />
+    <Content Include="Tests\Max.asm" />
+    <Content Include="Tests\MaxL.asm" />
+    <Content Include="Tests\Pong.asm" />
+    <Content Include="Tests\PongL.asm" />
+    <Content Include="Tests\Rect.asm" />
+    <Content Include="Tests\RectL.asm" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

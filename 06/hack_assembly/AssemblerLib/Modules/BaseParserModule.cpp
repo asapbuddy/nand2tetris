@@ -1,5 +1,10 @@
 ﻿#include "BaseParserModule.h"
 
+bool BaseParserModule::init(char* path)
+{
+    return true;
+}
+
 bool BaseParserModule::has_more_commands()
 {
     return false;
@@ -19,17 +24,17 @@ std::string BaseParserModule::symbol()
     return "";
 }
 
-std::string BaseParserModule::dest()
+std::bitset<16> BaseParserModule::dest()
 {
-    return "";
+    return std::bitset<16>(0);
 }
 
-std::string BaseParserModule::comp()
+std::bitset<16> BaseParserModule::comp()
 {
-    return "";
+    return std::bitset<16>(0);
 }
 
-std::string BaseParserModule::jump()
+std::bitset<16> BaseParserModule::jump()
 {
-    return "";
+    return std::bitset<16>(0);
 }

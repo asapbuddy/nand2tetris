@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <bitset>
 #include <string>
 
 enum class CommandType
@@ -18,6 +19,13 @@ struct IParserModule
 {
     virtual ~IParserModule() = default;
 
+    
+    /**
+     * \brief ctor replacement
+     * \param path to assembly source file
+     * \return true if initialized correctly
+     */
+    virtual bool init(char* path) = 0;
     /**
      * \brief Are the more commands in the input?
      * \return true if more commands available in source
@@ -54,17 +62,17 @@ struct IParserModule
     * \brief when command_type() is c_command;
     * \return dest mnemonic of current c_command
     */
-    virtual std::string dest() = 0;
+    virtual std::bitset<16> dest() = 0;
 
     /**
     * \brief when command_type() is c_command;
     * \return comp mnemonic of current c_command
     */
-    virtual std::string comp() = 0;
+    virtual std::bitset<16> comp() = 0;
 
     /**
     * \brief when command_type() is c_command;
     * \return jump mnemonic of current c_command
     */
-    virtual std::string jump() = 0;
+    virtual std::bitset<16> jump() = 0;
 };
