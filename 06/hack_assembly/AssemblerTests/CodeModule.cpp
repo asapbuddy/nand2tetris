@@ -1,7 +1,8 @@
 #include <boost/test/unit_test.hpp>
 
 #include "Fixtures.h"
-
+#include <bitset>
+using namespace std;
 
 namespace assembler_tests
 {
@@ -63,6 +64,12 @@ namespace assembler_tests
                 BOOST_TEST(code_module.comp("M-D")== bitset<7>("1000111"));
                 BOOST_TEST(code_module.comp("D&M")== bitset<7>("1000000"));
                 BOOST_TEST(code_module.comp("D|M")== bitset<7>("1010101"));
+            }
+
+            BOOST_AUTO_TEST_CASE(CorrectBitsOperation)
+            {
+        
+        
             }
 
         BOOST_AUTO_TEST_SUITE_END()

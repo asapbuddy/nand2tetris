@@ -25,7 +25,7 @@ struct IParserModule
      * \param path to assembly source file
      * \return true if initialized correctly
      */
-    virtual bool init(char* path) = 0;
+    virtual bool init(const char* path) = 0;
     /**
      * \brief Are the more commands in the input?
      * \return true if more commands available in source

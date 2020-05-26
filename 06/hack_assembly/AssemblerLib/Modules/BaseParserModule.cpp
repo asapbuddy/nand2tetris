@@ -1,6 +1,8 @@
 ﻿#include "BaseParserModule.h"
 
-bool BaseParserModule::init(char* path)
+#include <bitset>
+
+bool BaseParserModule::init(const char* path)
 {
     return true;
 }
@@ -26,15 +28,22 @@ std::string BaseParserModule::symbol()
 
 std::bitset<16> BaseParserModule::dest()
 {
-    return std::bitset<16>(0);
+    std::bitset<16> dest(0);
+
+    return dest;
 }
 
 std::bitset<16> BaseParserModule::comp()
 {
-    return std::bitset<16>(0);
+    std::bitset<16> comp(0);
+    bool a_flag = true;
+    comp |= a_flag ? 1 << 12 : 0 << 12;
+    return comp;
 }
 
 std::bitset<16> BaseParserModule::jump()
 {
-    return std::bitset<16>(0);
+    std::bitset<16> jump("");
+
+    return jump;
 }

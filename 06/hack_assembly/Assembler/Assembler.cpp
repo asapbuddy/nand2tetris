@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     auto parser = fabric->get_parser_module();
     auto encode = fabric->get_code_module();
     auto sym_table = fabric->get_symbol_table();
-    char* path = "..\AssemblerTests\Tests\Add.asm";
+    auto* path = "..\\AssemblerTests\\Tests\\Add.asm";
     if(!parser->init(path))
     {
         //TODO print error
@@ -26,14 +26,17 @@ int main(int argc, char* argv[])
         switch(command_type)
         {
         case CommandType::a_command:
+        {
             const auto symbol = parser->symbol();
             result.push_back(std::bitset<16>(symbol));
-            
+
             break;
+        }
         case CommandType::c_command:
-            
+
             break;
         case CommandType::l_command:
+        {
             std::bitset<16> mask(0);
             mask |= 0b111 << 13;
             mask |= parser->comp();
@@ -42,6 +45,7 @@ int main(int argc, char* argv[])
             result.push_back(mask);
 
             break;
+        }
         default:
             break;
         }

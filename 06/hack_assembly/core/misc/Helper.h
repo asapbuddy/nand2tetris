@@ -1,9 +1,11 @@
 ﻿#pragma once
-#include <filesystem>
+
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <xstring>
+#include <filesystem>
+using namespace std::filesystem;
 
 
 #include "../errors/HelperError.h"
@@ -37,7 +39,7 @@ class helper
 
 
 public:
-    static ifstream process_source(const filesystem::path input)
+    static ifstream process_source(const std::filesystem::path input)
     {
         if(!exists(input))
             throw helper_error("Input file doesn't exist");

@@ -4,7 +4,7 @@
 class BaseParserModule : public IParserModule
 {
 public:
-    bool init(char* path) override;
+    bool init(const char* path) override;
     bool has_more_commands() override;
     void advance() override;
     CommandType command_type() override;
