@@ -1,8 +1,10 @@
-﻿#include "BaseCodeModule.h"
+﻿#pragma once
+#include "BaseCodeModule.h"
 
 #include <bitset>
 
-void BaseCodeModule::init_comp_table()
+template <uint8_t Bits>
+void BaseCodeModule<Bits>::init_comp_table()
 {
     comp_table_["0"] = "101010";
     comp_table_["1"] = "111111";
@@ -35,7 +37,9 @@ void BaseCodeModule::init_comp_table()
     comp_table_["D|M"] = "010101";
 }
 
-void BaseCodeModule::init_jump_table()
+
+template <uint8_t Bits>
+void BaseCodeModule<Bits>::init_jump_table()
 {
     jump_table_["JGT"] = "001";
     jump_table_["JEQ"] = "010";
@@ -46,7 +50,8 @@ void BaseCodeModule::init_jump_table()
     jump_table_["JMP"] = "111";
 }
 
-void BaseCodeModule::init_dest_table()
+template <uint8_t Bits>
+void BaseCodeModule<Bits>::init_dest_table()
 {
     dest_table_["M"] = "001";
     dest_table_["D"] = "010";
@@ -57,17 +62,19 @@ void BaseCodeModule::init_dest_table()
     dest_table_["AMD"] = "111";
 }
 
-std::string BaseCodeModule::dest(std::string mnemonic)
+template <uint8_t Bits>
+std::string BaseCodeModule<Bits>::dest(std::string mnemonic)
 {
     if(dest_table_.count(mnemonic) == 0)
         throw "Dest mnemonic not found";
 
-    const auto result = bitset<16>(dest_table_[mnemonic]) << 3;
+    const auto result = bitset<Bits>(dest_table_[mnemonic]) << 3;
 
     return result.to_string();
 }
 
-std::string BaseCodeModule::comp(std::string mnemonic)
+template <uint8_t Bits>
+std::string BaseCodeModule<Bits>::comp(std::string mnemonic)
 {
     bool a_bit = mnemonic.find('M') == string::npos ? false : true;
     string str;
@@ -76,20 +83,22 @@ std::string BaseCodeModule::comp(std::string mnemonic)
         throw "Comp mnemonic not found";
     str += comp_table_[mnemonic];
 
-    const auto result = bitset<16>(str) << 6;
+    const auto result = bitset<Bits>(str) << 6;
 
     return result.to_string();
 }
 
-std::string BaseCodeModule::jump(std::string mnemonic)
+template <uint8_t Bits>
+std::string BaseCodeModule<Bits>::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
         throw "Jump mnemonic not found";
-    const auto result = bitset<16>(jump_table_[mnemonic]);
+    const auto result = bitset<Bits>(jump_table_[mnemonic]);
     return result.to_string();
 }
 
-std::string BaseCodeModule::instruction()
+template <uint8_t Bits>
+std::string BaseCodeModule<Bits>::instruction()
 {
     std::string result{"111"};
     return result;

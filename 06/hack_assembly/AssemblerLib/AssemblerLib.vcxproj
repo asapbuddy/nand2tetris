@@ -157,14 +157,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Core\DefaultModuleFabric.cpp" />
-    <ClCompile Include="Modules\BaseCodeModule.cpp" />
+    <ClInclude Include="Modules\BaseCodeModule.inl" />
     <ClCompile Include="Modules\BaseParserModule.cpp" />
     <ClCompile Include="Modules\BaseSymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API\ICodeModule.h" />
-    <ClInclude Include="API\IModuleFabric.h" />
     <ClInclude Include="API\IParserModule.h" />
     <ClInclude Include="API\ISymbolTable.h" />
     <ClInclude Include="Core\DefaultModuleFabric.h" />

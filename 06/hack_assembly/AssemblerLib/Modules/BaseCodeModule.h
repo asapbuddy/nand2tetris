@@ -6,6 +6,7 @@
 
 using namespace std;
 
+template <uint8_t Bits>
 class BaseCodeModule final : public ICodeModule
 {
     std::unordered_map<string, string> comp_table_;
@@ -29,3 +30,4 @@ public:
     std::string jump(std::string mnemonic) override;
     std::string instruction() override;
 };
+#include "BaseCodeModule.inl"

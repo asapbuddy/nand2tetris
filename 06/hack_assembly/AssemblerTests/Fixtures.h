@@ -8,7 +8,7 @@ namespace assembler_tests
 {
     struct Configuration
     {
-        BaseCodeModule code_module;
+        BaseCodeModule<16> code_module;
         BaseParserModule parser_module;
     };
 } // namespace tests

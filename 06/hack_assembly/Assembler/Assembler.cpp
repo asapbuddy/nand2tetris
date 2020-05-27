@@ -1,23 +1,25 @@
 #include <bitset>
+#include <string>
 #include <vector>
-
 
 #include "../AssemblerLib/Core/DefaultModuleFabric.h"
 
+using namespace std;
+
 int main(int argc, char* argv[])
 {
-    IModuleFabric* fabric = new DefaultModuleFabric;
+    DefaultModuleFabric<16> fabric;
 
-    auto parser = fabric->get_parser_module();
-    auto encode = fabric->get_code_module();
-    auto sym_table = fabric->get_symbol_table();
+    auto parser = fabric.get_parser_module();
+    auto encode = fabric.get_code_module();
+    auto sym_table = fabric.get_symbol_table();
     auto* path = "..\\AssemblerTests\\Tests\\Add.asm";
     if(!parser->init(path))
     {
         //TODO print error
     }
 
-    std::vector<std::bitset<16>> result;
+    std::vector<std::string> result;
 
     while(parser->has_more_commands())
     {
@@ -28,7 +30,7 @@ int main(int argc, char* argv[])
         case CommandType::a_command:
         {
             const auto symbol = parser->symbol();
-            result.push_back(std::bitset<16>(symbol));
+            result.emplace_back(symbol);
 
             break;
         }
@@ -40,7 +42,7 @@ int main(int argc, char* argv[])
             mask |= std::bitset<16>(parser->dest());
             mask |= std::bitset<16>(parser->jump());
 
-            result.push_back(mask);
+            result.push_back(mask.to_string());
             break;
         }
         case CommandType::l_command:
