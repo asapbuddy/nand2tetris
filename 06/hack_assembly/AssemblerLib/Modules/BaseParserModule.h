@@ -1,16 +1,25 @@
 ﻿#pragma once
+#include "../API/ICodeModule.h"
 #include "../API/IParserModule.h"
 
-class BaseParserModule : public IParserModule
+class BaseParserModule final : public IParserModule
 {
+    ICodeModule* code_module_;
 public:
+    explicit BaseParserModule(ICodeModule* module)
+        : code_module_(module)
+    {
+    }
+
+    
+    BaseParserModule():code_module_(nullptr) {  }
     bool init(const char* path) override;
     bool has_more_commands() override;
     void advance() override;
     CommandType command_type() override;
     std::string symbol() override;
-    std::bitset<16> dest() override;
-    std::bitset<16> comp() override;
-    std::bitset<16> jump() override;
+    std::string dest() override;
+    std::string comp() override;
+    std::string jump() override;
     ~BaseParserModule() = default;
 };

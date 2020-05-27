@@ -33,17 +33,18 @@ int main(int argc, char* argv[])
             break;
         }
         case CommandType::c_command:
-
-            break;
-        case CommandType::l_command:
         {
             std::bitset<16> mask(0);
             mask |= 0b111 << 13;
-            mask |= parser->comp();
-            mask |= parser->dest();
-            mask |= parser->jump();
-            result.push_back(mask);
+            mask |= std::bitset<16>(parser->comp());
+            mask |= std::bitset<16>(parser->dest());
+            mask |= std::bitset<16>(parser->jump());
 
+            result.push_back(mask);
+            break;
+        }
+        case CommandType::l_command:
+        {
             break;
         }
         default:

@@ -24,8 +24,8 @@ public:
         init_dest_table();
     }
 
-    std::bitset<3> dest(std::string mnemonic) override;
-    std::bitset<7> comp(std::string mnemonic) override;
-    std::bitset<3> jump(std::string mnemonic) override;
-    std::bitset<16> instruction() override;
+    std::string dest(std::string mnemonic) override;
+    std::string comp(std::string mnemonic) override;
+    std::string jump(std::string mnemonic) override;
+    std::string instruction() override;
 };

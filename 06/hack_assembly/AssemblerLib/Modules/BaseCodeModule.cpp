@@ -57,35 +57,40 @@ void BaseCodeModule::init_dest_table()
     dest_table_["AMD"] = "111";
 }
 
-std::bitset<3> BaseCodeModule::dest(std::string mnemonic)
+std::string BaseCodeModule::dest(std::string mnemonic)
 {
     if(dest_table_.count(mnemonic) == 0)
         throw "Dest mnemonic not found";
 
-    return bitset<3>(dest_table_[mnemonic]);
+    const auto result = bitset<16>(dest_table_[mnemonic]) << 3;
+
+    return result.to_string();
 }
 
-std::bitset<7> BaseCodeModule::comp(std::string mnemonic)
+std::string BaseCodeModule::comp(std::string mnemonic)
 {
     bool a_bit = mnemonic.find('M') == string::npos ? false : true;
-    string result;
-    result += a_bit ? "1" : "0";
+    string str;
+    str += a_bit ? "1" : "0";
     if(comp_table_.count(mnemonic) == 0)
         throw "Comp mnemonic not found";
-    result += comp_table_[mnemonic];
+    str += comp_table_[mnemonic];
 
-    return bitset<7>(result);
+    const auto result = bitset<16>(str) << 6;
+
+    return result.to_string();
 }
 
-std::bitset<3> BaseCodeModule::jump(std::string mnemonic)
+std::string BaseCodeModule::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
         throw "Jump mnemonic not found";
-    return bitset<3>(jump_table_[mnemonic]);
+    const auto result = bitset<16>(jump_table_[mnemonic]);
+    return result.to_string();
 }
 
-std::bitset<16> BaseCodeModule::instruction()
+std::string BaseCodeModule::instruction()
 {
-    std::string result = "111";
-    return std::bitset<16>(result);
+    std::string result{"111"};
+    return result;
 }

@@ -12,7 +12,6 @@ namespace assembler_tests
 
             BOOST_AUTO_TEST_CASE(CorrectBitsOperation)
             {
-                BOOST_TEST(parser_module.comp() == 0b0001000000000000);
             }
 
         BOOST_AUTO_TEST_SUITE_END()

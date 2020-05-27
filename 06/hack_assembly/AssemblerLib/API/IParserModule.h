@@ -62,17 +62,17 @@ struct IParserModule
     * \brief when command_type() is c_command;
     * \return dest mnemonic of current c_command
     */
-    virtual std::bitset<16> dest() = 0;
+    virtual std::string dest() = 0;
 
     /**
     * \brief when command_type() is c_command;
     * \return comp mnemonic of current c_command
     */
-    virtual std::bitset<16> comp() = 0;
+    virtual std::string comp() = 0;
 
     /**
     * \brief when command_type() is c_command;
     * \return jump mnemonic of current c_command
     */
-    virtual std::bitset<16> jump() = 0;
+    virtual std::string jump() = 0;
 };

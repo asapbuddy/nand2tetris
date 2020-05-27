@@ -1,6 +1,7 @@
 ﻿#include "BaseParserModule.h"
 
 #include <bitset>
+#include <string>
 
 bool BaseParserModule::init(const char* path)
 {
@@ -26,24 +27,23 @@ std::string BaseParserModule::symbol()
     return "";
 }
 
-std::bitset<16> BaseParserModule::dest()
+std::string BaseParserModule::dest()
 {
-    std::bitset<16> dest(0);
+    std::string current_sym{""};
 
-    return dest;
+    return code_module_->dest(current_sym);
 }
 
-std::bitset<16> BaseParserModule::comp()
+std::string BaseParserModule::comp()
 {
-    std::bitset<16> comp(0);
-    bool a_flag = true;
-    comp |= a_flag ? 1 << 12 : 0 << 12;
-    return comp;
+    std::string current_sym{""};
+
+    return code_module_->comp(current_sym);
 }
 
-std::bitset<16> BaseParserModule::jump()
+std::string BaseParserModule::jump()
 {
-    std::bitset<16> jump("");
+    std::string current_sym{""};
 
-    return jump;
+    return code_module_->jump(current_sym);
 }
