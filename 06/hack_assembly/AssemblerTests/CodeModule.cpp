@@ -24,13 +24,13 @@ namespace assembler_tests
                 const auto JLE = bitset<BITNESS>("110").to_string();
                 const auto JMP = bitset<BITNESS>("111").to_string();
 
-                BOOST_TEST(code_module.jump("JGT")== JGT);
-                BOOST_TEST(code_module.jump("JEQ")== JEQ);
-                BOOST_TEST(code_module.jump("JGE")== JGE);
-                BOOST_TEST(code_module.jump("JLT")== JLT);
-                BOOST_TEST(code_module.jump("JNE")== JNE);
-                BOOST_TEST(code_module.jump("JLE")== JLE);
-                BOOST_TEST(code_module.jump("JMP")== JMP);
+                BOOST_TEST(code_module->jump("JGT")== JGT);
+                BOOST_TEST(code_module->jump("JEQ")== JEQ);
+                BOOST_TEST(code_module->jump("JGE")== JGE);
+                BOOST_TEST(code_module->jump("JLT")== JLT);
+                BOOST_TEST(code_module->jump("JNE")== JNE);
+                BOOST_TEST(code_module->jump("JLE")== JLE);
+                BOOST_TEST(code_module->jump("JMP")== JMP);
             }
 
             BOOST_AUTO_TEST_CASE(CorrectDestMnemonics)
@@ -43,13 +43,13 @@ namespace assembler_tests
                 const auto b_AD = bitset<BITNESS>("110") << DEST_SHIFT;
                 const auto b_AMD = bitset<BITNESS>("111") << DEST_SHIFT;
 
-                BOOST_TEST(code_module.dest("M")== b_M.to_string());
-                BOOST_TEST(code_module.dest("D")== b_D.to_string());
-                BOOST_TEST(code_module.dest("MD")== b_MD.to_string());
-                BOOST_TEST(code_module.dest("A")== b_A.to_string());
-                BOOST_TEST(code_module.dest("AM")== b_AM.to_string());
-                BOOST_TEST(code_module.dest("AD")== b_AD.to_string());
-                BOOST_TEST(code_module.dest("AMD")== b_AMD.to_string());
+                BOOST_TEST(code_module->dest("M")== b_M.to_string());
+                BOOST_TEST(code_module->dest("D")== b_D.to_string());
+                BOOST_TEST(code_module->dest("MD")== b_MD.to_string());
+                BOOST_TEST(code_module->dest("A")== b_A.to_string());
+                BOOST_TEST(code_module->dest("AM")== b_AM.to_string());
+                BOOST_TEST(code_module->dest("AD")== b_AD.to_string());
+                BOOST_TEST(code_module->dest("AMD")== b_AMD.to_string());
             }
 
             BOOST_AUTO_TEST_CASE(CorrectCompMnemonics)
@@ -84,35 +84,35 @@ namespace assembler_tests
                 const auto DandM = bitset<BITNESS>("1000000") << COMP_SHIFT;
                 const auto DorM = bitset<BITNESS>("1010101") << COMP_SHIFT;
         
-                BOOST_TEST(code_module.comp("0")== zero.to_string());
-                BOOST_TEST(code_module.comp("1")== one.to_string());
-                BOOST_TEST(code_module.comp("-1")== nOne.to_string());
-                BOOST_TEST(code_module.comp("D")== D.to_string());
-                BOOST_TEST(code_module.comp("A")== A.to_string());
-                BOOST_TEST(code_module.comp("!D")== nD.to_string());
-                BOOST_TEST(code_module.comp("!A")== nA.to_string());
-                BOOST_TEST(code_module.comp("-D")== negD.to_string());
-                BOOST_TEST(code_module.comp("-A")== negA.to_string());
-                BOOST_TEST(code_module.comp("D+1")== Dp1.to_string());
-                BOOST_TEST(code_module.comp("A+1")== Ap1.to_string());
-                BOOST_TEST(code_module.comp("D-1")== Dm1.to_string());
-                BOOST_TEST(code_module.comp("A-1")== Am1.to_string());
-                BOOST_TEST(code_module.comp("D+A")== DpA.to_string());
-                BOOST_TEST(code_module.comp("D-A")== DmA.to_string());
-                BOOST_TEST(code_module.comp("A-D")== AmD.to_string());
-                BOOST_TEST(code_module.comp("D&A")== DandA.to_string());
-                BOOST_TEST(code_module.comp("D|A")== DorA.to_string());
+                BOOST_TEST(code_module->comp("0")== zero.to_string());
+                BOOST_TEST(code_module->comp("1")== one.to_string());
+                BOOST_TEST(code_module->comp("-1")== nOne.to_string());
+                BOOST_TEST(code_module->comp("D")== D.to_string());
+                BOOST_TEST(code_module->comp("A")== A.to_string());
+                BOOST_TEST(code_module->comp("!D")== nD.to_string());
+                BOOST_TEST(code_module->comp("!A")== nA.to_string());
+                BOOST_TEST(code_module->comp("-D")== negD.to_string());
+                BOOST_TEST(code_module->comp("-A")== negA.to_string());
+                BOOST_TEST(code_module->comp("D+1")== Dp1.to_string());
+                BOOST_TEST(code_module->comp("A+1")== Ap1.to_string());
+                BOOST_TEST(code_module->comp("D-1")== Dm1.to_string());
+                BOOST_TEST(code_module->comp("A-1")== Am1.to_string());
+                BOOST_TEST(code_module->comp("D+A")== DpA.to_string());
+                BOOST_TEST(code_module->comp("D-A")== DmA.to_string());
+                BOOST_TEST(code_module->comp("A-D")== AmD.to_string());
+                BOOST_TEST(code_module->comp("D&A")== DandA.to_string());
+                BOOST_TEST(code_module->comp("D|A")== DorA.to_string());
 
-                BOOST_TEST(code_module.comp("M")== M.to_string());
-                BOOST_TEST(code_module.comp("!M")== nM.to_string());
-                BOOST_TEST(code_module.comp("-M")== negM.to_string());
-                BOOST_TEST(code_module.comp("M+1")== Mp1.to_string());
-                BOOST_TEST(code_module.comp("M-1")== Mm1.to_string());
-                BOOST_TEST(code_module.comp("D+M")== DpM.to_string());
-                BOOST_TEST(code_module.comp("D-M")== DmM.to_string());
-                BOOST_TEST(code_module.comp("M-D")== MmD.to_string());
-                BOOST_TEST(code_module.comp("D&M")== DandM.to_string());
-                BOOST_TEST(code_module.comp("D|M")== DorM.to_string());
+                BOOST_TEST(code_module->comp("M")== M.to_string());
+                BOOST_TEST(code_module->comp("!M")== nM.to_string());
+                BOOST_TEST(code_module->comp("-M")== negM.to_string());
+                BOOST_TEST(code_module->comp("M+1")== Mp1.to_string());
+                BOOST_TEST(code_module->comp("M-1")== Mm1.to_string());
+                BOOST_TEST(code_module->comp("D+M")== DpM.to_string());
+                BOOST_TEST(code_module->comp("D-M")== DmM.to_string());
+                BOOST_TEST(code_module->comp("M-D")== MmD.to_string());
+                BOOST_TEST(code_module->comp("D&M")== DandM.to_string());
+                BOOST_TEST(code_module->comp("D|M")== DorM.to_string());
             }
 
         BOOST_AUTO_TEST_SUITE_END()

@@ -3,18 +3,82 @@
 #include <string>
 #include <vector>
 
-struct Helper
+
+class helper
 {
-    static std::vector<std::string> split(const std::string& s, const char delimiter)
+    static void ltrim(std::string& s)
+    {
+        s.erase(s.begin(),
+                std::find_if(s.begin(),
+                             s.end(),
+                             [](int ch)
+                             {
+                                 return !std::isspace(ch);
+                             }));
+    }
+
+
+    static void rtrim(std::string& s)
+    {
+        s.erase(std::find_if(s.rbegin(),
+                             s.rend(),
+                             [](int ch)
+                             {
+                                 return !std::isspace(ch);
+                             }).base(),
+                s.end());
+    }
+
+public:
+    static std::vector<std::string> split(const std::string& s, char delimiter)
     {
         std::vector<std::string> tokens;
         std::string token;
-        std::istringstream token_stream(s);
-
-        while(std::getline(token_stream, token, delimiter))
+        std::istringstream tokenStream(s);
+        while(std::getline(tokenStream, token, delimiter))
         {
             tokens.push_back(token);
         }
         return tokens;
+    }
+
+    static void remove_comment(std::string& s)
+    {
+        auto pos = s.find("//");
+        if(pos != std::string::npos)
+            s.erase(pos);
+    }
+
+    static void trim(std::string& s)
+    {
+        ltrim(s);
+        rtrim(s);
+    }
+
+    static bool is_digit(const string& s)
+    {
+        for(const auto ch : s)
+        {
+            if(ch < '0' || ch > '0')
+                return false;
+        }
+        return true;
+    }
+
+    static vector<std::string> parse_c_command(const string& str)
+    {
+        vector<string> result;
+        auto part1 = split(str, '=');
+        vector<string> part2;
+        if(part1.size() == 1)
+        {
+            //TODO continue working from here
+            result.push_back(part1[0]);
+        }
+
+        if(part1.size() > 1)
+        {
+            result.emplace_back()
+        }
     }
 };

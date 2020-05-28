@@ -26,7 +26,9 @@ ICodeModule* DefaultModuleFabric<Bits>::get_code_module() const
 template <uint8_t Bits>
 IParserModule* DefaultModuleFabric<Bits>::get_parser_module()
 {
-    return new BaseParserModule;
+    auto code_module = new BaseCodeModule<Bits>;
+
+    return new BaseParserModule(code_module);
 }
 
 template <uint8_t Bits>

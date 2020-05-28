@@ -66,9 +66,9 @@ template <uint8_t Bits>
 std::string BaseCodeModule<Bits>::dest(std::string mnemonic)
 {
     if(dest_table_.count(mnemonic) == 0)
-        throw "Dest mnemonic not found";
+        return bitset<Bits>(0).to_string();
 
-    const auto result = bitset<Bits>(dest_table_[mnemonic]) << 3;
+    const auto result = bitset<Bits>(dest_table_[mnemonic]) << DEST_SHIFT;
 
     return result.to_string();
 }
@@ -83,7 +83,7 @@ std::string BaseCodeModule<Bits>::comp(std::string mnemonic)
         throw "Comp mnemonic not found";
     str += comp_table_[mnemonic];
 
-    const auto result = bitset<Bits>(str) << 6;
+    const auto result = bitset<Bits>(str) << COMP_SHIFT;
 
     return result.to_string();
 }
@@ -92,7 +92,7 @@ template <uint8_t Bits>
 std::string BaseCodeModule<Bits>::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
-        throw "Jump mnemonic not found";
+        return bitset<Bits>(0).to_string();
     const auto result = bitset<Bits>(jump_table_[mnemonic]);
     return result.to_string();
 }

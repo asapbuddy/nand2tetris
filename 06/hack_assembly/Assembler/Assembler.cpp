@@ -1,22 +1,33 @@
 #include <bitset>
+#include <iostream>
 #include <string>
 #include <vector>
 
 #include "../AssemblerLib/Core/DefaultModuleFabric.h"
+#include "../AssemblerLib/Core/Helper.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-    DefaultModuleFabric<16> fabric;
+    const uint8_t bitness = 16;
+    DefaultModuleFabric<bitness> fabric;
 
     auto parser = fabric.get_parser_module();
     auto encode = fabric.get_code_module();
     auto sym_table = fabric.get_symbol_table();
     auto* path = "..\\AssemblerTests\\Tests\\Add.asm";
-    if(!parser->init(path))
+    try
     {
-        //TODO print error
+        const auto init_result = parser->init(path);
+        if(init_result)
+        {
+            //TODO print error
+        }
+    }
+    catch(exception& ex)
+    {
+        cout << ex.what() << endl;
     }
 
     std::vector<std::string> result;
@@ -25,12 +36,19 @@ int main(int argc, char* argv[])
     {
         parser->advance();
         const auto command_type = parser->command_type();
+
         switch(command_type)
         {
         case CommandType::a_command:
         {
-            const auto symbol = parser->symbol();
-            result.emplace_back(symbol);
+            auto symbol = parser->symbol();
+
+            if(helper::is_digit(symbol))
+                result.emplace_back(bitset<bitness>(stoi(symbol)).to_string());
+            else
+            {
+                //TODO: resolve A-command here
+            }
 
             break;
         }
