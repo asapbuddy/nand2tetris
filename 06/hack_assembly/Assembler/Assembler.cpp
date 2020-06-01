@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     auto parser = fabric.get_parser_module();
     auto encode = fabric.get_code_module();
     auto sym_table = fabric.get_symbol_table();
-    auto* path = "..\\AssemblerTests\\Tests\\Add.asm";
+    auto* path = "..\\AssemblerTests\\Tests\\Max.asm";
     try
     {
         const auto init_result = parser->init(path);
@@ -31,6 +31,7 @@ int main(int argc, char* argv[])
     }
 
     std::vector<std::string> result;
+    int a_counter = 16;
 
     while(parser->has_more_commands())
     {
@@ -47,9 +48,11 @@ int main(int argc, char* argv[])
                 result.emplace_back(bitset<bitness>(stoi(symbol)).to_string());
             else
             {
-                //TODO: resolve A-command here
-            }
+                if(!sym_table->contains(symbol))
+                    sym_table->add_entry(symbol, a_counter++);
 
+                result.emplace_back(bitset<bitness>(sym_table->address(symbol)).to_string());
+            }
             break;
         }
         case CommandType::c_command:

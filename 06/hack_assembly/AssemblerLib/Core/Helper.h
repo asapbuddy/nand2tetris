@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <sstream>
+#include <stdbool.h>
 #include <string>
 #include <vector>
 
@@ -63,22 +64,5 @@ public:
                 return false;
         }
         return true;
-    }
-
-    static vector<std::string> parse_c_command(const string& str)
-    {
-        vector<string> result;
-        auto part1 = split(str, '=');
-        vector<string> part2;
-        if(part1.size() == 1)
-        {
-            //TODO continue working from here
-            result.push_back(part1[0]);
-        }
-
-        if(part1.size() > 1)
-        {
-            result.emplace_back()
-        }
     }
 };

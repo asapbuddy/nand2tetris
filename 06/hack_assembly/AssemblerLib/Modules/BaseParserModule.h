@@ -14,6 +14,7 @@ class BaseParserModule final : public IParserModule
     ICodeModule* code_module_;
     ifstream file_stream_;
     CommandType current_type_;
+    string dest_, comp_, jump_;
 
     string current_token_;
 public:

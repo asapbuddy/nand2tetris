@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+
+#include "../API/IParserModule.h"
 #include "../Core/Helper.h"
 
 bool BaseParserModule::init(const char* file_path)
@@ -31,6 +33,7 @@ bool BaseParserModule::has_more_commands()
 
 void BaseParserModule::advance()
 {
+    dest_ = "", comp_ = "", jump_ = "";
     std::string token;
     do
     {
@@ -38,21 +41,63 @@ void BaseParserModule::advance()
     }
     while(file_stream_.is_open() && token.size() == 0 || token[0] == '/');
 
-    switch(token[0])
+    for(int i = 0; i < token.size() - 1; ++i)
     {
-    case '@':
-        current_type_ = CommandType::a_command;
-        break;
-    case '(':
-        current_type_ = CommandType::l_command;
-        break;
-    default:
+        int start = i;
+
+        if(token[i] == ' ')
+        {
+            continue;
+        }
+        if(token[i] == '/')
+        {
+            current_type_ = CommandType::not_command;
+            break;
+        }
+        if(token[i] == '@')
+        {
+            while(token[i] != ' ' && i < token.size() - 1)
+                ++i;
+            current_token_ = token.substr(start + 1, i - start - (token[i]==' '?1:0));
+            current_type_ = CommandType::a_command;
+            break;
+        }
+        if(token[i] == '(')
+        {
+            while(token[i] != ')' && i < token.size() - 1)
+                ++i;
+            current_token_ = token.substr(start + 1, i - start - 1);
+            current_type_ = CommandType::l_command;
+            break;
+        }
+        string dest, comp, jmp;
+        int eq_pos = -1, sc_pos = -1; // equal and semicolon
         current_type_ = CommandType::c_command;
+        while(i < token.size() - 1 && token[i] != ' ')
+        {
+            if(token[i] == '=')
+                eq_pos = i;
+
+            if(token[i] == ';')
+                sc_pos = i;
+
+            ++i;
+        }
+
+        if(eq_pos > 0)
+            dest = token.substr(start, eq_pos - start);
+        if(sc_pos > 0)
+            jmp = token.substr(sc_pos+1, i - sc_pos-1);
+        if(eq_pos > 0 && sc_pos < 0)
+            comp = token.substr(eq_pos + 1, i - eq_pos-1);
+        if(eq_pos < 0 && sc_pos > 0)
+            comp = token.substr(start, sc_pos - start);
+
+        comp_ = comp;
+        dest_ = dest;
+        jump_ = jmp;
         break;
     }
-    helper::remove_comment(token);
-    helper::trim(token);
-    current_token_ = token;
 }
 
 CommandType BaseParserModule::command_type()
@@ -62,48 +107,33 @@ CommandType BaseParserModule::command_type()
 
 std::string BaseParserModule::symbol()
 {
-    if(current_type_ == CommandType::a_command)
+    if(current_type_ == CommandType::a_command || current_type_ == CommandType::l_command)
     {
-        return current_token_.substr(1);
-    }
-    if(current_type_ == CommandType::l_command)
-    {
-        return current_token_.substr(1, current_token_.length() - 1);
+        return current_token_;
     }
     throw "Current command nor A nor L";
 }
 
 std::string BaseParserModule::dest()
 {
-    std::string sym;
-    auto splitted = helper::split(current_token_, '=');
-    if(splitted.size() > 1)
-        sym = splitted[0];
+    if(current_type_ != CommandType::c_command)
+        throw "Current command not C";
 
-    return code_module_->dest(sym);
+    return code_module_->dest(dest_);
 }
 
 std::string BaseParserModule::comp()
 {
-    string sym;
-    string comp_temp;
+    if(current_type_ != CommandType::c_command)
+        throw "Current command not C";
 
-    // dirty
-    if(stoi(this->dest()) > 0)
-    {
-        comp_temp = helper::split(current_token_)
-        //auto splitted = helper::split()
-    }
-    else
-    {
-    }
-
-    return sym; //code_module_->comp(current_sym);
+    return code_module_->comp(comp_);
 }
 
 std::string BaseParserModule::jump()
 {
-    std::string current_sym{""};
+    if(current_type_ != CommandType::c_command)
+        throw "Current command not C";
 
-    return code_module_->jump(current_sym);
+    return code_module_->jump(jump_);
 }
