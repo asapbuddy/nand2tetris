@@ -10,6 +10,7 @@
 #include "../API/IParserModule.h"
 #include "../Core/Helper.h"
 
+
 bool BaseParserModule::init(const char* file_path)
 {
     const filesystem::path input(file_path);
@@ -24,6 +25,12 @@ bool BaseParserModule::init(const char* file_path)
 
     file_stream_ = ifstream(input.c_str());
     return true;
+}
+
+void BaseParserModule::reset()
+{
+    if(file_stream_.is_open())
+        file_stream_.close();
 }
 
 bool BaseParserModule::has_more_commands()
@@ -58,7 +65,7 @@ void BaseParserModule::advance()
         {
             while(token[i] != ' ' && i < token.size() - 1)
                 ++i;
-            current_token_ = token.substr(start + 1, i - start - (token[i]==' '?1:0));
+            current_token_ = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
             current_type_ = CommandType::a_command;
             break;
         }
@@ -87,12 +94,14 @@ void BaseParserModule::advance()
         if(eq_pos > 0)
             dest = token.substr(start, eq_pos - start);
         if(sc_pos > 0)
-            jmp = token.substr(sc_pos+1, i - sc_pos-1);
+            jmp = token.substr(sc_pos + 1, i - sc_pos- (token[i] == ' ' ? 1 : 0));
         if(eq_pos > 0 && sc_pos < 0)
-            comp = token.substr(eq_pos + 1, i - eq_pos-1);
+            comp = token.substr(eq_pos + 1, i - eq_pos- (token[i] == ' ' ? 1 : 0));
         if(eq_pos < 0 && sc_pos > 0)
             comp = token.substr(start, sc_pos - start);
 
+        
+        
         comp_ = comp;
         dest_ = dest;
         jump_ = jmp;

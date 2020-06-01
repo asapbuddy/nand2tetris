@@ -5,7 +5,7 @@
 #include <vector>
 
 
-class helper
+class Helper
 {
     static void ltrim(std::string& s)
     {
@@ -58,10 +58,10 @@ public:
 
     static bool is_digit(const string& s)
     {
-        for(const auto ch : s)
+        for(auto ch : s)
         {
-            if(ch < '0' || ch > '0')
-                return false;
+           if(!std::isdigit(ch))
+               return false;
         }
         return true;
     }

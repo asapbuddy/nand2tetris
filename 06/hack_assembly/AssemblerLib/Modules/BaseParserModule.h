@@ -25,6 +25,7 @@ public:
 
 
     bool init(const char* file_path) override;
+    void reset() override;
     bool has_more_commands() override;
     void advance() override;
     CommandType command_type() override;

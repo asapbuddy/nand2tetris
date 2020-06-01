@@ -20,7 +20,7 @@ struct IParserModule
 {
     virtual ~IParserModule() = default;
 
-    
+
     /**
      * \brief ctor replacement
      * \param path to assembly source file
@@ -76,4 +76,7 @@ struct IParserModule
     * \return jump mnemonic of current c_command
     */
     virtual std::string jump() = 0;
+
+
+    virtual void reset() = 0;
 };
