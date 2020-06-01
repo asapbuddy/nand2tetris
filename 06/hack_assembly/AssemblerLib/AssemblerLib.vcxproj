@@ -157,7 +157,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Modules\BaseAssemblerModule.h" />
     <ClInclude Include="Modules\BaseCodeModule.inl" />
+    <ClCompile Include="Modules\BaseAssemblerModule.cpp" />
     <ClCompile Include="Modules\BaseParserModule.cpp" />
     <ClCompile Include="Modules\BaseSymbolTable.cpp" />
   </ItemGroup>

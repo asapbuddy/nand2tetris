@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssemblerModule.cpp" />
     <ClCompile Include="CodeModule.cpp" />
     <ClCompile Include="ParserModule.cpp" />
     <ClCompile Include="Source.cpp" />

@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <fstream>
 #include <iosfwd>
-#include <sstream>
 
 using namespace std;
 
@@ -33,5 +32,9 @@ public:
     std::string dest() override;
     std::string comp() override;
     std::string jump() override;
-    ~BaseParserModule() = default;
+
+    ~BaseParserModule()
+    {
+        delete code_module_;
+    };
 };

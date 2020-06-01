@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <sstream>
-#include <stdbool.h>
 #include <string>
 #include <vector>
 
@@ -56,7 +55,7 @@ public:
         rtrim(s);
     }
 
-    static bool is_digit(const string& s)
+    static bool is_digit( std::string& s)
     {
         for(auto ch : s)
         {

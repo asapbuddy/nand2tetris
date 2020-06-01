@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <bitset>
 #include <string>
 
 enum class CommandType

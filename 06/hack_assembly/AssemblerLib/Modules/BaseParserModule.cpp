@@ -1,14 +1,11 @@
 ﻿#include "BaseParserModule.h"
 
-#include <bitset>
 #include <string>
 #include <filesystem>
 #include <fstream>
-#include <sstream>
 
 
 #include "../API/IParserModule.h"
-#include "../Core/Helper.h"
 
 
 bool BaseParserModule::init(const char* file_path)

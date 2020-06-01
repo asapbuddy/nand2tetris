@@ -8,31 +8,26 @@
 #include "../Modules/BaseParserModule.h"
 #include "../Modules/BaseSymbolTable.h"
 
-template <uint8_t Bits>
-struct DefaultModuleFabric
+struct IModuleFabric
 {
-    ICodeModule* get_code_module() const;
-    IParserModule* get_parser_module();
-    ISymbolTable* get_symbol_table();
+    virtual IParserModule* get_parser_module() = 0;
+    virtual ISymbolTable* get_symbol_table() = 0;
+
+    virtual ~IModuleFabric() = default;
 };
 
 template <uint8_t Bits>
-ICodeModule* DefaultModuleFabric<Bits>::get_code_module() const
+struct DefaultFabricModule final : IModuleFabric
 {
-    auto code_module = new BaseCodeModule<Bits>;
-    return code_module;
-}
+    IParserModule* get_parser_module() override
+    {
+        auto code_module = new BaseCodeModule<Bits>;
+        return new BaseParserModule(code_module);
+    }
 
-template <uint8_t Bits>
-IParserModule* DefaultModuleFabric<Bits>::get_parser_module()
-{
-    auto code_module = new BaseCodeModule<Bits>;
+    ISymbolTable* get_symbol_table() override
+    {
+        return new BaseSymbolTable;
+    }
+};
 
-    return new BaseParserModule(code_module);
-}
-
-template <uint8_t Bits>
-ISymbolTable* DefaultModuleFabric<Bits>::get_symbol_table()
-{
-    return new BaseSymbolTable;
-}
