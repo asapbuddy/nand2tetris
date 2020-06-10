@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "../AssemblerLib/Core/DefaultModuleFabric.h"
-#include "../AssemblerLib/Modules/BaseAssemblerModule.h"
+#include "../AssemblerLib/Modules/AssemblerModule.h"
 #include "../core/Parser.h"
 
 using namespace std;
@@ -9,8 +9,6 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     const uint8_t bitness = 16;
-
-    IModuleFabric* fabric = new DefaultFabricModule<bitness>;
 
     if(argc < 2)
     {
@@ -24,11 +22,8 @@ int main(int argc, char* argv[])
 
     try
     {
-        BaseAssemblerModule<bitness> assembler(argv[1], fabric);
-        const auto init_result = assembler.init();
-        if(!init_result)
-            throw "Assembler initialization has failed";
-
+        AssemblerModule<bitness> assembler(argv[1]);
+        assembler.init();
         assembler.process_labels();
         assembler.compile();
         assembler.save("hack");
@@ -38,6 +33,5 @@ int main(int argc, char* argv[])
         cout << ex.what() << endl;
     }
 
-    delete fabric;
     return 0;
 }

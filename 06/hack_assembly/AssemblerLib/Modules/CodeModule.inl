@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "BaseCodeModule.h"
+#include "CodeModule.h"
 
 #include <bitset>
 
 template <uint8_t Bits>
-void BaseCodeModule<Bits>::init_comp_table()
+void CodeModule<Bits>::init_comp_table()
 {
     comp_table_["0"] = "101010";
     comp_table_["1"] = "111111";
@@ -39,7 +39,7 @@ void BaseCodeModule<Bits>::init_comp_table()
 
 
 template <uint8_t Bits>
-void BaseCodeModule<Bits>::init_jump_table()
+void CodeModule<Bits>::init_jump_table()
 {
     jump_table_["JGT"] = "001";
     jump_table_["JEQ"] = "010";
@@ -51,7 +51,7 @@ void BaseCodeModule<Bits>::init_jump_table()
 }
 
 template <uint8_t Bits>
-void BaseCodeModule<Bits>::init_dest_table()
+void CodeModule<Bits>::init_dest_table()
 {
     dest_table_["M"] = "001";
     dest_table_["D"] = "010";
@@ -63,7 +63,7 @@ void BaseCodeModule<Bits>::init_dest_table()
 }
 
 template <uint8_t Bits>
-std::string BaseCodeModule<Bits>::dest(std::string mnemonic)
+std::string CodeModule<Bits>::dest(std::string mnemonic)
 {
     if(dest_table_.count(mnemonic) == 0)
         return bitset<Bits>(0).to_string();
@@ -74,9 +74,9 @@ std::string BaseCodeModule<Bits>::dest(std::string mnemonic)
 }
 
 template <uint8_t Bits>
-std::string BaseCodeModule<Bits>::comp(std::string mnemonic)
+std::string CodeModule<Bits>::comp(std::string mnemonic)
 {
-    bool a_bit = mnemonic.find('M') == string::npos ? false : true;
+    const bool a_bit = mnemonic.find('M') == string::npos ? false : true;
     string str;
     str += a_bit ? "1" : "0";
     if(comp_table_.count(mnemonic) == 0)
@@ -89,7 +89,7 @@ std::string BaseCodeModule<Bits>::comp(std::string mnemonic)
 }
 
 template <uint8_t Bits>
-std::string BaseCodeModule<Bits>::jump(std::string mnemonic)
+std::string CodeModule<Bits>::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
         return bitset<Bits>(0).to_string();
@@ -98,7 +98,7 @@ std::string BaseCodeModule<Bits>::jump(std::string mnemonic)
 }
 
 template <uint8_t Bits>
-std::string BaseCodeModule<Bits>::instruction()
+std::string CodeModule<Bits>::instruction()
 {
     std::string result{"111"};
     return result;

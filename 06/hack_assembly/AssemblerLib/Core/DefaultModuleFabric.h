@@ -1,33 +1,67 @@
 ﻿#pragma once
 #include <cstdint>
 
-#include "../API/ICodeModule.h"
-#include "../API/IParserModule.h"
-#include "../API/ISymbolTable.h"
-#include "../Modules/BaseCodeModule.h"
-#include "../Modules/BaseParserModule.h"
-#include "../Modules/BaseSymbolTable.h"
+#include "../Modules/CodeModule.h"
+#include "../Modules/SymbolTable.h"
+#include "../Modules/ParserModule.h"
 
-struct IModuleFabric
-{
-    virtual IParserModule* get_parser_module() = 0;
-    virtual ISymbolTable* get_symbol_table() = 0;
-
-    virtual ~IModuleFabric() = default;
-};
 
 template <uint8_t Bits>
-struct DefaultFabricModule final : IModuleFabric
+class FabricModule final
 {
-    IParserModule* get_parser_module() override
+public:
+    FabricModule(const FabricModule& other) = delete;
+    FabricModule(FabricModule&& other) noexcept = delete;
+    FabricModule& operator=(const FabricModule& other) = delete;
+    FabricModule& operator=(FabricModule&& other) noexcept = delete;
+private:
+    FabricModule()
     {
-        auto code_module = new BaseCodeModule<Bits>;
-        return new BaseParserModule(code_module);
     }
 
-    ISymbolTable* get_symbol_table() override
+    ICodeModule* code_module_ = nullptr;
+    ISymbolTable* symbol_table_ = nullptr;
+    IParserModule* parser_module_ = nullptr;
+public:
+
+    static FabricModule& get_instance()
     {
-        return new BaseSymbolTable;
+        static FabricModule instance;
+        return instance;
+    }
+
+    ICodeModule* get_code_module()
+    {
+        if(code_module_ == nullptr)
+            code_module_ = new CodeModule<Bits>;
+
+        return code_module_;
+    }
+
+    IParserModule* get_parser_module()
+    {
+        if(parser_module_ == nullptr)
+            parser_module_ = new ParserModule();
+
+        return parser_module_;
+    }
+
+
+    ISymbolTable* get_symbol_table()
+    {
+        if(symbol_table_ == nullptr)
+            symbol_table_ = new SymbolTable;
+
+        return symbol_table_;
+    }
+
+    ~FabricModule()
+    {
+        if(code_module_ != nullptr)
+            delete code_module_;
+        if(parser_module_ != nullptr)
+            delete parser_module_;
+        if(symbol_table_ != nullptr)
+            delete symbol_table_;
     }
 };
-

@@ -7,7 +7,7 @@
 using namespace std;
 
 template <uint8_t Bits>
-class BaseCodeModule final : public ICodeModule
+class CodeModule final : public ICodeModule
 {
     std::unordered_map<string, string> comp_table_;
     std::unordered_map<string, string> jump_table_;
@@ -21,7 +21,7 @@ class BaseCodeModule final : public ICodeModule
     void init_dest_table();
 public:
 
-    BaseCodeModule()
+    CodeModule()
     {
         init_comp_table();
         init_jump_table();
@@ -34,4 +34,4 @@ public:
     std::string instruction() override;
 };
 
-#include "BaseCodeModule.inl"
+#include "CodeModule.inl"

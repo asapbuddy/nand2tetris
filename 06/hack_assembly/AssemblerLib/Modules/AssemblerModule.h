@@ -10,70 +10,58 @@
 #include "../Core/Helper.h"
 
 template <uint8_t bitness>
-class BaseAssemblerModule
+class AssemblerModule
 {
     const char* file_path_;
     IParserModule* parser_ = nullptr;
-    ISymbolTable* symbol_table_ = nullptr;
     std::vector<std::string> result_;
+
+
 public:
-    BaseAssemblerModule(const char* path, IModuleFabric* fabric)
+    AssemblerModule(const char* path)
         : file_path_(path)
     {
-        if(fabric != nullptr)
-        {
-            parser_ = fabric->get_parser_module();
-            symbol_table_ = fabric->get_symbol_table();
-        }
+        FabricModule<16>& fabric = FabricModule<bitness>::get_instance();
+        parser_ = fabric.get_parser_module();
     }
 
-    ~BaseAssemblerModule()
-    {
-        delete symbol_table_;
-        delete parser_;
-    }
+    ~AssemblerModule() = default;
 
-    bool init() const
+    void init() const
     {
-        return parser_->init(file_path_);
+        parser_->init(file_path_);
     }
 
     void process_labels() const
     {
-        auto lines_counter = 0;
+        parser_->reset();
 
-        while(parser_->has_more_commands())
+        auto& fabric = FabricModule<16>::get_instance();
+        auto symbol_table_ = fabric.get_symbol_table();
+
+        unsigned lines_counter = 0;
+        while(parser_->advance())
         {
-            parser_->advance();
-            const auto command_type = parser_->command_type();
-            switch(command_type)
+            if(parser_->command_type() == CommandType::l_command)
             {
-            case CommandType::a_command:
-                lines_counter++;
-                break;
-            case CommandType::l_command:
-                symbol_table_->add_entry(parser_->symbol(), lines_counter);
-                break;
-            case CommandType::c_command:
-                lines_counter++;
-                break;
-            default:
-                break;
+                const auto mnemonic_ = Helper::Process(parser_->get_command());
+                symbol_table_->add_entry(mnemonic_, lines_counter);
             }
+            else
+                lines_counter++;
         }
     }
 
     void compile()
     {
         parser_->reset();
-        parser_->init(file_path_);
-
-        auto a_counter = 16;
-        while(parser_->has_more_commands())
+        while(parser_->advance())
         {
-            parser_->advance();
             const auto command_type = parser_->command_type();
+            if(command_type != CommandType::l_command)
+                result_.emplace_back(Helper::Process(parser_->get_command()));
 
+            /*
             switch(command_type)
             {
             case CommandType::a_command:
@@ -105,7 +93,7 @@ public:
             }
             default:
                 break;
-            }
+            }*/
         }
     }
 

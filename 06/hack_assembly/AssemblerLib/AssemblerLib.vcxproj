@@ -157,23 +157,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Modules\BaseAssemblerModule.h" />
-    <ClInclude Include="Modules\BaseCodeModule.inl" />
-    <ClCompile Include="Modules\BaseAssemblerModule.cpp" />
-    <ClCompile Include="Modules\BaseParserModule.cpp" />
-    <ClCompile Include="Modules\BaseSymbolTable.cpp" />
+    <ClInclude Include="Core\CCommand.h" />
+    <ClInclude Include="Core\CommandProcessor.h" />
+    <ClInclude Include="Core\Global.h" />
+    <ClInclude Include="Core\LCommand.h" />
+    <ClInclude Include="Modules\AssemblerModule.h" />
+    <ClInclude Include="Modules\CodeModule.inl" />
+    <ClCompile Include="Modules\ParserModule.cpp" />
+    <ClCompile Include="Modules\SymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API\ICodeModule.h" />
     <ClInclude Include="API\IParserModule.h" />
     <ClInclude Include="API\ISymbolTable.h" />
     <ClInclude Include="Core\DefaultModuleFabric.h" />
-    <ClInclude Include="Modules\BaseCodeModule.h" />
-    <ClInclude Include="Modules\BaseParserModule.h" />
-    <ClInclude Include="Modules\BaseSymbolTable.h" />
+    <ClInclude Include="Modules\CodeModule.h" />
+    <ClInclude Include="Modules\ParserModule.h" />
+    <ClInclude Include="Modules\SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Helper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="API\ICommand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\ACommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,7 +16,7 @@ namespace assembler_tests
 
             BOOST_AUTO_TEST_CASE(CorrectJumpMnemonics)
             {
-                auto code_module = new BaseCodeModule<16>;
+                auto code_module = new CodeModule<16>;
                 const auto JGT = bitset<BITNESS>("001").to_string();
                 const auto JEQ = bitset<BITNESS>("010").to_string();
                 const auto JGE = bitset<BITNESS>("011").to_string();
@@ -37,7 +37,7 @@ namespace assembler_tests
 
             BOOST_AUTO_TEST_CASE(CorrectDestMnemonics)
             {
-                auto code_module = new BaseCodeModule<16>;
+                auto code_module = new CodeModule<16>;
                 const auto b_M = bitset<BITNESS>("001") << DEST_SHIFT;
                 const auto b_D = bitset<BITNESS>("010") << DEST_SHIFT;
                 const auto b_MD = bitset<BITNESS>("011") << DEST_SHIFT;
@@ -58,7 +58,7 @@ namespace assembler_tests
 
             BOOST_AUTO_TEST_CASE(CorrectCompMnemonics)
             {
-                auto code_module = new BaseCodeModule<16>;
+                auto code_module = new CodeModule<16>;
                 const auto zero = bitset<BITNESS>("0101010") << COMP_SHIFT;
                 const auto one = bitset<BITNESS>("0111111") << COMP_SHIFT;
                 const auto nOne = bitset<BITNESS>("0111010") << COMP_SHIFT;

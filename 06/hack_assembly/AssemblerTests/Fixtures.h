@@ -2,11 +2,11 @@
 
 
 #include <AssemblerLib/Core/DefaultModuleFabric.h>
-#include <AssemblerLib/Modules/BaseAssemblerModule.h>
+#include <AssemblerLib/Modules/AssemblerModule.h>
 
 
-#include "../AssemblerLib/Modules/BaseCodeModule.h"
-#include "../AssemblerLib/Modules/BaseParserModule.h"
+#include "../AssemblerLib/Modules/CodeModule.h"
+#include "../AssemblerLib/Modules/ParserModule.h"
 
 
 namespace assembler_tests
@@ -15,7 +15,6 @@ namespace assembler_tests
 
     struct Configuration
     {
-        IModuleFabric* fabric = new DefaultFabricModule<16>;
         string tests_path{"..\\AssemblerTests\\Tests\\"};
 
         string locate_test_file(const char* name, const char* ext) const
@@ -30,8 +29,8 @@ namespace assembler_tests
         {
             string path(tests_path);
             path.append(name).append(".asm");
-            BaseAssemblerModule<bitness> assembler_module(path.c_str(), fabric);
-            BOOST_ASSERT(assembler_module.init() == true);
+            AssemblerModule<bitness> assembler_module(path.c_str());
+            assembler_module.init();
             assembler_module.process_labels();
             assembler_module.compile();
             assembler_module.save("hack");
@@ -60,6 +59,6 @@ namespace assembler_tests
                               std::istreambuf_iterator<char>(f2.rdbuf()));
         }
 
-        ~Configuration() { delete fabric; }
+        ~Configuration() = default;
     };
 } // namespace tests

@@ -1,13 +1,10 @@
 ﻿#pragma once
 #include <string>
 
-enum class CommandType
-{
-    a_command,
-    c_command,
-    l_command,
-    not_command
-};
+
+#include "ICommand.h"
+#include "../Core/Global.h"
+
 
 /**
  * \brief Encapsulates access to the input code. Reads an assembly language com-
@@ -25,12 +22,7 @@ struct IParserModule
      * \param path to assembly source file
      * \return true if initialized correctly
      */
-    virtual bool init(const char* path) = 0;
-    /**
-     * \brief Are the more commands in the input?
-     * \return true if more commands available in source
-     */
-    virtual bool has_more_commands() = 0;
+    virtual void init(const char* path) = 0;
 
     /**
      * \brief Reads the next command from the input
@@ -38,7 +30,14 @@ struct IParserModule
         has_more_commands() is true.
         Initially there is no current command.
      */
-    virtual void advance() = 0;
+    virtual bool advance() = 0;
+
+    
+    /**
+     * \brief 
+     * \return Encapsulated command
+     */
+    virtual ICommand* get_command() = 0;
 
     /**
      * \brief Returns the type of current command:
@@ -50,32 +49,6 @@ struct IParserModule
      * \return a_command, c_command, l_command
      */
     virtual CommandType command_type() = 0;
-
-    /**
-     * \brief Should be called only if command_type() returns
-        a_command or c_command
-     * \return Returns the symbol or decimal of current command
-     */
-    virtual std::string symbol() = 0;
-
-    /**
-    * \brief when command_type() is c_command;
-    * \return dest mnemonic of current c_command
-    */
-    virtual std::string dest() = 0;
-
-    /**
-    * \brief when command_type() is c_command;
-    * \return comp mnemonic of current c_command
-    */
-    virtual std::string comp() = 0;
-
-    /**
-    * \brief when command_type() is c_command;
-    * \return jump mnemonic of current c_command
-    */
-    virtual std::string jump() = 0;
-
 
     virtual void reset() = 0;
 };

@@ -30,6 +30,14 @@ class Helper
     }
 
 public:
+
+    static string Process(ICommand* command)
+    {
+        auto result(command->execute());
+        delete command;
+        return result;
+    }
+
     static std::vector<std::string> split(const std::string& s, char delimiter)
     {
         std::vector<std::string> tokens;
@@ -55,12 +63,12 @@ public:
         rtrim(s);
     }
 
-    static bool is_digit( std::string& s)
+    static bool is_digit(std::string& s)
     {
         for(auto ch : s)
         {
-           if(!std::isdigit(ch))
-               return false;
+            if(!std::isdigit(ch))
+                return false;
         }
         return true;
     }

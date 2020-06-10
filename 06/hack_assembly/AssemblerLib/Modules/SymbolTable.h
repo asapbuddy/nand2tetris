@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class BaseSymbolTable : public ISymbolTable
+class SymbolTable : public ISymbolTable
 {
     unordered_map<string, int> symbol_table_;
 
@@ -38,7 +38,7 @@ class BaseSymbolTable : public ISymbolTable
     }
 
 public:
-    BaseSymbolTable()
+    SymbolTable()
     {
         init_sym_table();
     }
