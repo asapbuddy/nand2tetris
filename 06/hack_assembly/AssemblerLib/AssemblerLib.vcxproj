@@ -157,32 +157,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core\CCommand.h" />
-    <ClInclude Include="Core\CommandProcessor.h" />
     <ClInclude Include="Core\Global.h" />
-    <ClInclude Include="Core\LCommand.h" />
-    <ClInclude Include="Modules\AssemblerModule.h" />
-    <ClInclude Include="Modules\CodeModule.inl" />
-    <ClCompile Include="Modules\ParserModule.cpp" />
-    <ClCompile Include="Modules\SymbolTable.cpp" />
+    <ClInclude Include="HACK\Assembler.h" />
+    <ClCompile Include="HACK\Assembler.cpp" />
+    <ClCompile Include="HACK\CodeGenerator.cpp" />
+    <ClCompile Include="HACK\Parser.cpp" />
+    <ClCompile Include="HACK\SymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API\ICodeModule.h" />
     <ClInclude Include="API\IParserModule.h" />
-    <ClInclude Include="API\ISymbolTable.h" />
+    <ClInclude Include="API\LookupTable.h" />
     <ClInclude Include="Core\DefaultModuleFabric.h" />
-    <ClInclude Include="Modules\CodeModule.h" />
-    <ClInclude Include="Modules\ParserModule.h" />
-    <ClInclude Include="Modules\SymbolTable.h" />
+    <ClInclude Include="HACK\CodeGenerator.h" />
+    <ClInclude Include="HACK\Commands\Address.h" />
+    <ClInclude Include="HACK\Commands\Instruction.h" />
+    <ClInclude Include="HACK\Commands\Label.h" />
+    <ClInclude Include="HACK\Parser.h" />
+    <ClInclude Include="HACK\SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Helper.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\ICommand.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Core\ACommand.h" />
+    <ClInclude Include="API\Command.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

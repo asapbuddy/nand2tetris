@@ -3,8 +3,8 @@
 
 using namespace std;
 
-struct ICommand
+struct Command
 {
-    virtual ~ICommand(){};
+    virtual ~Command(){};
     virtual string execute() = 0;
 };

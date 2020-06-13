@@ -1,8 +1,7 @@
 ﻿#pragma once
-#include <string>
 
 
-#include "ICommand.h"
+#include "Command.h"
 #include "../Core/Global.h"
 
 
@@ -32,12 +31,12 @@ struct IParserModule
      */
     virtual bool advance() = 0;
 
-    
+
     /**
      * \brief 
      * \return Encapsulated command
      */
-    virtual ICommand* get_command() = 0;
+    virtual Command* get_command() = 0;
 
     /**
      * \brief Returns the type of current command:

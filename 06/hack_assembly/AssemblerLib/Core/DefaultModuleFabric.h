@@ -1,27 +1,24 @@
 ﻿#pragma once
 #include <cstdint>
 
-#include "../Modules/CodeModule.h"
-#include "../Modules/SymbolTable.h"
-#include "../Modules/ParserModule.h"
+#include "../API/ICodeModule.h"
+#include "../API/LookupTable.h"
+#include "../HACK/CodeGenerator.h"
+#include "../HACK/SymbolTable.h"
 
-
-template <uint8_t Bits>
 class FabricModule final
 {
-public:
     FabricModule(const FabricModule& other) = delete;
     FabricModule(FabricModule&& other) noexcept = delete;
     FabricModule& operator=(const FabricModule& other) = delete;
     FabricModule& operator=(FabricModule&& other) noexcept = delete;
-private:
-    FabricModule()
-    {
-    }
 
-    ICodeModule* code_module_ = nullptr;
-    ISymbolTable* symbol_table_ = nullptr;
-    IParserModule* parser_module_ = nullptr;
+    FabricModule() = default;
+
+    ICodeModule * code_module_ = nullptr;
+    LookupTable * symbol_table_ = nullptr;
+    IParserModule * parser_module_ = nullptr;
+
 public:
 
     static FabricModule& get_instance()
@@ -33,21 +30,18 @@ public:
     ICodeModule* get_code_module()
     {
         if(code_module_ == nullptr)
-            code_module_ = new CodeModule<Bits>;
+            code_module_ = new CodeGenerator;
 
         return code_module_;
     }
 
     IParserModule* get_parser_module()
     {
-        if(parser_module_ == nullptr)
-            parser_module_ = new ParserModule();
-
         return parser_module_;
     }
 
 
-    ISymbolTable* get_symbol_table()
+    LookupTable* get_symbol_table()
     {
         if(symbol_table_ == nullptr)
             symbol_table_ = new SymbolTable;

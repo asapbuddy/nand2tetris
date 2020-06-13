@@ -1,4 +1,4 @@
-﻿#include "ParserModule.h"
+﻿#include "Parser.h"
 
 #include <string>
 #include <filesystem>
@@ -6,17 +6,17 @@
 
 
 #include "../API/IParserModule.h"
-#include "../API/ICommand.h"
-#include "../Core/ACommand.h"
-#include "../Core/CCommand.h"
-#include "../Core/LCommand.h"
+#include "../API/Command.h"
+#include "Commands/Address.h"
+#include "Commands/Instruction.h"
+#include "Commands/Label.h"
 
-ICommand* ParserModule::get_command()
+Command* Parser::get_command()
 {
     return current_command_;
 }
 
-void ParserModule::init(const char* file_path)
+void Parser::init(const char* file_path)
 {
     const filesystem::path input(file_path);
     if(!exists(input))
@@ -31,13 +31,13 @@ void ParserModule::init(const char* file_path)
     file_stream_ = ifstream(input.c_str());
 }
 
-void ParserModule::reset()
+void Parser::reset()
 {
     file_stream_.clear();
     file_stream_.seekg(0);
 }
 
-bool ParserModule::advance()
+bool Parser::advance()
 {
     if(file_stream_.peek() == EOF)
         return false;
@@ -67,7 +67,7 @@ bool ParserModule::advance()
             current_token_ = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
             current_type_ = CommandType::a_command;
 
-            current_command_ = new ACommand(std::move(current_token_));
+            current_command_ = new Address(std::move(current_token_));
 
             break;
         }
@@ -77,7 +77,7 @@ bool ParserModule::advance()
                 ++i;
             current_token_ = token.substr(start + 1, i - start - 1);
 
-            current_command_ = new LCommand(std::move(current_token_));
+            current_command_ = new Label(std::move(current_token_));
             current_type_ = CommandType::l_command;
             break;
         }
@@ -110,7 +110,7 @@ bool ParserModule::advance()
             dest_ = dest;
             jump_ = jmp;
 
-            current_command_ = new CCommand(
+            current_command_ = new Instruction(
                 std::move(comp),
                 std::move(dest),
                 std::move(jmp));
@@ -121,7 +121,7 @@ bool ParserModule::advance()
     return true;
 }
 
-CommandType ParserModule::command_type()
+CommandType Parser::command_type()
 {
     return current_type_;
 }

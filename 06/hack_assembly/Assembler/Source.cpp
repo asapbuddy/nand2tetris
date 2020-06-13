@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "../AssemblerLib/Core/DefaultModuleFabric.h"
-#include "../AssemblerLib/Modules/AssemblerModule.h"
+#include "../AssemblerLib/HACK/Assembler.h"
 #include "../core/Parser.h"
 
 using namespace std;
@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
     try
     {
-        AssemblerModule<bitness> assembler(argv[1]);
+        Assembler assembler(argv[1]);
         assembler.init();
         assembler.process_labels();
         assembler.compile();

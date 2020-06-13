@@ -1,24 +1,25 @@
 ﻿#pragma once
-#include "DefaultModuleFabric.h"
-#include "Helper.h"
-#include "../API/ICommand.h"
-#include "../API/ISymbolTable.h"
+#include <bitset>
 
+#include "../../API/Command.h"
+#include "../../API/LookupTable.h"
+#include "../../Core/DefaultModuleFabric.h"
+#include "../../Core/Helper.h"
 
-class ACommand : public ICommand
+class Address : public Command
 {
     string mnemonic_;
 
     inline static unsigned a_counter_ = 16;
-    ISymbolTable* symbol_table_ = nullptr;
+    LookupTable* symbol_table_ = nullptr;
 
 public:
-    ~ACommand() override = default;
+    ~Address() override = default;
 
-    ACommand(string&& mnemonic)
+    Address(string&& mnemonic)
         : mnemonic_(std::move(mnemonic))
     {
-        auto& fabric = FabricModule<16>::get_instance();
+        auto& fabric = FabricModule::get_instance();
         symbol_table_ = fabric.get_symbol_table();
     }
 

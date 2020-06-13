@@ -6,8 +6,7 @@
 
 using namespace std;
 
-template <uint8_t Bits>
-class CodeModule final : public ICodeModule
+class CodeGenerator final : public ICodeModule
 {
     std::unordered_map<string, string> comp_table_;
     std::unordered_map<string, string> jump_table_;
@@ -21,7 +20,7 @@ class CodeModule final : public ICodeModule
     void init_dest_table();
 public:
 
-    CodeModule()
+    CodeGenerator()
     {
         init_comp_table();
         init_jump_table();
@@ -32,6 +31,5 @@ public:
     std::string comp(std::string mnemonic) override;
     std::string jump(std::string mnemonic) override;
     std::string instruction() override;
+    ~CodeGenerator() override = default;
 };
-
-#include "CodeModule.inl"

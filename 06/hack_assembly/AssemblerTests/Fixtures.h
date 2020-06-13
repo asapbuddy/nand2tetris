@@ -1,12 +1,5 @@
 #pragma once
-
-
-#include <AssemblerLib/Core/DefaultModuleFabric.h>
-#include <AssemblerLib/Modules/AssemblerModule.h>
-
-
-#include "../AssemblerLib/Modules/CodeModule.h"
-#include "../AssemblerLib/Modules/ParserModule.h"
+#include <AssemblerLib/HACK/Assembler.h>
 
 
 namespace assembler_tests
@@ -27,9 +20,9 @@ namespace assembler_tests
 
         void create_assembly(const string& name)
         {
-            string path(tests_path);
+            std::string path(tests_path);
             path.append(name).append(".asm");
-            AssemblerModule<bitness> assembler_module(path.c_str());
+            Assembler assembler_module(path.c_str());
             assembler_module.init();
             assembler_module.process_labels();
             assembler_module.compile();

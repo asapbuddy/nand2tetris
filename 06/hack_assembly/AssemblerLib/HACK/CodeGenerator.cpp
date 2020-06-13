@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "CodeModule.h"
+#include "CodeGenerator.h"
 
 #include <bitset>
 
-template <uint8_t Bits>
-void CodeModule<Bits>::init_comp_table()
+
+void CodeGenerator::init_comp_table()
 {
     comp_table_["0"] = "101010";
     comp_table_["1"] = "111111";
@@ -38,8 +38,7 @@ void CodeModule<Bits>::init_comp_table()
 }
 
 
-template <uint8_t Bits>
-void CodeModule<Bits>::init_jump_table()
+void CodeGenerator::init_jump_table()
 {
     jump_table_["JGT"] = "001";
     jump_table_["JEQ"] = "010";
@@ -50,8 +49,8 @@ void CodeModule<Bits>::init_jump_table()
     jump_table_["JMP"] = "111";
 }
 
-template <uint8_t Bits>
-void CodeModule<Bits>::init_dest_table()
+
+void CodeGenerator::init_dest_table()
 {
     dest_table_["M"] = "001";
     dest_table_["D"] = "010";
@@ -62,19 +61,19 @@ void CodeModule<Bits>::init_dest_table()
     dest_table_["AMD"] = "111";
 }
 
-template <uint8_t Bits>
-std::string CodeModule<Bits>::dest(std::string mnemonic)
+
+std::string CodeGenerator::dest(std::string mnemonic)
 {
     if(dest_table_.count(mnemonic) == 0)
-        return bitset<Bits>(0).to_string();
+        return bitset<16>(0).to_string();
 
-    const auto result = bitset<Bits>(dest_table_[mnemonic]) << DEST_SHIFT;
+    const auto result = bitset<16>(dest_table_[mnemonic]) << DEST_SHIFT;
 
     return result.to_string();
 }
 
-template <uint8_t Bits>
-std::string CodeModule<Bits>::comp(std::string mnemonic)
+
+std::string CodeGenerator::comp(std::string mnemonic)
 {
     const bool a_bit = mnemonic.find('M') == string::npos ? false : true;
     string str;
@@ -83,22 +82,22 @@ std::string CodeModule<Bits>::comp(std::string mnemonic)
         throw "Comp mnemonic not found";
     str += comp_table_[mnemonic];
 
-    const auto result = bitset<Bits>(str) << COMP_SHIFT;
+    const auto result = bitset<16>(str) << COMP_SHIFT;
 
     return result.to_string();
 }
 
-template <uint8_t Bits>
-std::string CodeModule<Bits>::jump(std::string mnemonic)
+
+std::string CodeGenerator::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
-        return bitset<Bits>(0).to_string();
-    const auto result = bitset<Bits>(jump_table_[mnemonic]);
+        return bitset<16>(0).to_string();
+    const auto result = bitset<16>(jump_table_[mnemonic]);
     return result.to_string();
 }
 
-template <uint8_t Bits>
-std::string CodeModule<Bits>::instruction()
+
+std::string CodeGenerator::instruction()
 {
     std::string result{"111"};
     return result;

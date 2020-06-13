@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include <unordered_map>
 
-#include "../API/ISymbolTable.h"
+#include "../API/LookupTable.h"
 
 using namespace std;
 
-class SymbolTable : public ISymbolTable
+class SymbolTable : public LookupTable
 {
     unordered_map<string, int> symbol_table_;
 

@@ -6,9 +6,9 @@
     addresses
  * \ctor creates a new symbol table
  */
-struct ISymbolTable
+struct LookupTable
 {
-    virtual ~ISymbolTable() = default;
+    virtual ~LookupTable() = default;
 
     /**
      * \brief adds entry to table

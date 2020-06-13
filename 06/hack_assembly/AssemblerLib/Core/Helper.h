@@ -31,7 +31,7 @@ class Helper
 
 public:
 
-    static string Process(ICommand* command)
+    static string Process(Command* command)
     {
         auto result(command->execute());
         delete command;

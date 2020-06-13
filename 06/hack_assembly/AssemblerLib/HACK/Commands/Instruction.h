@@ -1,23 +1,22 @@
 ﻿#pragma once
 #include <string>
 
+#include "../../API/Command.h"
+#include "../../API/ICodeModule.h"
 
-#include "DefaultModuleFabric.h"
-#include "../API/ICommand.h"
-
-class CCommand : public ICommand
+class Instruction : public Command
 {
     std::string comp_, dest_, jump_;
     ICodeModule* code_module_ = nullptr;
 public:
-    ~CCommand() override = default;
+    ~Instruction() override = default;
 
-    CCommand(std::string&& comp, string&& dest, string&& jump)
+    Instruction(std::string&& comp, string&& dest, string&& jump)
         : comp_(std::move(comp)),
           dest_(std::move(dest)),
           jump_(std::move(jump))
     {
-        auto& fabric = FabricModule<16>::get_instance();
+        auto& fabric = FabricModule::get_instance();
         code_module_ = fabric.get_code_module();
     }
 
