@@ -17,7 +17,6 @@ class FabricModule final
 
     InstructionHandler* code_module_ = nullptr;
     LookupTable* symbol_table_ = nullptr;
-    AssemblerParser* parser_module_ = nullptr;
 
 public:
 
@@ -35,14 +34,6 @@ public:
         return code_module_;
     }
 
-    AssemblerParser* get_parser_module()
-    {
-        if(parser_module_ == nullptr)
-            parser_module_ = new Parser;
-        return parser_module_;
-    }
-
-
     LookupTable* get_symbol_table()
     {
         if(symbol_table_ == nullptr)
@@ -55,8 +46,6 @@ public:
     {
         if(code_module_ != nullptr)
             delete code_module_;
-        if(parser_module_ != nullptr)
-            delete parser_module_;
         if(symbol_table_ != nullptr)
             delete symbol_table_;
     }

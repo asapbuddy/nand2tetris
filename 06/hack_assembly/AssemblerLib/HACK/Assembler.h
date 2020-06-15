@@ -1,11 +1,6 @@
 ﻿#pragma once
-#include <bitset>
-#include <fstream>
-#include <iterator>
 #include <vector>
 
-#include "../API/AssemblerParser.h"
-#include "../Core/DefaultModuleFabric.h"
 #include "../Core/Helper.h"
 
 class Assembler

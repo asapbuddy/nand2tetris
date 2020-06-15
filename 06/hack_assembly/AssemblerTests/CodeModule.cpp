@@ -2,6 +2,7 @@
 
 #include "Fixtures.h"
 #include <bitset>
+#include <AssemblerLib/HACK/CodeGenerator.h>
 using namespace std;
 
 constexpr uint8_t BITNESS = 16;

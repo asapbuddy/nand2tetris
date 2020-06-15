@@ -1,5 +1,12 @@
 ﻿#include "Assembler.h"
 
+#include <iterator>
+
+
+
+#include "Parser.h"
+#include "SourceCode.h"
+
 void Assembler::process_labels() const
 {
     SourceCode source_code(file_path_);
@@ -43,7 +50,7 @@ void Assembler::save(const char* ext)
 
     const auto output_fn = dot == std::string::npos ? fn + ext : fn.substr(0, dot + 1) + ext;
     std::ofstream output_file(output_fn);
-    const std::ostream_iterator<std::string> output_iterator(output_file, "\n");
+    const ostream_iterator<std::string> output_iterator(output_file, "\n");
     std::copy(result_.begin(), result_.end(), output_iterator);
     output_file.close();
 }

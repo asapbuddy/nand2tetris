@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include <AssemblerLib/HACK/Assembler.h>
 
 
@@ -8,28 +9,27 @@ namespace assembler_tests
 
     struct Configuration
     {
-        string tests_path{"..\\AssemblerTests\\Tests\\"};
+        std::string tests_path{"..\\AssemblerTests\\Tests\\"};
 
-        string locate_test_file(const char* name, const char* ext) const
+        std::string locate_test_file(const char* name, const char* ext) const
         {
-            string result(tests_path);
+            std::string result(tests_path);
             result.append(name);
             result.append(ext);
             return result;
         }
 
-        void create_assembly(const string& name)
+        void create_assembly(const std::string& name)
         {
             std::string path(tests_path);
             path.append(name).append(".asm");
             Assembler assembler_module(path.c_str());
-            assembler_module.init();
             assembler_module.process_labels();
             assembler_module.compile();
             assembler_module.save("hack");
         }
 
-        bool compare_two_files(const std::string& file1, const string& file2)
+        bool compare_two_files(const std::string& file1, const std::string& file2)
         {
             std::ifstream f1(file1, std::ifstream::binary | std::ifstream::ate);
             std::ifstream f2(file2, std::ifstream::binary | std::ifstream::ate);

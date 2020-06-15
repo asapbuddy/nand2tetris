@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "../AssemblerLib/Core/DefaultModuleFabric.h"
 #include "../AssemblerLib/HACK/Assembler.h"
 #include "../core/Parser.h"
 
@@ -23,7 +22,6 @@ int main(int argc, char* argv[])
     try
     {
         Assembler assembler(argv[1]);
-        assembler.init();
         assembler.process_labels();
         assembler.compile();
         assembler.save("hack");
