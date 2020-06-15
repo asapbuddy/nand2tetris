@@ -11,7 +11,6 @@
 class Assembler
 {
     const char* file_path_;
-    AssemblerParser* parser_ = nullptr;
     std::vector<std::string> result_;
 
 
@@ -19,7 +18,6 @@ public:
     Assembler(const char* path)
         : file_path_(path)
     {
-        parser_ = FabricModule::instance().get_parser_module();
     }
 
     ~Assembler() = default;

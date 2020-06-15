@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../API/InstructionHandler.h"
+
 #include "../API/LookupTable.h"
 #include "../HACK/CodeGenerator.h"
 #include "../HACK/Parser.h"

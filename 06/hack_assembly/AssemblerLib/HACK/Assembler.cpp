@@ -2,63 +2,37 @@
 
 void Assembler::process_labels() const
 {
-    auto& fabric = FabricModule::instance();
-    auto symbol_table_ = fabric.get_symbol_table();
+    SourceCode source_code(file_path_);
+    auto filestream = source_code.GetFileStream();
+    Parser parser(std::move(filestream));
 
-    unsigned lines_counter = 0;
-    while(parser_->Advance())
+    while(parser.HasMoreCommands())
     {
-        if(parser_->GetCommandType() == CommandType::l_command)
-        {
-            const auto mnemonic_ = Helper::Process(parser_->ProduceCommand());
-            symbol_table_->AddEntry(mnemonic_, lines_counter);
-        }
-        else
-            lines_counter++;
+        parser.Advance();
+        auto command = parser.ProduceStatement();
+
+        if(command->GetCommandType() == CommandType::l_command)
+            command->Process();
     }
 }
 
 void Assembler::compile()
 {
-    while(parser_->Advance())
+    SourceCode source_code(file_path_);
+    auto filestream = source_code.GetFileStream();
+    Parser parser(std::move(filestream));
+
+    while(parser.HasMoreCommands())
     {
-        const auto command_type = parser_->GetCommandType();
-        if(command_type != CommandType::l_command)
-            result_.emplace_back(Helper::Process(parser_->ProduceCommand()));
+        parser.Advance();
+        auto command = parser.ProduceStatement();
+        auto command_type = command->GetCommandType();
 
-        /*
-        switch(command_type)
+        if(command_type == CommandType::a_command || command_type == CommandType::c_command)
         {
-        case CommandType::a_command:
-        {
-            auto symbol = parser_->symbol();
-
-            if(Helper::is_digit(symbol))
-                result_.emplace_back(std::bitset<bitness>(stoi(symbol)).to_string());
-            else
-            {
-                if(!symbol_table_->contains(symbol))
-                    symbol_table_->add_entry(symbol, a_counter++);
-
-                result_.emplace_back(std::bitset<bitness>(symbol_table_->address(symbol)).to_string());
-            }
-
-            break;
+            command->Process();
+            result_.emplace_back(command->GetResult());
         }
-        case CommandType::c_command:
-        {
-            std::bitset<16> mask(0);
-            mask |= 0b111 << 13;
-            mask |= std::bitset<16>(parser_->comp());
-            mask |= std::bitset<16>(parser_->dest());
-            mask |= std::bitset<16>(parser_->jump());
-
-            result_.push_back(mask.to_string());
-            break;
-        }
-        default:
-            break;
-        }*/
     }
 }
 

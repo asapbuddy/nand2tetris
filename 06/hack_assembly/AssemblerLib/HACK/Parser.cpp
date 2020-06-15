@@ -4,119 +4,120 @@
 #include <filesystem>
 #include <fstream>
 
-
-#include "../API/AssemblerParser.h"
-#include "../API/InstructionStatement.h"
 #include "Commands/Address.h"
 #include "Commands/Instruction.h"
 #include "Commands/Label.h"
 
-unique_ptr<InstructionStatement> Parser::ProduceCommand()
+
+unique_ptr<NullCommand> Parser::ProduceNullCommand() const
 {
-    return current_command_;
+    return make_unique<NullCommand>();
 }
 
-void Parser::init(const char* file_path)
+unique_ptr<Address> Parser::ProduceAddressCommand(int start) const
 {
-    const filesystem::path input(file_path);
-    if(!exists(input))
-        throw ("Input file doesn't exist");
+    const string& token = current_token_;
+    int i = start;
+    while(token[i] != ' '
+          && token[i] != '\n'
+          && i < token.size() - 1)
+        ++i;
 
-    if(!input.has_extension() || input.extension() != ".asm")
-        throw ("Input file has unknown extension.\n Please use *.asm.");
+    auto mnemonic = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
+    return make_unique<Address>(std::move(mnemonic));
+}
 
-    if(filesystem::is_empty(input))
-        throw ("Input file is empty");
+unique_ptr<Instruction> Parser::ProduceInstructionCommand(int start) const
+{
+    string dest, comp, jmp;
+    const string& token = current_token_;
 
-    file_stream_ = ifstream(input.c_str());
+    int i = start, eq_pos = -1, sc_pos = -1; // equal and semicolon
+
+    while(i < token.size() - 1 && token[i] != ' ')
+    {
+        if(token[i] == '=')
+            eq_pos = i;
+
+        if(token[i] == ';')
+            sc_pos = i;
+        ++i;
+    }
+
+    if(eq_pos > 0)
+        dest = token.substr(start, eq_pos - start);
+    if(sc_pos > 0)
+        jmp = token.substr(sc_pos + 1, i - sc_pos - (token[i] == ' ' ? 1 : 0));
+    if(eq_pos > 0 && sc_pos < 0)
+        comp = token.substr(eq_pos + 1, i - eq_pos - (token[i] == ' ' ? 1 : 0));
+    if(eq_pos < 0 && sc_pos > 0)
+        comp = token.substr(start, sc_pos - start);
+
+    return make_unique<Instruction>(
+        std::move(comp),
+        std::move(dest),
+        std::move(jmp));
+}
+
+unique_ptr<Label> Parser::ProduceLabelCommand(int start) const
+{
+    int i = start;
+    while(current_token_[i] != ')' && i < current_token_.size() - 1)
+        ++i;
+    auto mnemonic = current_token_.substr(start + 1, i - start - 1);
+    return make_unique<Label>(move(mnemonic), instructions_produced_);
+}
+
+unique_ptr<InstructionStatement> Parser::ProduceStatement()
+{
+    const string& token = current_token_;
+    unique_ptr<InstructionStatement> result;
+
+    for(int i = 0; i < token.size() - 1; ++i)
+    {
+        if(token[i] == ' ')
+            continue;
+
+        if(token[i] == '/')
+        {
+            result = ProduceNullCommand();
+            break;
+        }
+        if(token[i] == '@')
+        {
+            result = ProduceAddressCommand(i);
+            break;
+        }
+        if(token[i] == '(')
+        {
+            result = ProduceLabelCommand(i);
+            break;
+        }
+    }
+
+    const auto command_type = result->GetCommandType();
+    if(command_type == CommandType::a_command || command_type == CommandType::c_command)
+        instructions_produced_++;
+
+    return result;
 }
 
 
 void Parser::Advance()
 {
-    dest_ = "", comp_ = "", jump_ = "";
-    std::string token;
-
     do
     {
-        std::getline(file_stream_, token);
+        std::getline(FileStream_, current_token_);
     }
-    while(file_stream_.is_open() && token.size() == 0 || token[0] == '/');
-
-    for(int i = 0; i < token.size() - 1; ++i)
-    {
-        int start = i;
-
-        if(token[i] == ' ' || token[i] == '/')
-        {
-            continue;
-        }
-        if(token[i] == '@')
-        {
-            while(token[i] != ' ' && i < token.size() - 1)
-                ++i;
-
-            current_token_ = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
-            current_type_ = CommandType::a_command;
-
-            current_command_ = new Address(std::move(current_token_));
-
-            break;
-        }
-        if(token[i] == '(')
-        {
-            while(token[i] != ')' && i < token.size() - 1)
-                ++i;
-            current_token_ = token.substr(start + 1, i - start - 1);
-
-            current_command_ = new Label(std::move(current_token_));
-            current_type_ = CommandType::l_command;
-            break;
-        }
-        else
-        {
-            string dest, comp, jmp;
-            int eq_pos = -1, sc_pos = -1; // equal and semicolon
-            current_type_ = CommandType::c_command;
-            while(i < token.size() - 1 && token[i] != ' ')
-            {
-                if(token[i] == '=')
-                    eq_pos = i;
-
-                if(token[i] == ';')
-                    sc_pos = i;
-
-                ++i;
-            }
-
-            if(eq_pos > 0)
-                dest = token.substr(start, eq_pos - start);
-            if(sc_pos > 0)
-                jmp = token.substr(sc_pos + 1, i - sc_pos - (token[i] == ' ' ? 1 : 0));
-            if(eq_pos > 0 && sc_pos < 0)
-                comp = token.substr(eq_pos + 1, i - eq_pos - (token[i] == ' ' ? 1 : 0));
-            if(eq_pos < 0 && sc_pos > 0)
-                comp = token.substr(start, sc_pos - start);
-
-            comp_ = comp;
-            dest_ = dest;
-            jump_ = jmp;
-
-            current_command_ = new Instruction(
-                std::move(comp),
-                std::move(dest),
-                std::move(jmp));
-            break;
-        }
-    }
+    while(FileStream_.is_open() && current_token_.size() == 0 || current_token_[0] == '/');
 }
 
 bool Parser::HasMoreCommands()
 {
-    return file_stream_.peek() != EOF;
+    //TODO: Figure out to is need more intillegence method to determine that or not
+    return FileStream_.peek() != EOF;
 }
 
-CommandType Parser::GetCommandType()
+Parser::~Parser()
 {
-    return current_type_;
 }

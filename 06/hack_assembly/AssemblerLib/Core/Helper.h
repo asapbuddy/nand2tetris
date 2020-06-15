@@ -31,12 +31,6 @@ class Helper
 
 public:
 
-    static string Process(InstructionStatement* command)
-    {
-        auto result(command->Decode());
-        delete command;
-        return result;
-    }
 
     static std::vector<std::string> split(const std::string& s, char delimiter)
     {

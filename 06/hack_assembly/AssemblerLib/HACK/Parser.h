@@ -3,28 +3,39 @@
 #include <fstream>
 #include <iosfwd>
 
+
+#include "SourceCode.h"
 #include "../API/AssemblerParser.h"
+#include "Commands/Address.h"
+#include "Commands/Instruction.h"
+#include "Commands/Label.h"
+#include "Commands/NullCommand.h"
 
 using namespace std;
 
 class Parser final : public AssemblerParser
 {
-    ifstream file_stream_;
-    CommandType current_type_ = CommandType::not_command;
-    string dest_, comp_, jump_;
-    unique_ptr<InstructionStatement> current_command_;
+    ifstream FileStream_;
     string current_token_;
+    unsigned instructions_produced_;
 
 public:
-    Parser() = default;
+    Parser(ifstream&& filestream)
+        : FileStream_(std::move(filestream)),
+          instructions_produced_(0)
+    {
+    }
 
-    unique_ptr<InstructionStatement> ProduceCommand() override;
+    unique_ptr<InstructionStatement> ProduceStatement() override;
 
     void Advance() override;
 
     bool HasMoreCommands() override;
 
-    CommandType GetCommandType() override;
-
-    ~Parser() override = default;
+    ~Parser() override;
+private:
+    unique_ptr<NullCommand> ProduceNullCommand() const;
+    unique_ptr<Address> ProduceAddressCommand(int start) const;
+    unique_ptr<Instruction> ProduceInstructionCommand(int start) const;
+    unique_ptr<Label> ProduceLabelCommand(int start) const;
 };

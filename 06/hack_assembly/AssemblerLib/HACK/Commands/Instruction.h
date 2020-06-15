@@ -2,8 +2,8 @@
 #include <string>
 
 
-#include "InstructionStatement.h"
-#include "../../API/InstructionHandler.h"
+#include "InstructionHandler.h"
+
 
 class Instruction : public InstructionStatement
 {
@@ -36,5 +36,10 @@ public:
     string GetResult() override
     {
         return result_;
+    }
+
+    CommandType GetCommandType() override
+    {
+        return CommandType::c_command;
     }
 };

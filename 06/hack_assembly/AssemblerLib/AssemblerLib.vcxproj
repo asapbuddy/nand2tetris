@@ -157,25 +157,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="API\InstructionHandler.h" />
+    <ClInclude Include="API\InstructionStatement.h" />
     <ClInclude Include="API\TextFile.h" />
     <ClInclude Include="Core\Global.h" />
     <ClInclude Include="HACK\Assembler.h" />
     <ClCompile Include="HACK\Assembler.cpp" />
     <ClCompile Include="HACK\CodeGenerator.cpp" />
     <ClCompile Include="HACK\Parser.cpp" />
+    <ClCompile Include="HACK\SourceCode.cpp" />
     <ClCompile Include="HACK\SymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API\AssemblerParser.h" />
     <ClInclude Include="API\LookupTable.h" />
-    <ClInclude Include="Core\DefaultModuleFabric.h" />
+    <ClInclude Include="Core\FabricModule.h" />
     <ClInclude Include="HACK\CodeGenerator.h" />
     <ClInclude Include="HACK\Commands\Address.h" />
     <ClInclude Include="HACK\Commands\Instruction.h" />
-    <ClInclude Include="HACK\Commands\InstructionStatement.h" />
+    <ClInclude Include="HACK\Commands\InstructionHandler.h" />
     <ClInclude Include="HACK\Commands\Label.h" />
+    <ClInclude Include="HACK\Commands\NullCommand.h" />
     <ClInclude Include="HACK\Parser.h" />
+    <ClInclude Include="HACK\SourceCode.h" />
     <ClInclude Include="HACK\SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>

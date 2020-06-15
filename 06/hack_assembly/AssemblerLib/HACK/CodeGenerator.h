@@ -2,7 +2,8 @@
 #include <string>
 #include <unordered_map>
 
-#include "../API/InstructionHandler.h"
+#include "Commands/InstructionHandler.h"
+
 
 using namespace std;
 
