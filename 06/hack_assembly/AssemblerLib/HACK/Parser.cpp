@@ -5,13 +5,13 @@
 #include <fstream>
 
 
-#include "../API/IParserModule.h"
-#include "../API/Command.h"
+#include "../API/AssemblerParser.h"
+#include "../API/InstructionStatement.h"
 #include "Commands/Address.h"
 #include "Commands/Instruction.h"
 #include "Commands/Label.h"
 
-Command* Parser::get_command()
+unique_ptr<InstructionStatement> Parser::ProduceCommand()
 {
     return current_command_;
 }
@@ -31,17 +31,9 @@ void Parser::init(const char* file_path)
     file_stream_ = ifstream(input.c_str());
 }
 
-void Parser::reset()
-{
-    file_stream_.clear();
-    file_stream_.seekg(0);
-}
 
-bool Parser::advance()
+void Parser::Advance()
 {
-    if(file_stream_.peek() == EOF)
-        return false;
-
     dest_ = "", comp_ = "", jump_ = "";
     std::string token;
 
@@ -117,11 +109,14 @@ bool Parser::advance()
             break;
         }
     }
-
-    return true;
 }
 
-CommandType Parser::command_type()
+bool Parser::HasMoreCommands()
+{
+    return file_stream_.peek() != EOF;
+}
+
+CommandType Parser::GetCommandType()
 {
     return current_type_;
 }

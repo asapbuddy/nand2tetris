@@ -1,13 +1,15 @@
 ﻿#pragma once
 #include <string>
 
-#include "../../API/Command.h"
-#include "../../API/ICodeModule.h"
 
-class Instruction : public Command
+#include "InstructionStatement.h"
+#include "../../API/InstructionHandler.h"
+
+class Instruction : public InstructionStatement
 {
     std::string comp_, dest_, jump_;
-    ICodeModule* code_module_ = nullptr;
+    InstructionHandler* code_module_ = nullptr;
+    std::string result_;
 public:
     ~Instruction() override = default;
 
@@ -16,11 +18,11 @@ public:
           dest_(std::move(dest)),
           jump_(std::move(jump))
     {
-        auto& fabric = FabricModule::get_instance();
+        auto& fabric = FabricModule::instance();
         code_module_ = fabric.get_code_module();
     }
 
-    std::string execute() override
+    void Process() override
     {
         std::bitset<16> mask(0);
         mask |= 0b111 << 13;
@@ -28,6 +30,11 @@ public:
         mask |= std::bitset<16>(code_module_->dest(dest_));
         mask |= std::bitset<16>(code_module_->jump(jump_));
 
-        return mask.to_string();
+        result_ = mask.to_string();
+    }
+
+    string GetResult() override
+    {
+        return result_;
     }
 };

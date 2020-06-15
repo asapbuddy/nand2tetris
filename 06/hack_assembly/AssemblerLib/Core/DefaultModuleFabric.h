@@ -1,9 +1,9 @@
 ﻿#pragma once
-#include <cstdint>
 
-#include "../API/ICodeModule.h"
+#include "../API/InstructionHandler.h"
 #include "../API/LookupTable.h"
 #include "../HACK/CodeGenerator.h"
+#include "../HACK/Parser.h"
 #include "../HACK/SymbolTable.h"
 
 class FabricModule final
@@ -15,19 +15,19 @@ class FabricModule final
 
     FabricModule() = default;
 
-    ICodeModule * code_module_ = nullptr;
-    LookupTable * symbol_table_ = nullptr;
-    IParserModule * parser_module_ = nullptr;
+    InstructionHandler* code_module_ = nullptr;
+    LookupTable* symbol_table_ = nullptr;
+    AssemblerParser* parser_module_ = nullptr;
 
 public:
 
-    static FabricModule& get_instance()
+    static FabricModule& instance()
     {
         static FabricModule instance;
         return instance;
     }
 
-    ICodeModule* get_code_module()
+    InstructionHandler* get_code_module()
     {
         if(code_module_ == nullptr)
             code_module_ = new CodeGenerator;
@@ -35,8 +35,10 @@ public:
         return code_module_;
     }
 
-    IParserModule* get_parser_module()
+    AssemblerParser* get_parser_module()
     {
+        if(parser_module_ == nullptr)
+            parser_module_ = new Parser;
         return parser_module_;
     }
 

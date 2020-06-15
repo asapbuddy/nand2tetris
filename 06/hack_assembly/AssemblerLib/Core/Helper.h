@@ -31,9 +31,9 @@ class Helper
 
 public:
 
-    static string Process(Command* command)
+    static string Process(InstructionStatement* command)
     {
-        auto result(command->execute());
+        auto result(command->Decode());
         delete command;
         return result;
     }

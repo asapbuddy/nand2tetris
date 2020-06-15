@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="API\InstructionHandler.h" />
+    <ClInclude Include="API\TextFile.h" />
     <ClInclude Include="Core\Global.h" />
     <ClInclude Include="HACK\Assembler.h" />
     <ClCompile Include="HACK\Assembler.cpp" />
@@ -165,22 +167,19 @@
     <ClCompile Include="HACK\SymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\ICodeModule.h" />
-    <ClInclude Include="API\IParserModule.h" />
+    <ClInclude Include="API\AssemblerParser.h" />
     <ClInclude Include="API\LookupTable.h" />
     <ClInclude Include="Core\DefaultModuleFabric.h" />
     <ClInclude Include="HACK\CodeGenerator.h" />
     <ClInclude Include="HACK\Commands\Address.h" />
     <ClInclude Include="HACK\Commands\Instruction.h" />
+    <ClInclude Include="HACK\Commands\InstructionStatement.h" />
     <ClInclude Include="HACK\Commands\Label.h" />
     <ClInclude Include="HACK\Parser.h" />
     <ClInclude Include="HACK\SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Helper.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="API\Command.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

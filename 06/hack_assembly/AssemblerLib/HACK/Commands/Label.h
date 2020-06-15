@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "../../API/Command.h"
+#include "../../API/InstructionStatement.h"
 #include "../../API/LookupTable.h"
 
-class Label : public Command
+class Label : public InstructionStatement
 {
     std::string mnemonic_;
     LookupTable* symbol_table_ = nullptr;
@@ -16,7 +16,7 @@ public:
     }
 
 
-    std::string execute() override
+    string Decode() override
     {
         return mnemonic_;
     }

@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include <bitset>
 
-#include "../../API/Command.h"
+#include "../../API/InstructionStatement.h"
 #include "../../API/LookupTable.h"
 #include "../../Core/DefaultModuleFabric.h"
 #include "../../Core/Helper.h"
 
-class Address : public Command
+class Address : public InstructionStatement
 {
     string mnemonic_;
 
@@ -19,18 +19,18 @@ public:
     Address(string&& mnemonic)
         : mnemonic_(std::move(mnemonic))
     {
-        auto& fabric = FabricModule::get_instance();
+        auto& fabric = FabricModule::instance();
         symbol_table_ = fabric.get_symbol_table();
     }
 
-    std::string execute() override
+    string Decode() override
     {
         if(Helper::is_digit(mnemonic_))
             return std::bitset<16>(stoi(mnemonic_)).to_string();
 
-        if(!symbol_table_->contains(mnemonic_))
-            symbol_table_->add_entry(mnemonic_, a_counter_++);
+        if(!symbol_table_->Contains(mnemonic_))
+            symbol_table_->AddEntry(mnemonic_, a_counter_++);
 
-        return std::bitset<16>(symbol_table_->address(mnemonic_)).to_string();
+        return std::bitset<16>(symbol_table_->GetAddress(mnemonic_)).to_string();
     }
 };

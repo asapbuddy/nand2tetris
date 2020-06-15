@@ -5,9 +5,9 @@
  * \brief Translate Hack assembly to binary code.
  * \return aligned bit-values
  */
-struct ICodeModule
+struct InstructionHandler
 {
-    virtual ~ICodeModule() = default;
+    virtual ~InstructionHandler() = default;
 
     /**
     * \brief 

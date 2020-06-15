@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 
-#include "Command.h"
+#include "InstructionStatement.h"
 #include "../Core/Global.h"
 
 
@@ -11,17 +11,9 @@
     (fields and symbols). In addition, removes all white space and comments.
  * \ctor Opens the input file/stream and gets ready for parse it.
  */
-struct IParserModule
+struct AssemblerParser
 {
-    virtual ~IParserModule() = default;
-
-
-    /**
-     * \brief ctor replacement
-     * \param path to assembly source file
-     * \return true if initialized correctly
-     */
-    virtual void init(const char* path) = 0;
+    virtual ~AssemblerParser() = default;
 
     /**
      * \brief Reads the next command from the input
@@ -29,14 +21,15 @@ struct IParserModule
         has_more_commands() is true.
         Initially there is no current command.
      */
-    virtual bool advance() = 0;
+    virtual void Advance() = 0;
 
+    virtual bool HasMoreCommands() = 0;
 
     /**
      * \brief 
      * \return Encapsulated command
      */
-    virtual Command* get_command() = 0;
+    virtual unique_ptr<InstructionStatement> ProduceCommand() = 0;
 
     /**
      * \brief Returns the type of current command:
@@ -47,7 +40,5 @@ struct IParserModule
             for (Xxx) where Xxx is a symbol
      * \return a_command, c_command, l_command
      */
-    virtual CommandType command_type() = 0;
-
-    virtual void reset() = 0;
+    virtual CommandType GetCommandType() = 0;
 };

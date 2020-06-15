@@ -43,7 +43,7 @@ public:
         init_sym_table();
     }
 
-    void add_entry(std::string symbol, int address) override;
-    bool contains(std::string symbol) override;
-    int address(std::string symbol) override;
+    void AddEntry(std::string symbol, int address) override;
+    bool Contains(std::string symbol) override;
+    int GetAddress(std::string symbol) override;
 };

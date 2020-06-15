@@ -4,14 +4,14 @@
 #include <iterator>
 #include <vector>
 
-#include "../API/IParserModule.h"
+#include "../API/AssemblerParser.h"
 #include "../Core/DefaultModuleFabric.h"
 #include "../Core/Helper.h"
 
 class Assembler
 {
     const char* file_path_;
-    IParserModule* parser_ = nullptr;
+    AssemblerParser* parser_ = nullptr;
     std::vector<std::string> result_;
 
 
@@ -19,13 +19,10 @@ public:
     Assembler(const char* path)
         : file_path_(path)
     {
-        FabricModule& fabric = FabricModule::get_instance();
-        parser_ = fabric.get_parser_module();
+        parser_ = FabricModule::instance().get_parser_module();
     }
 
     ~Assembler() = default;
-
-    void init() const;
 
     void process_labels() const;
 
@@ -33,4 +30,3 @@ public:
 
     void save(const char* ext);
 };
-

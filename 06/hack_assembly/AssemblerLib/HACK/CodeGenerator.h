@@ -2,11 +2,11 @@
 #include <string>
 #include <unordered_map>
 
-#include "../API/ICodeModule.h"
+#include "../API/InstructionHandler.h"
 
 using namespace std;
 
-class CodeGenerator final : public ICodeModule
+class CodeGenerator final : public InstructionHandler
 {
     std::unordered_map<string, string> comp_table_;
     std::unordered_map<string, string> jump_table_;

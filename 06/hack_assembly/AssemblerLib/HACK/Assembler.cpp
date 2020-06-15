@@ -1,24 +1,17 @@
 ﻿#include "Assembler.h"
 
-void Assembler::init() const
-{
-    parser_->init(file_path_);
-}
-
 void Assembler::process_labels() const
 {
-    parser_->reset();
-
-    auto& fabric = FabricModule::get_instance();
+    auto& fabric = FabricModule::instance();
     auto symbol_table_ = fabric.get_symbol_table();
 
     unsigned lines_counter = 0;
-    while(parser_->advance())
+    while(parser_->Advance())
     {
-        if(parser_->command_type() == CommandType::l_command)
+        if(parser_->GetCommandType() == CommandType::l_command)
         {
-            const auto mnemonic_ = Helper::Process(parser_->get_command());
-            symbol_table_->add_entry(mnemonic_, lines_counter);
+            const auto mnemonic_ = Helper::Process(parser_->ProduceCommand());
+            symbol_table_->AddEntry(mnemonic_, lines_counter);
         }
         else
             lines_counter++;
@@ -27,12 +20,11 @@ void Assembler::process_labels() const
 
 void Assembler::compile()
 {
-    parser_->reset();
-    while(parser_->advance())
+    while(parser_->Advance())
     {
-        const auto command_type = parser_->command_type();
+        const auto command_type = parser_->GetCommandType();
         if(command_type != CommandType::l_command)
-            result_.emplace_back(Helper::Process(parser_->get_command()));
+            result_.emplace_back(Helper::Process(parser_->ProduceCommand()));
 
         /*
         switch(command_type)
