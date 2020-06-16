@@ -4,11 +4,10 @@
 #include "Parser.h"
 #include "SourceCodeFile.h"
 
-void Assembler::process_labels() const
+void Assembler::process_labels() 
 {
     SourceCodeFile source_code(file_path_);
-    auto filestream = source_code.GetFileStream();
-    Parser parser(std::move(filestream), lookup_table_, instruction_decoder_);
+    Parser parser(source_code.GetFileStream(), statement_parameters_);
 
     while(parser.HasMoreCommands())
     {
@@ -23,14 +22,13 @@ void Assembler::process_labels() const
 void Assembler::compile()
 {
     SourceCodeFile source_code(file_path_);
-    auto filestream = source_code.GetFileStream();
-    Parser parser(std::move(filestream), lookup_table_, instruction_decoder_);
+    Parser parser(source_code.GetFileStream(), statement_parameters_);
 
     while(parser.HasMoreCommands())
     {
         parser.Advance();
         auto command = parser.ProduceStatement();
-        auto command_type = command->GetCommandType();
+        const auto command_type = command->GetCommandType();
 
         if(command_type == CommandType::a_command || command_type == CommandType::c_command)
         {

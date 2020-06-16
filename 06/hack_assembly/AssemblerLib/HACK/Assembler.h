@@ -3,34 +3,30 @@
 #include <vector>
 
 
-#include "../API/LookupTable.h"
 #include "../Core/FabricModule.h"
-#include "Commands/InstructionDecoder.h"
+#include "Commands/StatementParameters.h"
 
 
 class Assembler
 {
     const char* file_path_;
     std::vector<std::string> result_;
-    LookupTable* lookup_table_;
-    InstructionDecoder* instruction_decoder_;
+    StatementParameters statement_parameters_;
 
 
 public:
     Assembler(const char* path)
-        : file_path_(path)
+        : file_path_(path),
+          statement_parameters_(
+              FabricModule::get_symbol_table(),
+              FabricModule::get_code_module()
+          )
     {
-        lookup_table_ = FabricModule::get_symbol_table();
-        instruction_decoder_ = FabricModule::get_code_module();
     }
 
-    ~Assembler()
-    {
-        delete lookup_table_;
-        delete instruction_decoder_;
-    }
+    ~Assembler() = default;
 
-    void process_labels() const;
+    void process_labels();
 
     void compile();
 

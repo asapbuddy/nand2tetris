@@ -1,40 +1,43 @@
 ﻿#pragma once
 #include <bitset>
 
-#include "../../API/InstructionStatement.h"
+
+#include "StatementParameters.h"
+#include "../../API/Statement.h"
 #include "../../API/LookupTable.h"
 #include "../../Core/FabricModule.h"
 
 
-class Address : public InstructionStatement
+class Address : public Statement
 {
     string mnemonic_, result_;
-
-    thread_local inline static int a_counter_ = 16;
-    LookupTable* const symbol_table_;
-
+    StatementParameters& parameters_;
 
 public:
     ~Address() override = default;
 
-    Address(string&& mnemonic, LookupTable* const lookup_table)
+    Address(string&& mnemonic, StatementParameters& parameters)
         : mnemonic_(std::move(mnemonic)),
-          symbol_table_(lookup_table)
+          parameters_(parameters)
 
     {
     }
 
     void Process() override
     {
-        static int counter = 16;
         if(is_digit(mnemonic_))
             result_ = std::bitset<16>(stoi(mnemonic_)).to_string();
         else
         {
-            if(!symbol_table_->Contains(mnemonic_))
-                symbol_table_->AddEntry(mnemonic_, counter++);
+            auto symbol_table = parameters_.GetLookupTable();
 
-            result_ = std::bitset<16>(symbol_table_->GetAddress(mnemonic_)).to_string();
+            if(!symbol_table->Contains(mnemonic_))
+            {
+                const auto offset = parameters_.GetNextAddressOffset();
+                symbol_table->AddEntry(mnemonic_, offset);
+            }
+
+            result_ = std::bitset<16>(symbol_table->GetAddress(mnemonic_)).to_string();
         }
     }
 

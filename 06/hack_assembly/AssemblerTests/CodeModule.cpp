@@ -17,7 +17,7 @@ namespace assembler_tests
 
             BOOST_AUTO_TEST_CASE(CorrectJumpMnemonics)
             {
-                auto code_module = new Decoder;
+                const auto code_module = make_unique<Decoder>();
                 const auto JGT = bitset<BITNESS>("001").to_string();
                 const auto JEQ = bitset<BITNESS>("010").to_string();
                 const auto JGE = bitset<BITNESS>("011").to_string();
@@ -33,12 +33,11 @@ namespace assembler_tests
                 BOOST_TEST(code_module->jump("JNE")== JNE);
                 BOOST_TEST(code_module->jump("JLE")== JLE);
                 BOOST_TEST(code_module->jump("JMP")== JMP);
-                delete code_module;
             }
 
             BOOST_AUTO_TEST_CASE(CorrectDestMnemonics)
             {
-                auto code_module = new Decoder;
+                const auto code_module = make_unique<Decoder>();
                 const auto b_M = bitset<BITNESS>("001") << DEST_SHIFT;
                 const auto b_D = bitset<BITNESS>("010") << DEST_SHIFT;
                 const auto b_MD = bitset<BITNESS>("011") << DEST_SHIFT;
@@ -54,12 +53,11 @@ namespace assembler_tests
                 BOOST_TEST(code_module->dest("AM")== b_AM.to_string());
                 BOOST_TEST(code_module->dest("AD")== b_AD.to_string());
                 BOOST_TEST(code_module->dest("AMD")== b_AMD.to_string());
-                delete code_module;
             }
 
             BOOST_AUTO_TEST_CASE(CorrectCompMnemonics)
             {
-                auto code_module = new Decoder;
+                const auto code_module = make_unique<Decoder>();
                 const auto zero = bitset<BITNESS>("0101010") << COMP_SHIFT;
                 const auto one = bitset<BITNESS>("0111111") << COMP_SHIFT;
                 const auto nOne = bitset<BITNESS>("0111010") << COMP_SHIFT;
@@ -119,7 +117,6 @@ namespace assembler_tests
                 BOOST_TEST(code_module->comp("M-D")== MmD.to_string());
                 BOOST_TEST(code_module->comp("D&M")== DandM.to_string());
                 BOOST_TEST(code_module->comp("D|M")== DorM.to_string());
-                delete code_module;
             }
 
         BOOST_AUTO_TEST_SUITE_END()

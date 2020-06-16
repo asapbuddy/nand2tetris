@@ -25,10 +25,10 @@ bool Parser::HasMoreCommands()
 }
 
 
-unique_ptr<InstructionStatement> Parser::ProduceStatement()
+unique_ptr<Statement> Parser::ProduceStatement()
 {
     const string& token = current_token_;
-    unique_ptr<InstructionStatement> result;
+    unique_ptr<Statement> result;
 
     for(int i = 0; i < token.size() - 1; ++i)
     {
@@ -59,7 +59,7 @@ unique_ptr<InstructionStatement> Parser::ProduceStatement()
 
     const auto command_type = result->GetCommandType();
     if(command_type == CommandType::a_command || command_type == CommandType::c_command)
-        instructions_produced_++;
+        statement_parameters_.IncreaseInstructionCounter();
 
     return result;
 }
@@ -79,7 +79,7 @@ unique_ptr<Address> Parser::ProduceAddressCommand(int start) const
         ++i;
 
     auto mnemonic = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
-    return make_unique<Address>(std::move(mnemonic), symbol_table_);
+    return make_unique<Address>(std::move(mnemonic), statement_parameters_);
 }
 
 unique_ptr<Instruction> Parser::ProduceInstructionCommand(int start) const
@@ -110,7 +110,7 @@ unique_ptr<Instruction> Parser::ProduceInstructionCommand(int start) const
 
     InstructionDto dto{dest, comp, jump};
 
-    return make_unique<Instruction>(std::move(dto), instruction_decoder_);
+    return make_unique<Instruction>(std::move(dto), statement_parameters_);
 }
 
 unique_ptr<Label> Parser::ProduceLabelCommand(int start) const
@@ -119,5 +119,5 @@ unique_ptr<Label> Parser::ProduceLabelCommand(int start) const
     while(current_token_[i] != ')' && i < current_token_.size() - 1)
         ++i;
     auto mnemonic = current_token_.substr(start + 1, i - start - 1);
-    return make_unique<Label>(move(mnemonic), instructions_produced_, symbol_table_);
+    return make_unique<Label>(move(mnemonic), statement_parameters_);
 }

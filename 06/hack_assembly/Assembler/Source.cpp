@@ -7,8 +7,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    const uint8_t bitness = 16;
-
     if(argc < 2)
     {
         cout

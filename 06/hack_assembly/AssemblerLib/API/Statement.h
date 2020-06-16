@@ -4,9 +4,9 @@
 using namespace std;
 #include "../Core/Global.h"
 
-struct InstructionStatement
+struct Statement
 {
-    virtual ~InstructionStatement() = default;
+    virtual ~Statement() = default;
     virtual void Process() = 0;
     virtual string GetResult() = 0;
 
@@ -15,7 +15,7 @@ struct InstructionStatement
     - a_command for @Xxx where Xxx is either a symbol
     or decimal number
     - c_command for dest = comp;jump
-    - l_command (actually, pseudocommand) for
+    - l_command (actually, pseudo command) for
     for (Xxx) where Xxx is a symbol
     * \return a_command, c_command, l_command
     */

@@ -1,18 +1,18 @@
 ﻿#pragma once
 
 
-#include "InstructionStatement.h"
+#include "Statement.h"
 
 
 /**
- * \brief Encapsulates access to the input code. Reads an assembly language com-
-    mand, parses it, and provides convenient access to the command’s components
+ * \brief Encapsulates access to the input code. Reads an assembly language 
+    command, parses it, and provides convenient access to the command’s components
     (fields and symbols). In addition, removes all white space and comments.
  * \ctor Opens the input file/stream and gets ready for parse it.
  */
-struct AssemblerParser
+struct AssemblyParser
 {
-    virtual ~AssemblerParser() = default;
+    virtual ~AssemblyParser() = default;
 
     /**
      * \brief Reads the next command from the input
@@ -28,5 +28,5 @@ struct AssemblerParser
      * \brief 
      * \return Encapsulated command
      */
-    virtual unique_ptr<InstructionStatement> ProduceStatement() = 0;
+    virtual unique_ptr<Statement> ProduceStatement() = 0;
 };

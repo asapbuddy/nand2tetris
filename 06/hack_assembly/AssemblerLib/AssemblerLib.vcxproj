@@ -157,7 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="API\InstructionStatement.h" />
+    <ClInclude Include="API\Statement.h" />
     <ClInclude Include="API\TextFile.h" />
     <ClInclude Include="Core\Global.h" />
     <ClInclude Include="HACK\Assembler.h" />
@@ -168,7 +168,7 @@
     <ClCompile Include="HACK\SymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\AssemblerParser.h" />
+    <ClInclude Include="API\AssemblyParser.h" />
     <ClInclude Include="API\LookupTable.h" />
     <ClInclude Include="Core\FabricModule.h" />
     <ClInclude Include="HACK\Commands\Address.h" />
@@ -177,6 +177,7 @@
     <ClInclude Include="HACK\Commands\InstructionDto.h" />
     <ClInclude Include="HACK\Commands\Label.h" />
     <ClInclude Include="HACK\Commands\NullCommand.h" />
+    <ClInclude Include="HACK\Commands\StatementParameters.h" />
     <ClInclude Include="HACK\Decoder.h" />
     <ClInclude Include="HACK\Parser.h" />
     <ClInclude Include="HACK\SourceCodeFile.h" />
