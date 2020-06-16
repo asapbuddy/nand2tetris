@@ -9,6 +9,61 @@
 #include "Commands/Label.h"
 
 
+void Parser::Advance()
+{
+    do
+    {
+        std::getline(FileStream_, current_token_);
+    }
+    while(FileStream_.is_open() && current_token_.size() == 0 || current_token_[0] == '/');
+}
+
+bool Parser::HasMoreCommands()
+{
+    //TODO: Figure out to is need more intillegence method to determine that or not
+    return FileStream_.peek() != EOF;
+}
+
+
+unique_ptr<InstructionStatement> Parser::ProduceStatement()
+{
+    const string& token = current_token_;
+    unique_ptr<InstructionStatement> result;
+
+    for(int i = 0; i < token.size() - 1; ++i)
+    {
+        if(token[i] == ' ')
+            continue;
+
+        if(token[i] == '/')
+        {
+            result = ProduceNullCommand();
+            break;
+        }
+        if(token[i] == '@')
+        {
+            result = ProduceAddressCommand(i);
+            break;
+        }
+        if(token[i] == '(')
+        {
+            result = ProduceLabelCommand(i);
+            break;
+        }
+        else
+        {
+            result = ProduceInstructionCommand(i);
+            break;
+        }
+    }
+
+    const auto command_type = result->GetCommandType();
+    if(command_type == CommandType::a_command || command_type == CommandType::c_command)
+        instructions_produced_++;
+
+    return result;
+}
+
 unique_ptr<NullCommand> Parser::ProduceNullCommand() const
 {
     return make_unique<NullCommand>();
@@ -66,56 +121,6 @@ unique_ptr<Label> Parser::ProduceLabelCommand(int start) const
         ++i;
     auto mnemonic = current_token_.substr(start + 1, i - start - 1);
     return make_unique<Label>(move(mnemonic), instructions_produced_);
-}
-
-unique_ptr<InstructionStatement> Parser::ProduceStatement()
-{
-    const string& token = current_token_;
-    unique_ptr<InstructionStatement> result;
-
-    for(int i = 0; i < token.size() - 1; ++i)
-    {
-        if(token[i] == ' ')
-            continue;
-
-        if(token[i] == '/')
-        {
-            result = ProduceNullCommand();
-            break;
-        }
-        if(token[i] == '@')
-        {
-            result = ProduceAddressCommand(i);
-            break;
-        }
-        if(token[i] == '(')
-        {
-            result = ProduceLabelCommand(i);
-            break;
-        }
-    }
-
-    const auto command_type = result->GetCommandType();
-    if(command_type == CommandType::a_command || command_type == CommandType::c_command)
-        instructions_produced_++;
-
-    return result;
-}
-
-
-void Parser::Advance()
-{
-    do
-    {
-        std::getline(FileStream_, current_token_);
-    }
-    while(FileStream_.is_open() && current_token_.size() == 0 || current_token_[0] == '/');
-}
-
-bool Parser::HasMoreCommands()
-{
-    //TODO: Figure out to is need more intillegence method to determine that or not
-    return FileStream_.peek() != EOF;
 }
 
 Parser::~Parser()

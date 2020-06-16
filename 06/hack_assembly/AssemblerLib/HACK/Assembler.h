@@ -1,7 +1,7 @@
 ﻿#pragma once
+#include <string>
 #include <vector>
 
-#include "../Core/Helper.h"
 
 class Assembler
 {

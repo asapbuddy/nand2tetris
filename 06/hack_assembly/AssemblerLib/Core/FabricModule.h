@@ -2,8 +2,7 @@
 
 
 #include "../API/LookupTable.h"
-#include "../HACK/CodeGenerator.h"
-#include "../HACK/Parser.h"
+#include "../HACK/Decoder.h"
 #include "../HACK/SymbolTable.h"
 
 class FabricModule final
@@ -15,7 +14,7 @@ class FabricModule final
 
     FabricModule() = default;
 
-    InstructionHandler* code_module_ = nullptr;
+    InstructionDecoder* code_module_ = nullptr;
     LookupTable* symbol_table_ = nullptr;
 
 public:
@@ -26,20 +25,18 @@ public:
         return instance;
     }
 
-    InstructionHandler* get_code_module()
+    InstructionDecoder* get_code_module()
     {
         if(code_module_ == nullptr)
-            code_module_ = new CodeGenerator;
+            code_module_ = new Decoder;
 
         return code_module_;
     }
 
-    LookupTable* get_symbol_table()
+    static LookupTable& get_symbol_table()
     {
-        if(symbol_table_ == nullptr)
-            symbol_table_ = new SymbolTable;
-
-        return symbol_table_;
+        static SymbolTable table;
+        return table;
     }
 
     ~FabricModule()

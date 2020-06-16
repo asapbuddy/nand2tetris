@@ -4,35 +4,36 @@
 #include "../../API/InstructionStatement.h"
 #include "../../API/LookupTable.h"
 #include "../../Core/FabricModule.h"
-#include "../../Core/Helper.h"
+
 
 class Address : public InstructionStatement
 {
     string mnemonic_, result_;
 
     inline static unsigned a_counter_ = 16;
-    LookupTable* symbol_table_ = nullptr;
+    LookupTable& symbol_table_;
 
 
 public:
     ~Address() override = default;
 
     Address(string&& mnemonic)
-        : mnemonic_(std::move(mnemonic))
+        : mnemonic_(std::move(mnemonic)),
+          symbol_table_(FabricModule::get_symbol_table())
     {
-        auto& fabric = FabricModule::instance();
-        symbol_table_ = fabric.get_symbol_table();
     }
 
     void Process() override
     {
-        if(Helper::is_digit(mnemonic_))
+        if(is_digit(mnemonic_))
             result_ = std::bitset<16>(stoi(mnemonic_)).to_string();
+        else
+        {
+            if(!symbol_table_.Contains(mnemonic_))
+                symbol_table_.AddEntry(mnemonic_, a_counter_++);
 
-        if(!symbol_table_->Contains(mnemonic_))
-            symbol_table_->AddEntry(mnemonic_, a_counter_++);
-
-        result_ = std::bitset<16>(symbol_table_->GetAddress(mnemonic_)).to_string();
+            result_ = std::bitset<16>(symbol_table_.GetAddress(mnemonic_)).to_string();
+        }
     }
 
     string GetResult() override
@@ -43,5 +44,16 @@ public:
     CommandType GetCommandType() override
     {
         return CommandType::a_command;
+    }
+
+private:
+    static bool is_digit(std::string& s)
+    {
+        for(auto ch : s)
+        {
+            if(!std::isdigit(ch))
+                return false;
+        }
+        return true;
     }
 };

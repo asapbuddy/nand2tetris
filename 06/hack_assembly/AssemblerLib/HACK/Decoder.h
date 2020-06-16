@@ -2,12 +2,12 @@
 #include <string>
 #include <unordered_map>
 
-#include "Commands/InstructionHandler.h"
+#include "Commands/InstructionDecoder.h"
 
 
 using namespace std;
 
-class CodeGenerator final : public InstructionHandler
+class Decoder final : public InstructionDecoder
 {
     std::unordered_map<string, string> comp_table_;
     std::unordered_map<string, string> jump_table_;
@@ -21,7 +21,7 @@ class CodeGenerator final : public InstructionHandler
     void init_dest_table();
 public:
 
-    CodeGenerator()
+    Decoder()
     {
         init_comp_table();
         init_jump_table();
@@ -32,5 +32,5 @@ public:
     std::string comp(std::string mnemonic) override;
     std::string jump(std::string mnemonic) override;
     std::string instruction() override;
-    ~CodeGenerator() override = default;
+    ~Decoder() override = default;
 };

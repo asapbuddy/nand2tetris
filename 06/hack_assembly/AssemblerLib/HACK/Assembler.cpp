@@ -1,15 +1,12 @@
 ﻿#include "Assembler.h"
 
 #include <iterator>
-
-
-
 #include "Parser.h"
-#include "SourceCode.h"
+#include "SourceCodeFile.h"
 
 void Assembler::process_labels() const
 {
-    SourceCode source_code(file_path_);
+    SourceCodeFile source_code(file_path_);
     auto filestream = source_code.GetFileStream();
     Parser parser(std::move(filestream));
 
@@ -25,7 +22,7 @@ void Assembler::process_labels() const
 
 void Assembler::compile()
 {
-    SourceCode source_code(file_path_);
+    SourceCodeFile source_code(file_path_);
     auto filestream = source_code.GetFileStream();
     Parser parser(std::move(filestream));
 

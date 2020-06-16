@@ -1,8 +1,8 @@
-﻿#include "SourceCode.h"
+﻿#include "SourceCodeFile.h"
 
 #include <filesystem>
 
-void SourceCode::CheckFile() const
+void SourceCodeFile::CheckFile() const
 {
     const std::filesystem::path input(filename_);
     if(!exists(input))
@@ -15,7 +15,7 @@ void SourceCode::CheckFile() const
         throw ("Input file is empty");
 }
 
-std::ifstream SourceCode::GetFileStream()
+std::ifstream SourceCodeFile::GetFileStream()
 {
     CheckFile();
     return std::ifstream(filename_);

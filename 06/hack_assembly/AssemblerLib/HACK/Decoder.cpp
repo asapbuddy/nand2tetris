@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "CodeGenerator.h"
+#include "Decoder.h"
 
 #include <bitset>
 
 
-void CodeGenerator::init_comp_table()
+void Decoder::init_comp_table()
 {
     comp_table_["0"] = "101010";
     comp_table_["1"] = "111111";
@@ -38,7 +38,7 @@ void CodeGenerator::init_comp_table()
 }
 
 
-void CodeGenerator::init_jump_table()
+void Decoder::init_jump_table()
 {
     jump_table_["JGT"] = "001";
     jump_table_["JEQ"] = "010";
@@ -50,7 +50,7 @@ void CodeGenerator::init_jump_table()
 }
 
 
-void CodeGenerator::init_dest_table()
+void Decoder::init_dest_table()
 {
     dest_table_["M"] = "001";
     dest_table_["D"] = "010";
@@ -62,10 +62,10 @@ void CodeGenerator::init_dest_table()
 }
 
 
-std::string CodeGenerator::dest(std::string mnemonic)
+std::string Decoder::dest(std::string mnemonic)
 {
     if(dest_table_.count(mnemonic) == 0)
-        return bitset<16>(0).to_string();
+        throw "Dest mnemonic not found";
 
     const auto result = bitset<16>(dest_table_[mnemonic]) << DEST_SHIFT;
 
@@ -73,7 +73,7 @@ std::string CodeGenerator::dest(std::string mnemonic)
 }
 
 
-std::string CodeGenerator::comp(std::string mnemonic)
+std::string Decoder::comp(std::string mnemonic)
 {
     const bool a_bit = mnemonic.find('M') == string::npos ? false : true;
     string str;
@@ -88,7 +88,7 @@ std::string CodeGenerator::comp(std::string mnemonic)
 }
 
 
-std::string CodeGenerator::jump(std::string mnemonic)
+std::string Decoder::jump(std::string mnemonic)
 {
     if(jump_table_.count(mnemonic) == 0)
         return bitset<16>(0).to_string();
@@ -97,7 +97,7 @@ std::string CodeGenerator::jump(std::string mnemonic)
 }
 
 
-std::string CodeGenerator::instruction()
+std::string Decoder::instruction()
 {
     std::string result{"111"};
     return result;

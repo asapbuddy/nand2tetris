@@ -2,21 +2,18 @@
 #include <string>
 
 
-#include "InstructionHandler.h"
+#include "InstructionDecoder.h"
 
 
 class Instruction : public InstructionStatement
 {
-    std::string comp_, dest_, jump_;
-    InstructionHandler* code_module_ = nullptr;
-    std::string result_;
+    std::string comp_, dest_, jump_, result_;
+    InstructionDecoder* code_module_ = nullptr;
 public:
     ~Instruction() override = default;
 
     Instruction(std::string&& comp, string&& dest, string&& jump)
-        : comp_(std::move(comp)),
-          dest_(std::move(dest)),
-          jump_(std::move(jump))
+        : comp_(comp), dest_(dest), jump_(jump)
     {
         auto& fabric = FabricModule::instance();
         code_module_ = fabric.get_code_module();
