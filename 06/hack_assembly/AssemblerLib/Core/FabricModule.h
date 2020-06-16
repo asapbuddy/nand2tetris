@@ -7,43 +7,14 @@
 
 class FabricModule final
 {
-    FabricModule(const FabricModule& other) = delete;
-    FabricModule(FabricModule&& other) noexcept = delete;
-    FabricModule& operator=(const FabricModule& other) = delete;
-    FabricModule& operator=(FabricModule&& other) noexcept = delete;
-
-    FabricModule() = default;
-
-    InstructionDecoder* code_module_ = nullptr;
-    LookupTable* symbol_table_ = nullptr;
-
 public:
-
-    static FabricModule& instance()
+    static InstructionDecoder* get_code_module()
     {
-        static FabricModule instance;
-        return instance;
+        return new Decoder;
     }
 
-    InstructionDecoder* get_code_module()
+    static LookupTable* get_symbol_table()
     {
-        if(code_module_ == nullptr)
-            code_module_ = new Decoder;
-
-        return code_module_;
-    }
-
-    static LookupTable& get_symbol_table()
-    {
-        static SymbolTable table;
-        return table;
-    }
-
-    ~FabricModule()
-    {
-        if(code_module_ != nullptr)
-            delete code_module_;
-        if(symbol_table_ != nullptr)
-            delete symbol_table_;
+        return new SymbolTable;
     }
 };

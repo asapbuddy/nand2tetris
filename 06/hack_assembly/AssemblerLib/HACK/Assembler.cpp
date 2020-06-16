@@ -8,7 +8,7 @@ void Assembler::process_labels() const
 {
     SourceCodeFile source_code(file_path_);
     auto filestream = source_code.GetFileStream();
-    Parser parser(std::move(filestream));
+    Parser parser(std::move(filestream), lookup_table_, instruction_decoder_);
 
     while(parser.HasMoreCommands())
     {
@@ -24,7 +24,7 @@ void Assembler::compile()
 {
     SourceCodeFile source_code(file_path_);
     auto filestream = source_code.GetFileStream();
-    Parser parser(std::move(filestream));
+    Parser parser(std::move(filestream), lookup_table_, instruction_decoder_);
 
     while(parser.HasMoreCommands())
     {

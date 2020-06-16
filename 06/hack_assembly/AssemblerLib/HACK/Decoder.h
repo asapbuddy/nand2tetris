@@ -28,9 +28,9 @@ public:
         init_dest_table();
     }
 
-    std::string dest(std::string mnemonic) override;
-    std::string comp(std::string mnemonic) override;
-    std::string jump(std::string mnemonic) override;
+    std::string dest(std::string mnemonic) const override;
+    std::string comp(std::string mnemonic) const override;
+    std::string jump(std::string mnemonic) const override;
     std::string instruction() override;
     ~Decoder() override = default;
 };

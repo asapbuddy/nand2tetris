@@ -171,12 +171,13 @@
     <ClInclude Include="API\AssemblerParser.h" />
     <ClInclude Include="API\LookupTable.h" />
     <ClInclude Include="Core\FabricModule.h" />
-    <ClInclude Include="HACK\Decoder.h" />
     <ClInclude Include="HACK\Commands\Address.h" />
     <ClInclude Include="HACK\Commands\Instruction.h" />
     <ClInclude Include="HACK\Commands\InstructionDecoder.h" />
+    <ClInclude Include="HACK\Commands\InstructionDto.h" />
     <ClInclude Include="HACK\Commands\Label.h" />
     <ClInclude Include="HACK\Commands\NullCommand.h" />
+    <ClInclude Include="HACK\Decoder.h" />
     <ClInclude Include="HACK\Parser.h" />
     <ClInclude Include="HACK\SourceCodeFile.h" />
     <ClInclude Include="HACK\SymbolTable.h" />

@@ -1,7 +1,6 @@
 ﻿#include <boost/test/unit_test.hpp>
 
 #include "Fixtures.h"
-#include <bitset>
 using namespace std;
 
 namespace assembler_tests

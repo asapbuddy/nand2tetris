@@ -4,7 +4,6 @@
 #include <iosfwd>
 
 
-#include "SourceCodeFile.h"
 #include "../API/AssemblerParser.h"
 #include "Commands/Address.h"
 #include "Commands/Instruction.h"
@@ -18,11 +17,16 @@ class Parser final : public AssemblerParser
     ifstream FileStream_;
     string current_token_;
     unsigned instructions_produced_;
+    LookupTable* const symbol_table_;
+    InstructionDecoder* const instruction_decoder_;
 
 public:
-    Parser(ifstream&& filestream)
+    Parser(ifstream&& filestream, LookupTable* const lookup_table, InstructionDecoder* const instruction_decoder)
         : FileStream_(std::move(filestream)),
-          instructions_produced_(0)
+          instructions_produced_(0),
+          symbol_table_(lookup_table),
+          instruction_decoder_(instruction_decoder)
+
     {
     }
 
@@ -32,7 +36,7 @@ public:
 
     bool HasMoreCommands() override;
 
-    ~Parser() override;
+    ~Parser() override = default;
 private:
     unique_ptr<NullCommand> ProduceNullCommand() const;
     unique_ptr<Address> ProduceAddressCommand(int start) const;

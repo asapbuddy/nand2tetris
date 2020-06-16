@@ -13,19 +13,19 @@ struct InstructionDecoder
     * \brief 
     * \return binary code of dest mnemonic
     */
-    virtual std::string dest(std::string mnemonic) = 0;
-    
+    virtual std::string dest(std::string mnemonic) const = 0;
+
     /**
     * \brief 
     * \return binary code of comp mnemonic
     */
-    virtual std::string comp(std::string mnemonic) = 0;
-    
+    virtual std::string comp(std::string mnemonic) const = 0;
+
     /**
     * \brief 
     * \return binary code of jump mnemonic
     */
-    virtual std::string jump(std::string mnemonic) = 0;
+    virtual std::string jump(std::string mnemonic) const = 0;
 
     /**
      * \brief clients doesn't actually know about processing

@@ -62,25 +62,25 @@ void Decoder::init_dest_table()
 }
 
 
-std::string Decoder::dest(std::string mnemonic)
+std::string Decoder::dest(std::string mnemonic) const
 {
     if(dest_table_.count(mnemonic) == 0)
         throw "Dest mnemonic not found";
 
-    const auto result = bitset<16>(dest_table_[mnemonic]) << DEST_SHIFT;
+    const auto result = bitset<16>(dest_table_.at(mnemonic)) << DEST_SHIFT;
 
     return result.to_string();
 }
 
 
-std::string Decoder::comp(std::string mnemonic)
+std::string Decoder::comp(std::string mnemonic) const
 {
     const bool a_bit = mnemonic.find('M') == string::npos ? false : true;
     string str;
     str += a_bit ? "1" : "0";
     if(comp_table_.count(mnemonic) == 0)
         throw "Comp mnemonic not found";
-    str += comp_table_[mnemonic];
+    str += comp_table_.at(mnemonic);
 
     const auto result = bitset<16>(str) << COMP_SHIFT;
 
@@ -88,11 +88,11 @@ std::string Decoder::comp(std::string mnemonic)
 }
 
 
-std::string Decoder::jump(std::string mnemonic)
+std::string Decoder::jump(std::string mnemonic) const
 {
     if(jump_table_.count(mnemonic) == 0)
         return bitset<16>(0).to_string();
-    const auto result = bitset<16>(jump_table_[mnemonic]);
+    const auto result = bitset<16>(jump_table_.at(mnemonic));
     return result.to_string();
 }
 
