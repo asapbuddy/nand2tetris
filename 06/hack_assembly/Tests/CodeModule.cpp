@@ -3,7 +3,7 @@
 
 #include "Fixtures.h"
 #include <bitset>
-#include <AssemblerLib/HACK/Decoder.h>
+
 using namespace std;
 
 constexpr uint8_t BITNESS = 16;

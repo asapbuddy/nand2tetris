@@ -2,10 +2,9 @@
 #include <bitset>
 
 
-#include "StatementParameters.h"
+#include "ProcessingParameters.h"
 #include "../../API/Statement.h"
 #include "../../API/LookupTable.h"
-#include "../../Core/FabricModule.h"
 
 
 class Address final : public Statement

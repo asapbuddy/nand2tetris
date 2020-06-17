@@ -157,30 +157,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="API\Statement.h" />
-    <ClInclude Include="API\TextFile.h" />
-    <ClInclude Include="HACK\Assembler.h" />
-    <ClCompile Include="HACK\Assembler.cpp" />
-    <ClCompile Include="HACK\Decoder.cpp" />
-    <ClCompile Include="HACK\Parser.cpp" />
-    <ClCompile Include="HACK\SourceCodeFile.cpp" />
-    <ClCompile Include="HACK\SymbolTable.cpp" />
+    <ClInclude Include="AssemblyParser.h" />
+    <ClInclude Include="Fabric.h" />
+    <ClInclude Include="LookupTable.h" />
+    <ClInclude Include="Statement.h" />
+    <ClInclude Include="StatementParameters.h" />
+    <ClInclude Include="TextFile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\AssemblyParser.h" />
-    <ClInclude Include="API\LookupTable.h" />
-    <ClInclude Include="Core\FabricModule.h" />
-    <ClInclude Include="HACK\Statements\Address.h" />
-    <ClInclude Include="HACK\Statements\Instruction.h" />
-    <ClInclude Include="HACK\Statements\InstructionDecoder.h" />
-    <ClInclude Include="HACK\Statements\PackedInstruction.h" />
-    <ClInclude Include="HACK\Statements\Label.h" />
-    <ClInclude Include="HACK\Statements\NullCommand.h" />
-    <ClInclude Include="HACK\Statements\StatementParameters.h" />
-    <ClInclude Include="HACK\Decoder.h" />
-    <ClInclude Include="HACK\Parser.h" />
-    <ClInclude Include="HACK\SourceCodeFile.h" />
-    <ClInclude Include="HACK\SymbolTable.h" />
+    <ClInclude Include="Assembler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

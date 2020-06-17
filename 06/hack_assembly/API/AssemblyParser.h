@@ -1,10 +1,7 @@
 ﻿#pragma once
-
-
 #include "Statement.h"
+#include "StatementParameters.h"
 
-
-class StatementParameters;
 
 /**
  * \brief Encapsulates access to the input code. Reads an assembly language 
@@ -24,6 +21,10 @@ struct AssemblyParser
      */
     virtual void Advance() = 0;
 
+    /**
+     * \brief For iterating through file
+     * \return true if file has more commands
+     */
     virtual bool HasMoreCommands() = 0;
 
     /**

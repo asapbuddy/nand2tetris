@@ -4,6 +4,7 @@
 
 #include "../API/TextFile.h"
 
+
 class SourceCodeFile final : public TextFile
 {
     const char* filename_;

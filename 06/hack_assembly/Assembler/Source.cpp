@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "../AssemblerLib/HACK/Assembler.h"
+
+#include "../HackPlatform/Assembler.h"
 
 using namespace std;
 
@@ -18,10 +19,10 @@ int main(const int argc, char* argv[])
 
     try
     {
-        Assembler assembler(argv[1]);
-        assembler.process_labels();
-        assembler.assemble();
-        assembler.save("hack");
+        auto assembler = make_unique<TwoPassAssembler>(argv[1]);
+        assembler->process_labels();
+        assembler->Compile();
+        assembler->SaveBinary();
     }
     catch(exception& ex)
     {

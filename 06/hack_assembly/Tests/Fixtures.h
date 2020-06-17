@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
-#include <AssemblerLib/HACK/Assembler.h>
+#include <HackPlatform/Assembler.h>
+#include <HackPlatform/Statements/PackedInstruction.h>
 
 
 namespace assembler_tests
@@ -9,7 +10,7 @@ namespace assembler_tests
 
     struct Configuration
     {
-        std::string tests_path{"..\\AssemblerTests\\Tests\\"};
+        std::string tests_path{"..\\Tests\\Tests\\"};
 
 
         PackedInstruction dest(const string& dest)
@@ -40,10 +41,10 @@ namespace assembler_tests
         {
             auto path(tests_path);
             path.append(name).append(".asm");
-            Assembler assembler_module(path.c_str());
+            TwoPassAssembler assembler_module(path.c_str());
             assembler_module.process_labels();
-            assembler_module.assemble();
-            assembler_module.save("hack");
+            assembler_module.Compile();
+            assembler_module.SaveBinary();
         }
 
         bool compare_two_files(const std::string& file1, const std::string& file2) const

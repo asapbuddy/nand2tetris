@@ -4,7 +4,7 @@
 #include "Parser.h"
 #include "SourceCodeFile.h"
 
-void Assembler::process_labels()
+void TwoPassAssembler::process_labels()
 {
     SourceCodeFile source_code(file_path_);
     Parser parser(source_code.GetFileStream());
@@ -23,7 +23,7 @@ void Assembler::process_labels()
     }
 }
 
-void Assembler::assemble()
+void TwoPassAssembler::Compile()
 {
     SourceCodeFile source_code(file_path_);
     Parser parser(source_code.GetFileStream());
@@ -42,12 +42,12 @@ void Assembler::assemble()
     }
 }
 
-void Assembler::save(const char* ext)
+void TwoPassAssembler::SaveBinary()
 {
     const std::string fn(file_path_);
     const auto dot = fn.rfind('.', fn.length());
 
-    const auto output_fn = dot == std::string::npos ? fn + ext : fn.substr(0, dot + 1) + ext;
+    const auto output_fn = dot == std::string::npos ? fn + "hack" : fn.substr(0, dot + 1) + "hack";
     std::ofstream output_file(output_fn);
     const ostream_iterator<std::string> output_iterator(output_file, "\n");
     std::copy(result_.begin(), result_.end(), output_iterator);

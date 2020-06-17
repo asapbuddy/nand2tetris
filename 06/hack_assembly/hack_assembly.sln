@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assembler", "Assembler\Assembler.vcxproj", "{5A823DB7-F35B-468B-B6B4-EA3F82483A03}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssemblerLib", "AssemblerLib\AssemblerLib.vcxproj", "{01243917-9CDE-4C12-83D4-F41929B6CC75}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "API", "API\API.vcxproj", "{01243917-9CDE-4C12-83D4-F41929B6CC75}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssemblerTests", "AssemblerTests\AssemblerTests.vcxproj", "{85B70589-8BBA-48A1-8533-F20800042247}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{85B70589-8BBA-48A1-8533-F20800042247}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HackPlatform", "HackPlatform\HackPlatform.vcxproj", "{42DAB291-1699-48CC-BB2C-FAAC1A957638}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{85B70589-8BBA-48A1-8533-F20800042247}.Release|Win32.Build.0 = Release|Win32
 		{85B70589-8BBA-48A1-8533-F20800042247}.Release|x64.ActiveCfg = Release|x64
 		{85B70589-8BBA-48A1-8533-F20800042247}.Release|x64.Build.0 = Release|x64
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Debug|Win32.ActiveCfg = Debug|Win32
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Debug|Win32.Build.0 = Debug|Win32
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Debug|x64.ActiveCfg = Debug|x64
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Debug|x64.Build.0 = Debug|x64
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Release|Win32.ActiveCfg = Release|Win32
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Release|Win32.Build.0 = Release|Win32
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Release|x64.ActiveCfg = Release|x64
+		{42DAB291-1699-48CC-BB2C-FAAC1A957638}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

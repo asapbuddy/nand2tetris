@@ -14,7 +14,16 @@ enum class CommandType
 struct Statement
 {
     virtual ~Statement() = default;
+
+    /**
+     * \brief Hidden Command logic
+     */
     virtual void Process() = 0;
+
+    /**
+     * \brief Call if need
+     * \return result after command execution
+     */
     virtual string GetResult() = 0;
 
     /**

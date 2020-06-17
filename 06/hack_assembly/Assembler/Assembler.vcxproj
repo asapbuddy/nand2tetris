@@ -163,13 +163,9 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AssemblerLib\AssemblerLib.vcxproj">
-      <Project>{01243917-9cde-4c12-83d4-f41929b6cc75}</Project>
-      <Name>AssemblerLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AssemblerTests\AssemblerTests.vcxproj">
-      <Project>{85b70589-8bba-48a1-8533-f20800042247}</Project>
-      <Name>AssemblerTests</Name>
+    <ProjectReference Include="..\HackPlatform\HackPlatform.vcxproj">
+      <Project>{42dab291-1699-48cc-bb2c-faac1a957638}</Project>
+      <Name>HackPlatform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
