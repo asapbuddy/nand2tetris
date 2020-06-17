@@ -1,11 +1,10 @@
 #include <iostream>
 
 #include "../AssemblerLib/HACK/Assembler.h"
-#include "../core/Parser.h"
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int main(const int argc, char* argv[])
 {
     if(argc < 2)
     {
@@ -21,7 +20,7 @@ int main(int argc, char* argv[])
     {
         Assembler assembler(argv[1]);
         assembler.process_labels();
-        assembler.compile();
+        assembler.assemble();
         assembler.save("hack");
     }
     catch(exception& ex)

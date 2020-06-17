@@ -2,7 +2,14 @@
 #include <string>
 
 using namespace std;
-#include "../Core/Global.h"
+
+enum class CommandType
+{
+    address,
+    instruction,
+    label,
+    not_command
+};
 
 struct Statement
 {

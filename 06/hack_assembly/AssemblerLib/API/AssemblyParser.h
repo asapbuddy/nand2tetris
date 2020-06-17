@@ -4,6 +4,8 @@
 #include "Statement.h"
 
 
+class StatementParameters;
+
 /**
  * \brief Encapsulates access to the input code. Reads an assembly language 
     command, parses it, and provides convenient access to the command’s components
@@ -28,5 +30,5 @@ struct AssemblyParser
      * \brief 
      * \return Encapsulated command
      */
-    virtual unique_ptr<Statement> ProduceStatement() = 0;
+    virtual unique_ptr<Statement> ProduceStatement(StatementParameters& statement_parameters) = 0;
 };

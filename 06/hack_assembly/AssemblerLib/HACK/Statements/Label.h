@@ -3,7 +3,7 @@
 #include "../../API/Statement.h"
 #include "../../API/LookupTable.h"
 
-class Label : public Statement
+class Label final : public Statement
 {
     std::string mnemonic_;
     StatementParameters& parameters_;
@@ -31,6 +31,6 @@ public:
 
     CommandType GetCommandType() override
     {
-        return CommandType::l_command;
+        return CommandType::label;
     }
 };

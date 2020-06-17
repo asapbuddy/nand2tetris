@@ -5,10 +5,10 @@
 class StatementParameters
 {
     LookupTable* const lookup_table_;
-    const InstructionDecoder* const instruction_decoder_;
+    InstructionDecoder* const instruction_decoder_;
     unsigned AddressInstructionOffset = 16, ProcessedInstructions = 0;
 public:
-    StatementParameters(LookupTable* const lookup_table, const InstructionDecoder* const instruction_decoder)
+    StatementParameters(LookupTable* const lookup_table, InstructionDecoder* const instruction_decoder)
         : lookup_table_(lookup_table), instruction_decoder_(instruction_decoder)
     {
     }
@@ -33,7 +33,7 @@ public:
         return lookup_table_;
     }
 
-    const InstructionDecoder* GetInstructionDecoder() const
+    InstructionDecoder* GetInstructionDecoder() const
     {
         return instruction_decoder_;
     }

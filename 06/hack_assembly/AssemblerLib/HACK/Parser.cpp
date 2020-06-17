@@ -4,11 +4,6 @@
 #include <filesystem>
 #include <fstream>
 
-#include "Commands/Address.h"
-#include "Commands/Instruction.h"
-#include "Commands/Label.h"
-
-
 void Parser::Advance()
 {
     do
@@ -25,43 +20,22 @@ bool Parser::HasMoreCommands()
 }
 
 
-unique_ptr<Statement> Parser::ProduceStatement()
+unique_ptr<Statement> Parser::ProduceStatement(StatementParameters& statement_parameters)
 {
-    const string& token = current_token_;
-    unique_ptr<Statement> result;
+    current_position_ = 0;
+    const auto& token = current_token_;
+    auto& position = current_position_;
+    while(token.at(position) == ' ')
+        ++position;
 
-    for(int i = 0; i < token.size() - 1; ++i)
-    {
-        if(token[i] == ' ')
-            continue;
+    if(token[position] == '/')
+        return ProduceNullCommand();
+    if(token[position] == '@')
+        return ProduceAddressCommand(statement_parameters);
+    if(token[position] == '(')
+        return ProduceLabelCommand(statement_parameters);
 
-        if(token[i] == '/')
-        {
-            result = ProduceNullCommand();
-            break;
-        }
-        if(token[i] == '@')
-        {
-            result = ProduceAddressCommand(i);
-            break;
-        }
-        if(token[i] == '(')
-        {
-            result = ProduceLabelCommand(i);
-            break;
-        }
-        else
-        {
-            result = ProduceInstructionCommand(i);
-            break;
-        }
-    }
-
-    const auto command_type = result->GetCommandType();
-    if(command_type == CommandType::a_command || command_type == CommandType::c_command)
-        statement_parameters_.IncreaseInstructionCounter();
-
-    return result;
+    return ProduceInstructionCommand(statement_parameters);
 }
 
 unique_ptr<NullCommand> Parser::ProduceNullCommand() const
@@ -69,25 +43,29 @@ unique_ptr<NullCommand> Parser::ProduceNullCommand() const
     return make_unique<NullCommand>();
 }
 
-unique_ptr<Address> Parser::ProduceAddressCommand(int start) const
+unique_ptr<Address> Parser::ProduceAddressCommand(StatementParameters& statement_parameters) const
 {
-    const string& token = current_token_;
-    int i = start;
+    const auto& token = current_token_;
+    const auto& start = current_position_;
+    auto i = start;
+
     while(token[i] != ' '
           && token[i] != '\n'
           && i < token.size() - 1)
         ++i;
 
     auto mnemonic = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
-    return make_unique<Address>(std::move(mnemonic), statement_parameters_);
+    return make_unique<Address>(std::move(mnemonic), statement_parameters);
 }
 
-unique_ptr<Instruction> Parser::ProduceInstructionCommand(int start) const
+unique_ptr<Instruction> Parser::ProduceInstructionCommand(StatementParameters& statement_parameters) const
 {
     string dest, comp, jump;
-    const string& token = current_token_;
+    const auto& token = current_token_;
+    const auto& start = current_position_;
 
-    int i = start, eq_pos = -1, sc_pos = -1; // equal and semicolon
+    auto i = start;
+    auto eq_pos = -1, sc_pos = -1; // equal and semicolon
 
     while(i < token.size() - 1 && token[i] != ' ')
     {
@@ -108,16 +86,17 @@ unique_ptr<Instruction> Parser::ProduceInstructionCommand(int start) const
     if(eq_pos < 0 && sc_pos > 0)
         comp = token.substr(start, sc_pos - start);
 
-    InstructionDto dto{dest, comp, jump};
+    PackedInstruction packed_instruction{dest, comp, jump};
 
-    return make_unique<Instruction>(std::move(dto), statement_parameters_);
+    return make_unique<Instruction>(std::move(packed_instruction), statement_parameters);
 }
 
-unique_ptr<Label> Parser::ProduceLabelCommand(int start) const
+unique_ptr<Label> Parser::ProduceLabelCommand(StatementParameters& statement_parameters) const
 {
-    int i = start;
+    const auto& start = current_position_;
+    auto i = start;
     while(current_token_[i] != ')' && i < current_token_.size() - 1)
         ++i;
     auto mnemonic = current_token_.substr(start + 1, i - start - 1);
-    return make_unique<Label>(move(mnemonic), statement_parameters_);
+    return make_unique<Label>(move(mnemonic), statement_parameters);
 }

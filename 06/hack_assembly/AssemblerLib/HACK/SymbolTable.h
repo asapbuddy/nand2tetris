@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class SymbolTable : public LookupTable
+class SymbolTable final : public LookupTable
 {
     unordered_map<string, int> symbol_table_;
 

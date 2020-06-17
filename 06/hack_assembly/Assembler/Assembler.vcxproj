@@ -168,7 +168,7 @@
       <Name>AssemblerLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\AssemblerTests\AssemblerTests.vcxproj">
-      <Project>{086549a7-3c6e-4a35-82d2-2323ab725c24}</Project>
+      <Project>{85b70589-8bba-48a1-8533-f20800042247}</Project>
       <Name>AssemblerTests</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,8 +1,9 @@
 ﻿#pragma once
+#include <bitset>
 #include <string>
 #include <unordered_map>
 
-#include "Commands/InstructionDecoder.h"
+#include "Statements/InstructionDecoder.h"
 
 
 using namespace std;
@@ -16,9 +17,6 @@ class Decoder final : public InstructionDecoder
     const uint8_t DEST_SHIFT = 3;
     const uint8_t COMP_SHIFT = 6;
 
-    void init_comp_table();
-    void init_jump_table();
-    void init_dest_table();
 public:
 
     Decoder()
@@ -28,9 +26,17 @@ public:
         init_dest_table();
     }
 
-    std::string dest(std::string mnemonic) const override;
-    std::string comp(std::string mnemonic) const override;
-    std::string jump(std::string mnemonic) const override;
-    std::string instruction() override;
+    std::string decode(const PackedInstruction& instruction) override;
+
     ~Decoder() override = default;
+
+private:
+
+    void init_comp_table();
+    void init_jump_table();
+    void init_dest_table();
+
+    bitset<16> dest(const string& mnemonic) const;
+    bitset<16> comp(const string& mnemonic) const;
+    bitset<16> jump(const string& mnemonic) const;
 };

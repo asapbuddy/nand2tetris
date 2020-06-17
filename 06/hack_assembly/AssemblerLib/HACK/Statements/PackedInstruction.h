@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <string>
 
-struct InstructionDto
+struct PackedInstruction
 {
     std::string dest;
     std::string comp;

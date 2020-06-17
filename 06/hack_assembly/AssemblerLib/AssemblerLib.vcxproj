@@ -159,7 +159,6 @@
   <ItemGroup>
     <ClInclude Include="API\Statement.h" />
     <ClInclude Include="API\TextFile.h" />
-    <ClInclude Include="Core\Global.h" />
     <ClInclude Include="HACK\Assembler.h" />
     <ClCompile Include="HACK\Assembler.cpp" />
     <ClCompile Include="HACK\Decoder.cpp" />
@@ -171,13 +170,13 @@
     <ClInclude Include="API\AssemblyParser.h" />
     <ClInclude Include="API\LookupTable.h" />
     <ClInclude Include="Core\FabricModule.h" />
-    <ClInclude Include="HACK\Commands\Address.h" />
-    <ClInclude Include="HACK\Commands\Instruction.h" />
-    <ClInclude Include="HACK\Commands\InstructionDecoder.h" />
-    <ClInclude Include="HACK\Commands\InstructionDto.h" />
-    <ClInclude Include="HACK\Commands\Label.h" />
-    <ClInclude Include="HACK\Commands\NullCommand.h" />
-    <ClInclude Include="HACK\Commands\StatementParameters.h" />
+    <ClInclude Include="HACK\Statements\Address.h" />
+    <ClInclude Include="HACK\Statements\Instruction.h" />
+    <ClInclude Include="HACK\Statements\InstructionDecoder.h" />
+    <ClInclude Include="HACK\Statements\PackedInstruction.h" />
+    <ClInclude Include="HACK\Statements\Label.h" />
+    <ClInclude Include="HACK\Statements\NullCommand.h" />
+    <ClInclude Include="HACK\Statements\StatementParameters.h" />
     <ClInclude Include="HACK\Decoder.h" />
     <ClInclude Include="HACK\Parser.h" />
     <ClInclude Include="HACK\SourceCodeFile.h" />

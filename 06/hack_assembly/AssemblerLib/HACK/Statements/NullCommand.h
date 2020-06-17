@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../../API/Statement.h"
 
-class NullCommand : public Statement
+class NullCommand final : public Statement
 {
 public:
     void Process() override

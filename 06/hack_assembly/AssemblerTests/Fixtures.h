@@ -11,25 +11,42 @@ namespace assembler_tests
     {
         std::string tests_path{"..\\AssemblerTests\\Tests\\"};
 
+
+        PackedInstruction dest(const string& dest)
+        {
+            return {dest, "", ""};
+        }
+
+        PackedInstruction comp(const string& comp)
+        {
+            return {"", comp, ""};
+        }
+
+        PackedInstruction jump(const string& jump)
+        {
+            return {"", "", jump};
+        }
+
+
         std::string locate_test_file(const char* name, const char* ext) const
         {
-            std::string result(tests_path);
+            auto result(tests_path);
             result.append(name);
             result.append(ext);
             return result;
         }
 
-        void create_assembly(const std::string& name)
+        void create_assembly(const std::string& name) const
         {
-            std::string path(tests_path);
+            auto path(tests_path);
             path.append(name).append(".asm");
             Assembler assembler_module(path.c_str());
             assembler_module.process_labels();
-            assembler_module.compile();
+            assembler_module.assemble();
             assembler_module.save("hack");
         }
 
-        bool compare_two_files(const std::string& file1, const std::string& file2)
+        bool compare_two_files(const std::string& file1, const std::string& file2) const
         {
             std::ifstream f1(file1, std::ifstream::binary | std::ifstream::ate);
             std::ifstream f2(file2, std::ifstream::binary | std::ifstream::ate);

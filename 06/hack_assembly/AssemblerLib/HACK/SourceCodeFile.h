@@ -4,13 +4,13 @@
 
 #include "../API/TextFile.h"
 
-class SourceCodeFile : public TextFile
+class SourceCodeFile final : public TextFile
 {
     const char* filename_;
     void CheckFile() const;
 
 public:
-    SourceCodeFile(const char* filename)
+    explicit SourceCodeFile(const char* filename)
         : filename_(filename)
     {
     }

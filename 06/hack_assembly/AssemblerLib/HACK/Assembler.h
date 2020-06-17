@@ -4,7 +4,7 @@
 
 
 #include "../Core/FabricModule.h"
-#include "Commands/StatementParameters.h"
+#include "Statements/StatementParameters.h"
 
 
 class Assembler
@@ -15,7 +15,7 @@ class Assembler
 
 
 public:
-    Assembler(const char* path)
+    explicit Assembler(const char* path)
         : file_path_(path),
           statement_parameters_(
               FabricModule::get_symbol_table(),
@@ -28,7 +28,7 @@ public:
 
     void process_labels();
 
-    void compile();
+    void assemble();
 
     void save(const char* ext);
 };

@@ -8,7 +8,7 @@
 #include "../../Core/FabricModule.h"
 
 
-class Address : public Statement
+class Address final : public Statement
 {
     string mnemonic_, result_;
     StatementParameters& parameters_;
@@ -48,7 +48,7 @@ public:
 
     CommandType GetCommandType() override
     {
-        return CommandType::a_command;
+        return CommandType::address;
     }
 
 private:
