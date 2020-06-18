@@ -67,20 +67,20 @@ std::bitset<16> Decoder::dest(const string& mnemonic) const
     if(dest_table_.count(mnemonic) == 0)
         throw "Dest mnemonic not found";
 
-    return bitset<16>(dest_table_.at(mnemonic)) << DEST_SHIFT;
+    return bitset<16>(dest_table_.at(mnemonic)) << dest_shift_;
 }
 
 
 std::bitset<16> Decoder::comp(const string& mnemonic) const
 {
-    const auto a_bit = mnemonic.find('M') == string::npos ? false : true;
+    const auto aBit = mnemonic.find('M') == string::npos ? false : true;
     string str;
-    str += a_bit ? "1" : "0";
+    str += aBit ? "1" : "0";
     if(comp_table_.count(mnemonic) == 0)
         throw "Comp mnemonic not found";
     str += comp_table_.at(mnemonic);
 
-    return bitset<16>(str) << COMP_SHIFT;
+    return bitset<16>(str) << comp_shift_;
 }
 
 
@@ -97,12 +97,12 @@ std::string Decoder::decode(const InstructionParts& instruction)
     std::bitset<16> mask(0);
     mask |= 0b111 << 13;
 
-    if(instruction.comp.size())
-        mask |= std::bitset<16>(comp(instruction.comp));
-    if(instruction.dest.size())
-        mask |= std::bitset<16>(dest(instruction.dest));
-    if(instruction.jump.size())
-        mask |= std::bitset<16>(jump(instruction.jump));
+    if(instruction.Comp.size())
+        mask |= std::bitset<16>(comp(instruction.Comp));
+    if(instruction.Dest.size())
+        mask |= std::bitset<16>(dest(instruction.Dest));
+    if(instruction.Jump.size())
+        mask |= std::bitset<16>(jump(instruction.Jump));
 
     return mask.to_string();
 }

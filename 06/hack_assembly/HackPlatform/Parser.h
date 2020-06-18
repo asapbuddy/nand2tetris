@@ -14,13 +14,13 @@ using namespace std;
 
 class Parser final : public AssemblyParser
 {
-    ifstream FileStream_;
+    ifstream file_stream_;
     string current_token_;
     unsigned current_position_ = 0;
 
 public:
-    Parser(ifstream&& filestream)
-        : FileStream_(std::move(filestream))
+    explicit Parser(ifstream&& filestream)
+        : file_stream_(std::move(filestream))
     {
     }
 

@@ -1,55 +1,63 @@
 ﻿#include "Assembler.h"
-
-#include <iterator>
 #include "Parser.h"
-#include "SourceCodeFile.h"
 
-void TwoPassAssembler::process_labels() const
+void TwoPassAssembler::ProcessLabels(SourceCodeFile sourceCode) const
 {
-    SourceCodeFile source_code(file_path_);
-    Parser parser(source_code.GetFileStream());
+    Parser parser(sourceCode.GetFileInputStream());
 
     while(parser.HasMoreCommands())
     {
         parser.Advance();
         auto command = parser.ProduceStatement();
-        const auto command_type = command->GetCommandType();
+        const auto commandType = command->GetCommandType();
 
         if(command->GetCommandType() == CommandType::label)
-            command->Process(*statement_parameters_);
+            command->Process(*parameters_);
 
-        if(command_type == CommandType::address || command_type == CommandType::instruction)
-            statement_parameters_->IncreaseInstructionCounter();
+        if(commandType == CommandType::address || commandType == CommandType::instruction)
+            parameters_->IncreaseInstructionCounter();
     }
 }
 
-void TwoPassAssembler::Compile()
+void TwoPassAssembler::ProcessInstructions(SourceCodeFile sourceCode)
 {
-    SourceCodeFile source_code(file_path_);
-    Parser parser(source_code.GetFileStream());
+    Parser parser(sourceCode.GetFileInputStream());
 
     while(parser.HasMoreCommands())
     {
         parser.Advance();
         auto command = parser.ProduceStatement();
-        const auto command_type = command->GetCommandType();
+        const auto commandType = command->GetCommandType();
 
-        if(command_type == CommandType::address || command_type == CommandType::instruction)
+        if(commandType == CommandType::address || commandType == CommandType::instruction)
         {
-            command->Process(*statement_parameters_);
+            command->Process(*parameters_);
             result_.emplace_back(command->GetResult());
         }
     }
 }
 
+void TwoPassAssembler::Compile(SourceCodeFile sourceCodeFile)
+{
+    ProcessLabels(sourceCodeFile);
+    ProcessInstructions(sourceCodeFile);
+}
+
+std::vector<std::string> TwoPassAssembler::GetCompilationResults()
+{
+    return result_;
+}
+
+/*
 void TwoPassAssembler::SaveBinary()
 {
     const std::string fn(file_path_);
     const auto dot = fn.rfind('.', fn.length());
 
-    const auto output_fn = dot == std::string::npos ? fn + "hack" : fn.substr(0, dot + 1) + "hack";
-    std::ofstream output_file(output_fn);
-    const ostream_iterator<std::string> output_iterator(output_file, "\n");
-    std::copy(result_.begin(), result_.end(), output_iterator);
-    output_file.close();
+    const auto outputFn = dot == std::string::npos ? fn + "hack" : fn.substr(0, dot + 1) + "hack";
+    std::ofstream outputFile(outputFn);
+    const ostream_iterator<std::string> outputIterator(outputFile, "\n");
+    std::copy(result_.begin(), result_.end(), outputIterator);
+    outputFile.close();
 }
+*/

@@ -163,10 +163,17 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\API\API.vcxproj">
+      <Project>{01243917-9cde-4c12-83d4-f41929b6cc75}</Project>
+      <Name>API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HackPlatform\HackPlatform.vcxproj">
       <Project>{42dab291-1699-48cc-bb2c-faac1a957638}</Project>
       <Name>HackPlatform</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HackFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

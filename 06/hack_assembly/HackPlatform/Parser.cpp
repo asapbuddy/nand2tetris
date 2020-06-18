@@ -8,15 +8,15 @@ void Parser::Advance()
 {
     do
     {
-        std::getline(FileStream_, current_token_);
+        std::getline(file_stream_, current_token_);
     }
-    while(FileStream_.is_open() && current_token_.size() == 0 || current_token_[0] == '/');
+    while(file_stream_.is_open() && current_token_.size() == 0 || current_token_[0] == '/');
 }
 
 bool Parser::HasMoreCommands()
 {
     //TODO: Figure out to is need more intillegence method to determine that or not
-    return FileStream_.peek() != EOF;
+    return file_stream_.peek() != EOF;
 }
 
 
@@ -65,30 +65,30 @@ unique_ptr<Instruction> Parser::ProduceInstructionCommand() const
     const auto& start = current_position_;
 
     auto i = start;
-    auto eq_pos = -1, sc_pos = -1; // equal and semicolon
+    auto eqPos = -1, scPos = -1; // equal and semicolon
 
     while(i < token.size() - 1 && token[i] != ' ')
     {
         if(token[i] == '=')
-            eq_pos = i;
+            eqPos = i;
 
         if(token[i] == ';')
-            sc_pos = i;
+            scPos = i;
         ++i;
     }
 
-    if(eq_pos > 0)
-        dest = token.substr(start, eq_pos - start);
-    if(sc_pos > 0)
-        jump = token.substr(sc_pos + 1, i - sc_pos - (token[i] == ' ' ? 1 : 0));
-    if(eq_pos > 0 && sc_pos < 0)
-        comp = token.substr(eq_pos + 1, i - eq_pos - (token[i] == ' ' ? 1 : 0));
-    if(eq_pos < 0 && sc_pos > 0)
-        comp = token.substr(start, sc_pos - start);
+    if(eqPos > 0)
+        dest = token.substr(start, eqPos - start);
+    if(scPos > 0)
+        jump = token.substr(scPos + 1, i - scPos - (token[i] == ' ' ? 1 : 0));
+    if(eqPos > 0 && scPos < 0)
+        comp = token.substr(eqPos + 1, i - eqPos - (token[i] == ' ' ? 1 : 0));
+    if(eqPos < 0 && scPos > 0)
+        comp = token.substr(start, scPos - start);
 
-    InstructionParts packed_instruction{dest, comp, jump};
+    InstructionParts packedInstruction{dest, comp, jump};
 
-    return make_unique<Instruction>(std::move(packed_instruction));
+    return make_unique<Instruction>(std::move(packedInstruction));
 }
 
 unique_ptr<Label> Parser::ProduceLabelCommand() const

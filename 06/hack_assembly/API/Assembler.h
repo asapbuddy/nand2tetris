@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include "../API/SourceCodeFile.h"
+#include <vector>
+
 struct Assembler
 {
     virtual ~Assembler() = default;
@@ -7,10 +10,10 @@ struct Assembler
     /**
      * \brief compiles source code
      */
-    virtual void Compile() = 0;
+    virtual void Compile(SourceCodeFile sourceCodeFile) = 0;
 
     /**
-     * \brief save compilation results
+     * \return Compiled source code in list of strings
      */
-    virtual void SaveBinary() = 0;
+    virtual std::vector<std::string> GetCompilationResults() = 0;
 };

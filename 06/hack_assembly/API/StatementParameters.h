@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "../HackPlatform/Statements/InstructionDecoder.h"
+#include "InstructionParts.h"
 
 struct StatementParameters
 {
@@ -7,7 +7,7 @@ struct StatementParameters
 
     virtual void IncreaseInstructionCounter() = 0;
 
-    virtual std::string DecodeInstruction(const InstructionParts& packed_instruction) const = 0;
+    virtual std::string DecodeInstruction(const InstructionParts& packedInstruction) const = 0;
 
     virtual std::string DecodeAddress(const std::string& address) const = 0;
 

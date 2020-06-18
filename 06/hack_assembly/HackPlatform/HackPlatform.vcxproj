@@ -21,16 +21,12 @@
   <ItemGroup>
     <ClInclude Include="Assembler.h" />
     <ClInclude Include="Decoder.h" />
-    <ClInclude Include="FabricModule.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="SourceCodeFile.h" />
+    <ClInclude Include="ProcessingParameters.h" />
     <ClInclude Include="Statements\Address.h" />
     <ClInclude Include="Statements\Instruction.h" />
-    <ClInclude Include="Statements\InstructionDecoder.h" />
     <ClInclude Include="Statements\Label.h" />
     <ClInclude Include="Statements\NullCommand.h" />
-    <ClInclude Include="Statements\InstructionParts.h" />
-    <ClInclude Include="Statements\ProcessingParameters.h" />
     <ClInclude Include="SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>
@@ -235,7 +231,7 @@
       <LibCompiled>true</LibCompiled>
       <ImpLibCompiled></ImpLibCompiled>
     </ClCompile>
-    <ClCompile Include="SourceCodeFile.cpp">
+    <ClCompile Include="ProcessingParameters.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -271,10 +267,10 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <ObjectFileName>Debug\</ObjectFileName>
       <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>Debug\AssemblerLib.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>Debug\HackPlatform.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>Debug\AssemblerLib.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>Debug\HackPlatform.pch</PrecompiledHeaderOutputFile>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
@@ -285,7 +281,7 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <SpectreMitigation>false</SpectreMitigation>
       <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>Debug\AssemblerLib.tlog\</TrackerLogDirectory>
+      <TrackerLogDirectory>Debug\HackPlatform.tlog\</TrackerLogDirectory>
       <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
       <TreatWarningAsError>false</TreatWarningAsError>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -302,7 +298,6 @@
       <LibCompiled>true</LibCompiled>
       <ImpLibCompiled></ImpLibCompiled>
     </ClCompile>
-    <ClCompile Include="Statements\ProcessingParameters.cpp" />
     <ClCompile Include="SymbolTable.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -370,6 +365,12 @@
       <LibCompiled>true</LibCompiled>
       <ImpLibCompiled></ImpLibCompiled>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\API\API.vcxproj">
+      <Project>{01243917-9cde-4c12-83d4-f41929b6cc75}</Project>
+      <Name>API</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

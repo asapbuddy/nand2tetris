@@ -1,4 +1,5 @@
-﻿#include <boost/test/unit_test.hpp>
+﻿// ReSharper disable CppInconsistentNaming
+#include <boost/test/unit_test.hpp>
 
 #include "Fixtures.h"
 #include <bitset>
@@ -15,10 +16,10 @@ namespace assembler_tests
             {
                 const std::string name("Add");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
 
@@ -26,10 +27,10 @@ namespace assembler_tests
             {
                 const std::string name("Max");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
 
@@ -37,50 +38,50 @@ namespace assembler_tests
             {
                 const std::string name("Rect");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
             BOOST_AUTO_TEST_CASE(RectLTest)
             {
                 const std::string name("RectL");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
             BOOST_AUTO_TEST_CASE(MaxLTest)
             {
                 const std::string name("MaxL");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
             BOOST_AUTO_TEST_CASE(PongTest)
             {
                 const std::string name("Pong");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
             BOOST_AUTO_TEST_CASE(PongLTest)
             {
                 const std::string name("PongL");
                 create_assembly(name);
-                const auto actual_file = locate_test_file(name.c_str(), ".hack");
-                const auto expected_file = locate_test_file(name.c_str(), "_expected.hack");
+                const auto actualFile = locate_test_file(name.c_str(), ".hack");
+                const auto expectedFile = locate_test_file(name.c_str(), "_expected.hack");
 
-                BOOST_TEST(compare_two_files(actual_file, expected_file) == true);
+                BOOST_TEST(compare_two_files(actualFile, expectedFile) == true);
             }
 
 

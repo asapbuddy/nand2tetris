@@ -87,6 +87,7 @@
       <PreprocessorDefinitions>_MBCS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;_CRT_DECLARE_GLOBAL_VARIABLES_DIRECTLY;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <SupportJustMyCode>false</SupportJustMyCode>
+      <AdditionalOptions>/Zi</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,7 +139,6 @@
   <ItemGroup>
     <ClCompile Include="AssemblerModule.cpp" />
     <ClCompile Include="CodeModule.cpp" />
-    <ClCompile Include="ParserModule.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>

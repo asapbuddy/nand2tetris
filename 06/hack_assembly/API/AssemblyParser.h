@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Statement.h"
-#include "StatementParameters.h"
 
 
 /**

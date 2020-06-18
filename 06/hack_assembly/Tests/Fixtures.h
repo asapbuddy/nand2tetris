@@ -1,29 +1,29 @@
 #pragma once
 #include <fstream>
 #include <HackPlatform/Assembler.h>
-#include <HackPlatform/Statements/InstructionParts.h>
 
 
 namespace assembler_tests
 {
+    using namespace std;
     constexpr uint8_t bitness = 16;
 
     struct Configuration
     {
-        std::string tests_path{"..\\Tests\\Tests\\"};
+        std::string TestsPath{"..\\Tests\\Tests\\"};
 
 
-        InstructionParts dest(const string& dest)
+        static InstructionParts dest(const string& dest)
         {
             return {dest, "", ""};
         }
 
-        InstructionParts comp(const string& comp)
+        static InstructionParts comp(const string& comp)
         {
             return {"", comp, ""};
         }
 
-        InstructionParts jump(const string& jump)
+        static InstructionParts jump(const string& jump)
         {
             return {"", "", jump};
         }
@@ -31,7 +31,7 @@ namespace assembler_tests
 
         std::string locate_test_file(const char* name, const char* ext) const
         {
-            auto result(tests_path);
+            auto result(TestsPath);
             result.append(name);
             result.append(ext);
             return result;
@@ -39,12 +39,12 @@ namespace assembler_tests
 
         void create_assembly(const std::string& name) const
         {
-            auto path(tests_path);
+            auto path(TestsPath);
             path.append(name).append(".asm");
-            TwoPassAssembler assembler_module(path.c_str());
-            assembler_module.process_labels();
-            assembler_module.Compile();
-            assembler_module.SaveBinary();
+            TwoPassAssembler assemblerModule(path.c_str());
+            assemblerModule.ProcessLabels();
+            assemblerModule.Compile();
+            assemblerModule.SaveBinary();
         }
 
         bool compare_two_files(const std::string& file1, const std::string& file2) const

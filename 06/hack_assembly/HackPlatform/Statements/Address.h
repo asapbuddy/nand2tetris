@@ -14,7 +14,7 @@ class Address final : public Statement
 public:
     ~Address() override = default;
 
-    Address(string&& mnemonic)
+    explicit Address(string&& mnemonic)
         : mnemonic_(std::move(mnemonic))
     {
     }

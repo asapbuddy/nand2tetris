@@ -8,7 +8,7 @@ class Label final : public Statement
 public:
     ~Label() override = default;
 
-    Label(string&& mnemonic)
+    explicit Label(string&& mnemonic)
         : mnemonic_(mnemonic)
     {
     }

@@ -1,16 +1,20 @@
 ﻿#pragma once
 #include <memory>
 
+
+#include "Assembler.h"
 #include "StatementParameters.h"
 
 
-struct Fabric
+struct Factory
 {
-    virtual ~Fabric() = default;
+    virtual ~Factory() = default;
 
     /**
      * \brief create InstructionDecoder and LookupTable to init Parameters
      * \return parameters for command execution
      */
     virtual std::unique_ptr<StatementParameters> CreateParameters() = 0;
+
+    virtual std::unique_ptr<Assembler> CreateAssembler() = 0;
 };

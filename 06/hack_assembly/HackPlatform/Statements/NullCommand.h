@@ -5,7 +5,7 @@ class NullCommand final : public Statement
 {
 public:
 
-    void Process(const StatementParameters& parameters) override
+    void Process(const StatementParameters&) override
     {
         throw "Attempt to processing NullCommand";
     }

@@ -3,8 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "Statements/InstructionDecoder.h"
-
+#include "../API/InstructionDecoder.h"
 
 using namespace std;
 
@@ -14,8 +13,8 @@ class Decoder final : public InstructionDecoder
     std::unordered_map<string, string> jump_table_;
     std::unordered_map<string, string> dest_table_;
 
-    const uint8_t DEST_SHIFT = 3;
-    const uint8_t COMP_SHIFT = 6;
+    const uint8_t dest_shift_ = 3;
+    const uint8_t comp_shift_ = 6;
 
 public:
 

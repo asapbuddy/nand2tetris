@@ -15,8 +15,21 @@ void SourceCodeFile::CheckFile() const
         throw "Input file is empty";
 }
 
-std::ifstream SourceCodeFile::GetFileStream()
+std::ifstream SourceCodeFile::GetFileInputStream()
 {
     CheckFile();
     return std::ifstream(filename_);
+}
+
+std::ofstream SourceCodeFile::GetFileOutputStream()
+{
+    throw "Could not write to source code file";
+}
+
+std::vector<std::string> SourceCodeFile::ReadAllLines()
+{
+}
+
+void SourceCodeFile::WriteAllLines(std::vector<std::string>)
+{
 }

@@ -1,34 +1,32 @@
 ﻿#pragma once
+#include <memory>
 #include <string>
 #include <vector>
 
-
-#include "FabricModule.h"
 #include "../API/Assembler.h"
-#include "Statements/ProcessingParameters.h"
+#include "../API/SourceCodeFile.h"
+#include "../API/StatementParameters.h"
 
 
-class TwoPassAssembler : public Assembler
+class TwoPassAssembler final : public Assembler
 {
-    const char* file_path_;
     std::vector<std::string> result_;
-    std::unique_ptr<Fabric> fabric_;
-    std::unique_ptr<StatementParameters> statement_parameters_;
-
+    std::unique_ptr<StatementParameters> parameters_;
 
 public:
-    explicit TwoPassAssembler(const char* path)
-        : file_path_(path),
-          fabric_(std::make_unique<FabricModule>()),
-          statement_parameters_(fabric_->CreateParameters())
+    explicit TwoPassAssembler(std::unique_ptr<StatementParameters>&& parameters)
+        : parameters_(std::move(parameters))
     {
     }
 
     ~TwoPassAssembler() override = default;
 
-    void process_labels() const;
+    void Compile(SourceCodeFile sourceCodeFile) override;
 
-    void Compile() override;
+    std::vector<std::string> GetCompilationResults() override;
 
-    void SaveBinary() override;
+private:
+    void ProcessLabels(SourceCodeFile sourceCode) const;
+
+    void ProcessInstructions(SourceCodeFile sourceFile);
 };

@@ -8,9 +8,9 @@ void ProcessingParameters::IncreaseInstructionCounter()
     ++processed_instructions_;
 }
 
-std::string ProcessingParameters::DecodeInstruction(const InstructionParts& packed_instruction) const
+std::string ProcessingParameters::DecodeInstruction(const InstructionParts& packedInstruction) const
 {
-    return instruction_decoder_->decode(packed_instruction);
+    return instruction_decoder_->decode(packedInstruction);
 }
 
 std::string ProcessingParameters::DecodeAddress(const std::string& address) const

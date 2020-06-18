@@ -1,8 +1,7 @@
 ﻿#pragma once
 #include <string>
 
-
-#include "InstructionParts.h"
+#include "../../API/InstructionParts.h"
 
 
 class Instruction final : public Statement
@@ -13,7 +12,7 @@ class Instruction final : public Statement
 public:
     ~Instruction() override = default;
 
-    Instruction(InstructionParts&& dto)
+    explicit Instruction(InstructionParts&& dto)
         : parts_(dto)
     {
     }
