@@ -92,7 +92,7 @@ std::bitset<16> Decoder::jump(const string& mnemonic) const
     return bitset<16>(jump_table_.at(mnemonic));
 }
 
-std::string Decoder::decode(const PackedInstruction& instruction)
+std::string Decoder::decode(const InstructionParts& instruction)
 {
     std::bitset<16> mask(0);
     mask |= 0b111 << 13;

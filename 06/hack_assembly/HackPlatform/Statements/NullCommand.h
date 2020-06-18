@@ -4,13 +4,16 @@
 class NullCommand final : public Statement
 {
 public:
-    void Process() override
+
+    void Process(const StatementParameters& parameters) override
     {
+        throw "Attempt to processing NullCommand";
     }
+
 
     string GetResult() override
     {
-        return "You're done.";
+        throw "Attempt to get result of NullCommand processing";
     }
 
     CommandType GetCommandType() override

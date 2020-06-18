@@ -20,7 +20,7 @@ bool Parser::HasMoreCommands()
 }
 
 
-unique_ptr<Statement> Parser::ProduceStatement(StatementParameters& statement_parameters)
+unique_ptr<Statement> Parser::ProduceStatement()
 {
     current_position_ = 0;
     const auto& token = current_token_;
@@ -31,11 +31,11 @@ unique_ptr<Statement> Parser::ProduceStatement(StatementParameters& statement_pa
     if(token[position] == '/')
         return ProduceNullCommand();
     if(token[position] == '@')
-        return ProduceAddressCommand(statement_parameters);
+        return ProduceAddressCommand();
     if(token[position] == '(')
-        return ProduceLabelCommand(statement_parameters);
+        return ProduceLabelCommand();
 
-    return ProduceInstructionCommand(statement_parameters);
+    return ProduceInstructionCommand();
 }
 
 unique_ptr<NullCommand> Parser::ProduceNullCommand() const
@@ -43,7 +43,7 @@ unique_ptr<NullCommand> Parser::ProduceNullCommand() const
     return make_unique<NullCommand>();
 }
 
-unique_ptr<Address> Parser::ProduceAddressCommand(StatementParameters& statement_parameters) const
+unique_ptr<Address> Parser::ProduceAddressCommand() const
 {
     const auto& token = current_token_;
     const auto& start = current_position_;
@@ -55,10 +55,10 @@ unique_ptr<Address> Parser::ProduceAddressCommand(StatementParameters& statement
         ++i;
 
     auto mnemonic = token.substr(start + 1, i - start - (token[i] == ' ' ? 1 : 0));
-    return make_unique<Address>(std::move(mnemonic), statement_parameters);
+    return make_unique<Address>(std::move(mnemonic));
 }
 
-unique_ptr<Instruction> Parser::ProduceInstructionCommand(StatementParameters& statement_parameters) const
+unique_ptr<Instruction> Parser::ProduceInstructionCommand() const
 {
     string dest, comp, jump;
     const auto& token = current_token_;
@@ -86,17 +86,17 @@ unique_ptr<Instruction> Parser::ProduceInstructionCommand(StatementParameters& s
     if(eq_pos < 0 && sc_pos > 0)
         comp = token.substr(start, sc_pos - start);
 
-    PackedInstruction packed_instruction{dest, comp, jump};
+    InstructionParts packed_instruction{dest, comp, jump};
 
-    return make_unique<Instruction>(std::move(packed_instruction), statement_parameters);
+    return make_unique<Instruction>(std::move(packed_instruction));
 }
 
-unique_ptr<Label> Parser::ProduceLabelCommand(StatementParameters& statement_parameters) const
+unique_ptr<Label> Parser::ProduceLabelCommand() const
 {
     const auto& start = current_position_;
     auto i = start;
     while(current_token_[i] != ')' && i < current_token_.size() - 1)
         ++i;
     auto mnemonic = current_token_.substr(start + 1, i - start - 1);
-    return make_unique<Label>(move(mnemonic), statement_parameters);
+    return make_unique<Label>(move(mnemonic));
 }

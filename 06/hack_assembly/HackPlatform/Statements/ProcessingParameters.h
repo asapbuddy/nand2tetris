@@ -9,38 +9,20 @@ class ProcessingParameters : public StatementParameters
 {
     std::unique_ptr<LookupTable> lookup_table_;
     std::unique_ptr<InstructionDecoder> instruction_decoder_;
-    unsigned AddressInstructionOffset = 16, ProcessedInstructions = 0;
+    mutable unsigned variable_offset_ = 16, processed_instructions_ = 0;
 public:
     ProcessingParameters(std::unique_ptr<LookupTable>&& lookup_table, std::unique_ptr<InstructionDecoder>&& instruction_decoder)
         : lookup_table_(std::move(lookup_table)), instruction_decoder_(std::move(instruction_decoder))
     {
     }
 
-    unsigned GetNextAddressOffset() override
-    {
-        return AddressInstructionOffset++;
-    }
+    void IncreaseInstructionCounter() override;
 
-    void IncreaseInstructionCounter() override
-    {
-        ++ProcessedInstructions;
-    }
+    std::string DecodeInstruction(const InstructionParts& packed_instruction) const override;
 
-    unsigned GetInstructionCounter() const override
-    {
-        return ProcessedInstructions;
-    }
+    std::string DecodeAddress(const std::string& address) const override;
 
-    //TODO Need to Fix that
-    LookupTable* GetLookupTable() const
-    {
-        return lookup_table_.get();
-    }
-
-    InstructionDecoder* GetInstructionDecoder() const
-    {
-        return instruction_decoder_.get();
-    }
+    void AddLabel(const std::string& mnemonic) const override;
 
     ~ProcessingParameters() override = default;
 };

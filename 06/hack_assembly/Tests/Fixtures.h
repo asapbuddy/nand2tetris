@@ -1,7 +1,7 @@
 #pragma once
 #include <fstream>
 #include <HackPlatform/Assembler.h>
-#include <HackPlatform/Statements/PackedInstruction.h>
+#include <HackPlatform/Statements/InstructionParts.h>
 
 
 namespace assembler_tests
@@ -13,17 +13,17 @@ namespace assembler_tests
         std::string tests_path{"..\\Tests\\Tests\\"};
 
 
-        PackedInstruction dest(const string& dest)
+        InstructionParts dest(const string& dest)
         {
             return {dest, "", ""};
         }
 
-        PackedInstruction comp(const string& comp)
+        InstructionParts comp(const string& comp)
         {
             return {"", comp, ""};
         }
 
-        PackedInstruction jump(const string& jump)
+        InstructionParts jump(const string& jump)
         {
             return {"", "", jump};
         }

@@ -1,21 +1,15 @@
 ﻿#pragma once
-#include "LookupTable.h"
 #include "../HackPlatform/Statements/InstructionDecoder.h"
 
 struct StatementParameters
 {
     virtual ~StatementParameters() = default;
 
-    virtual unsigned GetNextAddressOffset() = 0;
-
     virtual void IncreaseInstructionCounter() = 0;
 
-    virtual unsigned GetInstructionCounter() const = 0;
+    virtual std::string DecodeInstruction(const InstructionParts& packed_instruction) const = 0;
 
-    //TODO move lookup and decoding logic here
-    //TODO deprecate returning raw pointers to clients
+    virtual std::string DecodeAddress(const std::string& address) const = 0;
 
-    virtual LookupTable* GetLookupTable() const = 0;
-
-    virtual InstructionDecoder* GetInstructionDecoder() const = 0;
+    virtual void AddLabel(const std::string& mnemonic) const = 0;
 };

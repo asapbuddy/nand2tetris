@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <string>
 
+#include "StatementParameters.h"
+
 using namespace std;
 
 enum class CommandType
@@ -18,7 +20,7 @@ struct Statement
     /**
      * \brief Hidden Command logic
      */
-    virtual void Process() = 0;
+    virtual void Process(const StatementParameters& parameters) = 0;
 
     /**
      * \brief Call if need

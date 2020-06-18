@@ -2,30 +2,26 @@
 #include <string>
 
 
-#include "InstructionDecoder.h"
-#include "PackedInstruction.h"
+#include "InstructionParts.h"
 
 
 class Instruction final : public Statement
 {
-    PackedInstruction packed_;
-    StatementParameters& parameters_;
+    InstructionParts parts_;
     std::string result_;
 
 public:
     ~Instruction() override = default;
 
-    Instruction(PackedInstruction&& dto, StatementParameters& parameters)
-        : packed_(dto),
-          parameters_(parameters)
+    Instruction(InstructionParts&& dto)
+        : parts_(dto)
     {
     }
 
 
-    void Process() override
+    void Process(const StatementParameters& parameters) override
     {
-        auto decoder = parameters_.GetInstructionDecoder();
-        result_ = decoder->decode(packed_);
+        result_ = parameters.DecodeInstruction(parts_);
     }
 
     string GetResult() override

@@ -4,7 +4,7 @@
 #include "Parser.h"
 #include "SourceCodeFile.h"
 
-void TwoPassAssembler::process_labels()
+void TwoPassAssembler::process_labels() const
 {
     SourceCodeFile source_code(file_path_);
     Parser parser(source_code.GetFileStream());
@@ -12,14 +12,14 @@ void TwoPassAssembler::process_labels()
     while(parser.HasMoreCommands())
     {
         parser.Advance();
-        auto command = parser.ProduceStatement(statement_parameters_);
+        auto command = parser.ProduceStatement();
         const auto command_type = command->GetCommandType();
 
         if(command->GetCommandType() == CommandType::label)
-            command->Process();
+            command->Process(*statement_parameters_);
 
         if(command_type == CommandType::address || command_type == CommandType::instruction)
-            statement_parameters_.IncreaseInstructionCounter();
+            statement_parameters_->IncreaseInstructionCounter();
     }
 }
 
@@ -31,12 +31,12 @@ void TwoPassAssembler::Compile()
     while(parser.HasMoreCommands())
     {
         parser.Advance();
-        auto command = parser.ProduceStatement(statement_parameters_);
+        auto command = parser.ProduceStatement();
         const auto command_type = command->GetCommandType();
 
         if(command_type == CommandType::address || command_type == CommandType::instruction)
         {
-            command->Process();
+            command->Process(*statement_parameters_);
             result_.emplace_back(command->GetResult());
         }
     }

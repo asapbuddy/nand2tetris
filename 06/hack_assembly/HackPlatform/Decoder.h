@@ -26,7 +26,7 @@ public:
         init_dest_table();
     }
 
-    std::string decode(const PackedInstruction& instruction) override;
+    std::string decode(const InstructionParts& instruction) override;
 
     ~Decoder() override = default;
 

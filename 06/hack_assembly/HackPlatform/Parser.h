@@ -24,7 +24,7 @@ public:
     {
     }
 
-    unique_ptr<Statement> ProduceStatement(StatementParameters& statement_parameters) override;
+    unique_ptr<Statement> ProduceStatement() override;
 
     void Advance() override;
 
@@ -33,7 +33,7 @@ public:
     ~Parser() override = default;
 private:
     unique_ptr<NullCommand> ProduceNullCommand() const;
-    unique_ptr<Address> ProduceAddressCommand(StatementParameters& statement_parameters) const;
-    unique_ptr<Instruction> ProduceInstructionCommand(StatementParameters& statement_parameters) const;
-    unique_ptr<Label> ProduceLabelCommand(StatementParameters& statement_parameters) const;
+    unique_ptr<Address> ProduceAddressCommand() const;
+    unique_ptr<Instruction> ProduceInstructionCommand() const;
+    unique_ptr<Label> ProduceLabelCommand() const;
 };

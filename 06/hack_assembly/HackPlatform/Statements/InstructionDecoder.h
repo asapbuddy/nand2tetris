@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "PackedInstruction.h"
+#include "InstructionParts.h"
 
 /**
  * \brief Translate Hack assembly to binary code.
@@ -13,5 +13,5 @@ struct InstructionDecoder
      * \brief clients does not actually know about processing
      * \return full instruction bits
      */
-    virtual std::string decode(const PackedInstruction& instruction) = 0;
+    virtual std::string decode(const InstructionParts& instruction) = 0;
 };

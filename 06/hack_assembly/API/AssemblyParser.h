@@ -31,5 +31,5 @@ struct AssemblyParser
      * \brief 
      * \return Encapsulated command
      */
-    virtual unique_ptr<Statement> ProduceStatement(StatementParameters& statement_parameters) = 0;
+    virtual unique_ptr<Statement> ProduceStatement() = 0;
 };

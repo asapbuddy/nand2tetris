@@ -10,34 +10,21 @@
 class Address final : public Statement
 {
     string mnemonic_, result_;
-    StatementParameters& parameters_;
 
 public:
     ~Address() override = default;
 
-    Address(string&& mnemonic, StatementParameters& parameters)
-        : mnemonic_(std::move(mnemonic)),
-          parameters_(parameters)
-
+    Address(string&& mnemonic)
+        : mnemonic_(std::move(mnemonic))
     {
     }
 
-    void Process() override
+    void Process(const StatementParameters& parameters) override
     {
         if(is_digit(mnemonic_))
             result_ = std::bitset<16>(stoi(mnemonic_)).to_string();
         else
-        {
-            auto symbol_table = parameters_.GetLookupTable();
-
-            if(!symbol_table->Contains(mnemonic_))
-            {
-                const auto offset = parameters_.GetNextAddressOffset();
-                symbol_table->AddEntry(mnemonic_, offset);
-            }
-
-            result_ = std::bitset<16>(symbol_table->GetAddress(mnemonic_)).to_string();
-        }
+            result_ = parameters.DecodeAddress(mnemonic_);
     }
 
     string GetResult() override
