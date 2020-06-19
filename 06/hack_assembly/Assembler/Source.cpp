@@ -20,9 +20,10 @@ int main(const int argc, char* argv[])
 
     try
     {
-        auto hackFactory = new HackFactory;
+        auto hackFactory = make_unique<HackFactory>();
         auto assembler = hackFactory->CreateAssembler();
-        const SourceCodeFile sourceCode(argv[1]);
+        SourceCodeFile sourceCode(argv[1]);
+        sourceCode.CheckFile();
         assembler->Compile(sourceCode);
         auto compiled = assembler->GetCompilationResults();
     }

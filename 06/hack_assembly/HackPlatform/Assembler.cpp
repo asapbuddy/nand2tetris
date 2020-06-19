@@ -1,7 +1,7 @@
 ﻿#include "Assembler.h"
 #include "Parser.h"
 
-void TwoPassAssembler::ProcessLabels(SourceCodeFile sourceCode) const
+void TwoPassAssembler::ProcessLabels(const SourceCodeFile& sourceCode) const
 {
     Parser parser(sourceCode.GetFileInputStream());
 
@@ -19,7 +19,7 @@ void TwoPassAssembler::ProcessLabels(SourceCodeFile sourceCode) const
     }
 }
 
-void TwoPassAssembler::ProcessInstructions(SourceCodeFile sourceCode)
+void TwoPassAssembler::ProcessInstructions(const SourceCodeFile& sourceCode)
 {
     Parser parser(sourceCode.GetFileInputStream());
 

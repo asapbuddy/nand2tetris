@@ -26,7 +26,7 @@ public:
     std::vector<std::string> GetCompilationResults() override;
 
 private:
-    void ProcessLabels(SourceCodeFile sourceCode) const;
+    void ProcessLabels(const SourceCodeFile& sourceCode) const;
 
-    void ProcessInstructions(SourceCodeFile sourceFile);
+    void ProcessInstructions(const SourceCodeFile& sourceFile);
 };

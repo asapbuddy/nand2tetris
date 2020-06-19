@@ -2,6 +2,9 @@
 #include <fstream>
 #include <HackPlatform/Assembler.h>
 
+#include "BinaryCodeFile.h"
+#include "Assembler/HackFactory.h"
+
 
 namespace assembler_tests
 {
@@ -39,12 +42,18 @@ namespace assembler_tests
 
         void create_assembly(const std::string& name) const
         {
-            auto path(TestsPath);
-            path.append(name).append(".asm");
-            TwoPassAssembler assemblerModule(path.c_str());
-            assemblerModule.ProcessLabels();
-            assemblerModule.Compile();
-            assemblerModule.SaveBinary();
+            auto inputFile(TestsPath);
+            inputFile.append(name).append(".asm");
+            auto outputFile(TestsPath);
+            outputFile.append(name).append(".hack");
+            SourceCodeFile sourceCode(inputFile.c_str());
+            BinaryCodeFile binaryCode(outputFile.c_str());
+            auto hackFactory = make_unique<HackFactory>();
+            auto assembler = hackFactory->CreateAssembler();
+            sourceCode.CheckFile();
+            assembler->Compile(sourceCode);
+            const auto compiled = assembler->GetCompilationResults();
+            binaryCode.WriteAllLines(compiled);
         }
 
         bool compare_two_files(const std::string& file1, const std::string& file2) const
