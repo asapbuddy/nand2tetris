@@ -1,4 +1,3 @@
 # nand2tetris
 
-### HACK Assembler ready
-https://github.com/asapbuddy/nand2tetris/tree/master/06/hack_assembly
+### [Project 6 - Assembler](Project 6 - Assembler/Readme.md)
