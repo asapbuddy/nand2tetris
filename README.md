@@ -1,4 +1,3 @@
 # nand2tetris
 
-### q
-### [Project 6](`Project 6 - Assembler`)
+### [Project 6 - Assembler](https://github.com/asapbuddy/nand2tetris/tree/master/Project%206%20-%20Assembler)
