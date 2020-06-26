@@ -14,7 +14,7 @@ ming, high-level programming, and the operating system) are written in the assem
 language and high-level language implemented in previous projects.
 
 <p align="center">
-  <img src="https://github.com/asapbuddy/nand2tetris/blob/master/Images/Progress.PNG?raw=true">
+  <img src="https://github.com/asapbuddy/nand2tetris/blob/master/Images/Progress.png?raw=true">
 </p>
 
 ___
