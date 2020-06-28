@@ -1,12 +1,13 @@
 # Assembler
---
+
 HACK platform instruction support two instruction types: A- and C- instruction.
 
 ##### The ```A-instruction```:
 used to set the A register to a 15-bit value and represents a BCD:
 <p align="center">
-<img align="left" width="600" height="150" src="https://raw.githubusercontent.com/asapbuddy/nand2tetris/master/Images/A-Instruction.PNG">
+<img width="600" height="150" src="https://raw.githubusercontent.com/asapbuddy/nand2tetris/master/Images/A-Instruction.PNG">
 </p>
+
 
 ##### The ```C-instruction```:
 is the programming workhorse of the Hack platform — the instruction
@@ -16,7 +17,7 @@ value(`dest` part), and (c) what to do next(`jump` part)?
 Along with the A-instruction, these specifications determine all the possible operations of the computer.
 
 <p align="center">
-<img align="left" width="600" height="150" src="https://raw.githubusercontent.com/asapbuddy/nand2tetris/master/Images/C-Instruction.PNG">
+<img width="600" height="150" src="https://raw.githubusercontent.com/asapbuddy/nand2tetris/master/Images/C-Instruction.PNG">
 </p>
 
 ### Implementation
