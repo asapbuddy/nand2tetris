@@ -38,8 +38,22 @@ A- or C- instructions and if we see an Label instruction we added that symbol to
 
 ### Code
 Assembler pass source code file to parser(iterator-like API) then fetch the commands.
-There 3 command types which are generated from the Parser: Address(A-), Instruction(C-), Label(actually 4 for null NotCommand).
+There 3 command types which are generated from the Parser: Address(A-), Instruction(C-), Label (actually 4 with NullCommand).
 On first pass we acts like described above: just count instructions and resolve Labels.
 On second pass we process A- and C- instruction and if we see an A- instruction we can ensure that is address or label because of first pass.
 
 ![Image](https://raw.githubusercontent.com/asapbuddy/nand2tetris/master/Images/TwoPassAssembler.png)
+
+### Example
+```
+// Add.asm
+// Computes R0 = 2 + 3  (R0 refers to RAM[0])
+// Asm:         Compiles to:
+    @2          0000000000000010
+    D=A         1110110000010000
+    @3          0000000000000011
+    D=D+A       1110000010010000
+    @0          0000000000000000
+    M=D         1110001100001000
+
+```
