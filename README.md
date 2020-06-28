@@ -12,10 +12,6 @@ Five of the subsequent software projects
 modern programming language. The remaining three projects (low-level programming, high-level programming, and the operating system) are written in the assembly
 language and high-level language implemented in previous projects.
 
-<p align="center">
-  <img src="https://github.com/asapbuddy/nand2tetris/blob/master/Images/Progress.png?raw=true">
-</p>
-
 ___
 [Project 6 - Assembler](https://github.com/asapbuddy/nand2tetris/tree/master/Project%206%20-%20Assembler)
 
