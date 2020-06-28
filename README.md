@@ -9,8 +9,7 @@ hardware simulator supplied with the book.
 
 Five of the subsequent software projects
 (assembler, virtual machine I and II, and compiler I and II) can be written in any
-modern programming language. The remaining three projects (low-level program-
-ming, high-level programming, and the operating system) are written in the assembly
+modern programming language. The remaining three projects (low-level programming, high-level programming, and the operating system) are written in the assembly
 language and high-level language implemented in previous projects.
 
 <p align="center">
