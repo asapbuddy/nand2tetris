@@ -48,26 +48,25 @@ CHIP CPU {
     // 
 
     //A register region
+       	Not(in=instruction[15], out=loadAFrom);
+    	Mux16(a=outALU, b=instruction, sel=loadAFrom, out=ARegVal);
     
-    Not(in=instruction[15], out=loadAFrom);
-    Mux16(a=outALU, b=instruction, sel=loadAFrom, out=ARegVal);
-    
-    Or(a=loadAFrom, b=instruction[5], out=intoA);
-    ARegister(in=ARegVal, load=intoA, out=ARegOut, out[0..14]=addressM);
+    	Or(a=loadAFrom, b=instruction[5], out=intoA);
+    	ARegister(in=ARegVal, load=intoA, out=ARegOut, out[0..14]=addressM);
     //A register region
         
     //ALU Connection region    
 	And(a=instruction[15],b=instruction[12],out=AorM);
-    Mux16(a=ARegOut, b=inM, sel=AorM, out=ALUinput);
-    ALU(x=DRegOut, y=ALUinput,
-         zx=instruction[11],
-         nx=instruction[10],
-         zy=instruction[9], 
-         ny=instruction[8],
-         f=instruction[7],
-         no=instruction[6],
-         out=outALU, out=outM,
-         zr=zrOut, ng=ngOut);
+    	Mux16(a=ARegOut, b=inM, sel=AorM, out=ALUinput);
+    	ALU(x=DRegOut, y=ALUinput,
+        zx=instruction[11],
+        nx=instruction[10],
+        zy=instruction[9], 
+        ny=instruction[8],
+        f=instruction[7],
+        no=instruction[6],
+        out=outALU, out=outM,
+        zr=zrOut, ng=ngOut);
     //ALU Connection region
 
 	And(a=instruction[15],b=instruction[4],out=intoD);
@@ -75,7 +74,7 @@ CHIP CPU {
 	And(a=instruction[15],b=instruction[3],out=writeM);
     
     //PC region
-    Not(in=ngOut,out=pos);
+    	Not(in=ngOut,out=pos);
 	Not(in=zrOut,out=nzr);
 	And(a=instruction[15],b=instruction[0],out=jgt);
 	And(a=pos,b=nzr,out=posnzr);
