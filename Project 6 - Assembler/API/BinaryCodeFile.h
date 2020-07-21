@@ -21,7 +21,12 @@ public:
     }
 
     std::ifstream GetFileInputStream() const override;
+
     std::ofstream GetFileOutputStream() const override;
+
     std::vector<std::string> ReadAllLines() override;
+
     void WriteAllLines(std::vector<std::string> lines) override;
+
+    ~BinaryCodeFile() override = default;
 };
